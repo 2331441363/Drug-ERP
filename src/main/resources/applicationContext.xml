@@ -20,8 +20,8 @@
 		<p:property name="url">
 			<p:value>jdbc:mysql://192.168.43.47:3306/lijie?characterEncoding=utf8</p:value>
 		</p:property>
-		<p:property name="username" value="root"/>
-		<p:property name="password" value="ROOT"/>
+		<p:property name="username" value="abc"/>
+		<p:property name="password" value="123456"/>
 	</p:bean>
 	<!-- 配置sqlSessionFactory工厂 -->
 	<p:bean id="sqlSessionFactory"
