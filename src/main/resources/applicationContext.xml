@@ -18,7 +18,7 @@
 			<p:value>com.mysql.jdbc.Driver</p:value>
 		</p:property>
 		<p:property name="url">
-			<p:value>jdbc:mysql://localhost:3306/lijie?characterEncoding=utf8</p:value>
+			<p:value>jdbc:mysql://192.168.43.47:3306/lijie?characterEncoding=utf8</p:value>
 		</p:property>
 		<p:property name="username" value="root"/>
 		<p:property name="password" value="ROOT"/>
