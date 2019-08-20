@@ -1,0 +1,19 @@
+{
+	"code": 0,
+	"msg": "",
+	"count": 1000,
+	"data": [{
+		"ProductionFinishedId": 1,
+		"ProductionFinishedSerial": "abc1001",
+		"ProductionFinishedTheme": "nmsl",
+		"ProductionFinishedPrepared": "wc",
+		"ProductionFinishedProcess": "生产一",
+		"ProductionFinishedName": "小行星",
+		"ProductionFinishedQuantity": 250,
+		"ProductionFinishedBatch": 29,
+		"ProductionFinishedTime": "2018-11-1",
+		"ProductionFinishedDepartment": "仓库1",
+		"ProductionFinishedDelivery": "张三",
+		"ProductionFinishedAcceptor": "李四"
+	}]
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>layout 废料管理</title>
+		<link rel="stylesheet" href="../layui/css/layui.css">
+	</head>
+	<body class="layui-layout-body">
+		<table class="layui-hide" id="test" lay-filter="test"></table>
+		<script type="text/html" id="toolbarDemo">
+	<div class="layui-inline">
+	<button type="button" id="btn" class="layui-btn layui-btn-sm" lay-event="getCheckData">审核废料单</button>
+	  <div class="layui-inline">
+	  <label class="layui-form-label" style="width:130px">选择审核状态：</label>
+	  <div class="layui-input-inline">
+	    <select name="modules" lay-verify="required" lay-search="">
+	      <option value="">直接选择或搜索选择</option>
+	      <option value="1">已审核</option>
+	      <option value="2">未审核</option>
+	    </select>
+	  </div>
+	</div>
+  </div>
+</script>
+
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+		<script src="../layui/layui.js" charset="utf-8"></script>
+
+		<script>
+	
+	
+layui.use(['table','form','laydate'], function(){
+  var table = layui.table;
+  var form = layui.form;
+  var $ = layui.$;
+  var laydate = layui.laydate;
+    laydate.render({
+    elem: '#test11'
+    ,format: 'yyyy年MM月dd日'
+  });
+  table.render({
+    elem: '#test'
+    ,url:'../json/Produced.json'
+    ,toolbar: '#toolbarDemo'
+    ,title: '废料数据表'
+    ,cols: [[
+      {type: 'checkbox', fixed: 'left'}
+      ,{field:'id', title:'ID', fixed: 'left', unresize: true, sort: true}
+      ,{field:'name', title:'废料名称', edit: 'text'}
+      ,{field:'number', title:'废料数量', sort: true}
+      ,{field:'joinTime', title:'加入时间'}
+	  ,{field:'state', title:'处理状态'}
+      ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+    ]]
+    ,page: true
+  });
+  
+    //监听提交
+  form.on('submit(formDemo)', function(data){
+    layer.msg(JSON.stringify(data.field));
+    return false;
+  });
+  
+  //头工具栏事件
+  table.on('toolbar(test)', function(obj){
+    var checkStatus = table.checkStatus(obj.config.id);
+    switch(obj.event){
+      case 'getCheckData':
+        layer.open({
+        type:1,
+        title: '确认',
+        area:['400px','20%'],
+        content:'您确定审核此条退料单吗？',
+		btn:['确认','取消']
+		,yes: function(index, layero){
+			alert("审核成功！")
+			}
+        });
+      break;
+    };
+  });
+  
+  //监听行工具事件
+  table.on('tool(test)', function(obj){
+    var data = obj.data;
+    //console.log(obj)
+    if(obj.event === 'del'){
+      layer.confirm('真的删除行么', function(index){
+        obj.del();
+        layer.close(index);
+      });
+    } else if(obj.event === 'edit'){
+      layer.prompt({
+        formType: 2
+        ,value: data.email
+      }, function(value, index){
+        obj.update({
+          email: value
+        });
+        layer.close(index);
+      });
+    }
+  });
+});
+</script>
+	</body>
+</html>

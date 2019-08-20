@@ -1,0 +1,20 @@
+{
+	"code": 0,
+	"msg": "",
+	"count": 1000,
+	"data": [{
+		"Id": 1,
+		"Serial": "abc1001",
+		"Theme": "nmsl",
+		"Process": "生产一",
+		"Name": "cy",
+		"Quantity": 250,
+		"FinishedBatchy": "第一批",
+		"Department":"仓库一",
+		"Delivery":"菜虚坤",
+		"Acceptor":"乔碧罗",
+		"Prepared":"乔碧罗",
+		"Time":"2018-9-1",
+		"examine":"审核中"
+	}]
+}

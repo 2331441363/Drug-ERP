@@ -1,0 +1,20 @@
+{
+	"code": 0,
+	"msg": "",
+	"count": 1000,
+	"data": [{
+		"RawMaterialsId": 1,
+		"RawMaterialsSerial": "abc1001",
+		"RawMaterialsTheme": "nmsl",
+		"RawMaterialsPrepared": "wc",
+		"RawMaterialsName": "mm",
+		"RawMaterialsQuantity": 250,
+		"RawMaterialsBuyer": "cy",
+		"RawMaterialsMoney": 250,
+		"RawMaterialsTime": "2019-8-12",
+		"RawMaterialsSupplier": "ccc",
+		"RawMaterialsPurchasing": "cml",
+		"RawMaterialsDelivery": "nss",
+		"RawMaterialsAcceptor": "xx"
+	}]
+}
