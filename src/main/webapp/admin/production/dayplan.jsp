@@ -7,7 +7,7 @@
   <title>菜单</title>
   <link rel="stylesheet" href="../layui/css/layui.css">
   <script src="../layui/layui.js"></script>
-  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>          
+  <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>          
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>    
@@ -109,7 +109,7 @@ layui.use(['table','laydate','form','layer'], function(){
   
   table.render({
     elem: '#test'
-    ,url:'demo1.json'
+    ,url:'../json/demo1.json'
     ,toolbar: '#toolbarDemo'
     ,title: '日生产计划'
     ,cols: [[
@@ -163,7 +163,7 @@ layui.use(['table','laydate','form','layer'], function(){
   	  
   	  table.render({
 		    elem: '#test2'
-		    ,url:'demo1.json'
+		    ,url:'../json/demo1.json'
 		    ,totalRow: true
 		    ,cols: [[
 		      {type: 'checkbox', fixed: 'left', totalRowText: '合计'}

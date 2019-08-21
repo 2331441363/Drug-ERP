@@ -4,13 +4,13 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>日生产计划</title>
+  <title>生产订单</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
   <script src="../layui/layui.js"></script>
-  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
@@ -48,7 +48,7 @@ layui.use(['table','form'], function(){
   
   table.render({
     elem: '#test'
-    ,url:'demo1.json'
+    ,url:'../json/demo1.json'
     ,toolbar: '#toolbarDemo'
     ,title: '生产订单'
     ,cols: [[
