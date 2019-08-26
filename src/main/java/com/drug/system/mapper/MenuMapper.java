@@ -21,7 +21,7 @@ public interface MenuMapper {
 	 * @param menu 修改的菜单对象
 	 * @return 受影响行数
 	 */
-	@Update("UPDATE menu SET menuName = #{menuName},menuIcon = #{menuIcon},menuURL= #{menuURL} WHERE menuId = #{menuId}")
+	@Update("UPDATE menu SET menuName = #{menuName},menuType=#{menuType},menuIcon = #{menuIcon},menuURL= #{menuURL},menuParent=#{menuParent} WHERE menuId = #{menuId}")
 	Integer updateByMenu(Menu menu);
 	
 }

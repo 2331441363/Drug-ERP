@@ -7,8 +7,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>layout 后台大布局 - Layui</title>
   <link rel="stylesheet" href="../layui/css/layui.css">
+  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+  <script>
+			var delay=500;             //文字出现的时间间隔
+			var text="医药ERP";  //预定文字
+			var i=0;                //初始化变量 i
+			$(function(){
+				scrollit(); //调用scrollit()函数
+			});
+			function scrollit(){
+				//设置 id 为 demo 的对象内的文字为从变量 text 的 0 开始到 i 间的文字加"_"
+				font.innerText=text.slice(0,i++)+"_";
+				if(i>text.length){       //当 i 大于 text 的文本长度时
+					i=0              //重设 i 为 0，使文字重新从第一个文字出现
+					//延时执行scrollit()函数,delay*10是为了让显示完整文字的时间长一点
+					font.innerText=text
+					
+				}else{
+					setTimeout("scrollit()",delay)       //否则在delay毫秒后再次执行scrollit()函数
+					
+				} 
+			}
+		</script>
   <style type="text/css">
-
+	body{
+		margin:0px;
+		padding:0px;
+	}
+        
   	/*顶部*/
   	.layui-header {
     	z-index: 1000;
@@ -52,18 +78,16 @@
 	.layui-layout-admin .layui-body {
     	position: fixed;
     	top: 75px;
-    	bottom: 44px;
+    	bottom:0px;
     	background:#FAFAFA;
 	}
 	
 	/*中间内容位置*/
 	.layui-body {
     	left: 250px;
+    	
 	}
-	/*底部*/
-	.layui-layout-admin .layui-footer {
-    	left: 250px;
-	}
+	
 	/*左下导航颜色*/
 	.layui-nav-tree {
     	background: white;
@@ -125,7 +149,7 @@
 	/*选择二级菜单*/
 	.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover {
    		    	background: -moz-linear-gradient(right,#AB82FF,#7D7DFF,#1e9cf0);
-   		    	border-right:4px solid #bb07ef;
+   		    	border-right:3px solid #bb07ef;
     	
 	}
 	/*选择二级菜单*/
@@ -175,15 +199,19 @@
 		height:100%;
 	}
 
-	
+	/*导航栏下划线颜色*/
+	.layui-nav .layui-this::after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed::after {
+  		background-color: #FF359A; 
+	}
 
-	
   </style>
+
 </head>
 <body class="layui-layout-body">
+
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header" >
-    <div class="layui-logo">ERP</div>
+    <div class="layui-logo" id="font"></div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     
     <ul class="layui-nav layui-layout-left">
@@ -192,21 +220,12 @@
               <i class="layui-icon layui-icon-shrink-right" style="color:white;" id="LAY_app_flexible"></i>
             </a>
       </li>
-      <li class="layui-nav-item"><a  onclick="$('#main').load('index.jsp')" id="indexLinck">首页<span class="layui-badge-dot layui-bg-orange"></span></a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
       
-      <li class="layui-nav-item">
-        <a href="javascript:;">其它系统</a>
-        <dl class="layui-nav-child">
-          <dd><a href="">邮件管理</a></dd>
-          <dd><a href="">消息管理</a></dd>
-          <dd><a href="">授权管理</a></dd>
-        </dl>
-      </li>
       
     </ul>
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item" ><a href=""><i class="layui-icon layui-icon-screen-restore" id="unlock" style="color:white;font-size:18px;"></i></a></li>
+      <li class="layui-nav-item" ><a href=""><i class="layui-icon layui-icon-notice" style="color:white;font-size:18px;"></i></a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">
           <img src="../images/QQ.jpg" class="layui-nav-img">
@@ -238,28 +257,22 @@
   
   <div class="layui-body">
     <!-- 内容主体区域 -->
-    <div>
-    	<div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="docDemoTabBrief">
+    <div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="docDemoTabBrief">
   			<ul class="layui-tab-title">
   				<li class="layui-this" lay-id="index.jsp"><i class="layui-icon layui-icon-home " ></i></li>
   			</ul>
-  			<div class="layui-tab-content" id="main" style="height:545px;">
-  			        <div class="layui-tab-item layui-show" style="height:100%;width:100%;">
-  						<iframe src="menu.jsp" style="height:100%;width:100%;"  class="layadmin-iframe" frameborder="0"></iframe>
+  			<div class="layui-tab-content" id="main" style="height:590px;">
+  			        <div class="layui-tab-item layui-show" id = "boxscroll4" style="height:100%;width:100%;">
+  						<iframe src="login.jsp" style="height:100%;width:100%;"  scrolling="auto" id="iframe" class="layadmin-iframe"  frameborder="0"></iframe>
   					</div>
-  					
   			</div>
-		</div>      
-    </div>
+	</div>
   </div>
   
-  <div class="layui-footer">
-    <!-- 底部固定区域 -->
-    © 医药ERP - 管理系统
-  </div>
+  
 </div>
 <script src="../layui/layui.js"></script>
-<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+
 <script>
 //JavaScript代码区域
 //注册组件
@@ -283,7 +296,7 @@ layui.use('element', function(){
 		  if(ifs == 0){
 			  element.tabAdd('docDemoTabBrief', {
 				  title: name
-				  ,content:'<iframe src="'+url+'" style="height:100%;width:100%;" class="layadmin-iframe" frameborder="0"></iframe>'
+				  ,content:'<iframe id="iframe" src="'+url+'" scrolling="auto" style="height:100%;width:100%;" class="layadmin-iframe" frameborder="0"></iframe>'
 				  ,id: url
 				});
 		  }
@@ -333,8 +346,11 @@ layui.use('element', function(){
 
 
 $(function(){
-	$(".layui-tab ul").children('li').first().children('.layui-tab-close').css("display",'none');	
+	$(".layui-tab ul").children('li').first().children('.layui-tab-close').css("display",'none');
 });
 </script>
+
+
+
 </body>
 </html>
