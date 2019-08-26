@@ -4,10 +4,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>菜单</title>
+  <title>成品及配方管理</title>
   <link rel="stylesheet" href="../layui/css/layui.css">
   <script src="../layui/layui.js"></script>
-  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>          
+  <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>          
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>    
@@ -18,22 +18,24 @@
 
 				<script type="text/html" id="toolbarDemo">
   					<div class="layui-btn-container" style="margin-top:10px;padding-left:20px;">
-    					<button class="layui-btn layui-btn-sm" lay-event="addWarehouse">新增药品</button>
-    					<button class="layui-btn layui-btn-sm" lay-event="updateDetails">新增配方</button>
-   					 	<button class="layui-btn layui-btn-sm" lay-event="removeWarehouse">审核药品</button>
-						<button class="layui-btn layui-btn-sm" lay-event="capacityWarning">审核配方</button>
+    					<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="addWarehouse"><i class="layui-icon layui-icon-add-1"></i>新增药品</button>
+    					<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="updateDetails"><i class="layui-icon layui-icon-add-1"></i>新增配方</button>
+   					 	<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="removeWarehouse"><i class="layui-icon layui-icon-friends"></i>审核药品</button>
+						<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="capacityWarning"><i class="layui-icon layui-icon-friends"></i>审核配方</button>
   					</div>
 	
 				</script>
 				
 				<script type="text/html" id="toolbarDemo2">
-
-	<label width="120px" style="margin:0 5px 0 0px;">请输入原料名</label>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 0px;">
+  <legend>添加原料配方</legend>
+</fieldset>
+	<label width="120px" style="margin:0 5px 0 0px;font-size:13px;">请输入原料名</label>
       <div class="layui-input-inline">
         <input type="text" name="username" lay-verify="number" placeholder="请输入" autocomplete="off" class="layui-input">
       </div>
 	
-	<label width="120px" style="margin:0 5px 0 20px;">原料克重</label>
+	<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">原料克重</label>
 	<div class="layui-input-inline">
 		 <input type="text" name="username" lay-verify="number" placeholder="请输入" autocomplete="off" class="layui-input">
 	</div>
@@ -59,52 +61,53 @@
 				//执行一个 table 实例
 				table.render({
 					elem: '#demo',
-					url: 'demo1.json', //数据接口
+					url: '../json/demo1.json', //数据接口
 					title: '药品表',
-					page: true, //开启分页
 					toolbar: '#toolbarDemo', //开启工具栏
-					totalRow: true, //开启合计行
+					totalRow: false, //开启合计行
 					cols: [
 						
 						[ //表头
 								{
 								type: 'checkbox',
-								fixed: 'left'
+								fixed: 'left',
 							}, {
 								field: 'id',
 								title: '药品编号',
-								sort: true,
+								unresize : true
 							}, {
 								field: 'username',
 								title: '药品名称',
+								unresize : true
 							}, {
 								field: 'experience',
 								title: '药品审核状态',
-								align: 'center',
+								unresize : true
 							}, {
 								field: 'sex',
 								title: '有无配方',
-								align: 'center',
+								unresize : true
 							}, {
 								field: 'sex',
 								title: '配方审核状态',
-								align: 'center',
+								unresize : true
 							}, {
 								field: 'sex',
 								title: '制定人',
-								align: 'center',
+								unresize : true
 							}, {
 								field: 'sex',
 								title: '药品制定时间',
-								align: 'center',
+								unresize : true
 							}, {
-								field: 'sex',
 								title: '操作',
+								width : 178,
 								align: 'center',
-								toolbar: '#barDemo'
+								toolbar: '#barDemo',
+								unresize : true
 							}
 						]
-					]
+					],page: true, //开启分页
 				});
 
 				var operator = '<option value="">请选择或者(输入)入库仓库</option>';
@@ -125,7 +128,7 @@
 
 				var operator = '<option value="">请选择或者(输入)入库仓库</option>';
 				$.ajax({
-					url: 'demo1.json',
+					url: '../json/demo1.json',
 					//pe: "post",
 					dataType: "json",
 					async: false, //这得注意是同步
@@ -178,9 +181,9 @@
 						if(data.length == 1){
 							table.render({
 								elem: '#detailsTable',
-								url: 'demo1.json', //数据接口
+								url: '../json/demo1.json', //数据接口
 								title: '用户表',
-								totalRow: true, //开启合计行
+								totalRow: false, //开启合计行
 								toolbar :"#toolbarDemo2",
 								cols: [
 									[ //表头
@@ -208,24 +211,49 @@
 											align: 'center',
 											toolbar: '#barDemo2'
 										}
+										]
 									]
-								]
-							});
-							layer.open({
-								title: '原料配方',
-								type: 1, //Page层类型
-								area: ['1000px', '520px'], //宽高
-								closeBtn: 0,
-								btn: ['确定', '关闭'], //可以无限个按钮
-								content: $("#divTable")
-							});
-						}else if(data.length > 1){
-							layer.msg('只能同时选择一行数据');
-						}else{
-							layer.msg('请选择一行');
-						}
-						break;
-						case "removeWarehouse":
+								});
+								var index = layer.open({
+									title: '新增原料配方',
+									type: 1, //Page层类型
+									area: ['880px', '550px'],
+									closeBtn: 0,
+									btn: ['确定', '关闭'], //可以无限个按钮
+									content: $("#divTable"),
+									yes: function(index, layero){
+										var index2 = layer.confirm('你确认制定该配方？', {
+											  btn: ['确认', '取消'] //可以无限个按钮
+											  ,btn2: function(index, layero){
+											    layer.close(index2);
+											  }
+											}, function(index, layero){
+												layer.close(index2);
+												layer.open({
+													  type: 1,
+													  shade: 0,
+													  area: ['300px', '300px'],
+													  content: $('#nameAndTimeDiv'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+													  success: function(layero, index){
+														  form.render();
+													  }	
+												});
+												
+											});
+									}
+									,btn2: function(index, layero){
+										//按钮【按钮二】的回调
+										  layer.close(index);
+										 //return false 开启该代码可禁止点击该按钮关闭
+									}
+								});
+							}else if(data.length > 1){
+								layer.msg('最多只能选择一件药品');
+							}else{
+								layer.msg('请选择要制定配方的药品');
+							}
+							break;
+						case "removeWarehouse":	//审核药品
 							//判断是否选择一行以上的
 							if (data.length != 0) {
 								layer.confirm('确认删除？', function(index) {
@@ -251,85 +279,9 @@
 								layer.msg("请选择一行以上的选项");
 							}
 							break;
-						case "capacityWarning":
-							alert("刷新警报")
+						case "capacityWarning":	//审核配方
 							break;
-							//监听头部工具栏
-							case 'add':
-								layer.open({
-									title: '添加原材料信息',
-									type: 1, //Page层类型
-									area: ['450px', '390px'], //宽高
-									closeBtn: 0,
-									btn: ['确定', '关闭'], //可以无限个按钮
-									yes: function(index, layero) {
-										layer.close(index);
-										//执行清空
-										$("#warehouseOperator").empty();
-										$("#storageWarehouse").empty();
-										form.render("select");
-										if(index > 0){
-											//添加
-											layer.msg('添加成功');
-										}
-									},
-									content: $("#warehousingDescription")
-								});
-								break;
-							case 'update':
-								if (data.length === 0) {
-									layer.msg('请选择一行');
-								} else if (data.length > 1) {
-									layer.msg('只能同时编辑一个');
-								} else {
-									layer.open({
-										title: '修改原材料信息',
-										type: 1, //Page层类型
-										area: ['450px', '520px'], //宽高
-										closeBtn: 0,
-										btn: ['确定', '关闭'], //可以无限个按钮
-										yes: function(index, layero) {
-											layer.close(index);
-											//执行清空
-											$("#warehouseOperator").empty();
-											$("#storageWarehouse").empty();
-											form.render("select");
-											if(index > 0){
-												//确认修改
-												layer.msg('修改成功');
-											}
-										},
-										content: $("#warehousingDescription")
-									});
-									layer.alert('编辑 [id]：' + checkStatus.data[0].id);
-								}
-								break;
-							case 'delete':
-								if (data.length === 0) {
-									layer.msg('请选择一行');
-								} else {
-									layer.confirm('确认删除？', function(index) {
-										var id = new Array(); //声明数组
-										for (var i in data) {
-											id[i] = data[i].fpId; //得到复选框的值
-											console.log(id[i])
-										}
-										/* $.ajax({
-											url: "controller路径",
-											type: "POST",
-											traditional: true, //传数组一定要加的
-											data: {
-												"id": id
-											},
-											dataType: "json",
-											success: function(result) {
-										
-											}
-										}); */
-										layer.msg('删除');
-									});
-								}
-								break;
+						
 					};
 				});
 
@@ -343,7 +295,7 @@
 					}else if(layEvent === 'manageAe') {	//管理配方
 						table.render({
 							elem: '#detailsTable',
-							url: 'demo1.json', //数据接口
+							url: '../json/demo1.json', //数据接口
 							title: '用户表',
 							totalRow: true, //开启合计行
 							toolbar :"#toolbarDemo2",
@@ -391,31 +343,31 @@
 		
 		<div class="site-text" style="margin: 5%; display: none" id="addDetails" target="test123">
 			<div class="layui-input-inline">
-				<label class="layui-form-label layui-bg-orange">药品名称</label>
+				<label style="margin:0 10px 0 20px;font-size:13px;">药品名称</label>
 				<div class="layui-input-inline">
       				<input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
     			</div>
 			</div>
-			<div class="layui-input-inline">
-				<label for="" class="layui-form-label layui-bg-orange">药品规格</label>
+			<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">药品规格</label>
 				<div class="layui-input-inline">
       				<input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
     			</div>
 			</div>
-			<div class="layui-input-inline">
-				<label for="" class="layui-form-label layui-bg-orange">药品价格</label>
+			<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">药品价格</label>
 				<div class="layui-input-inline">
       				<input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
     			</div>
 			</div>
-			<div class="layui-input-inline">
-				<label for="" class="layui-form-label layui-bg-orange">药品质保期</label>
+			<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">质保日期</label>
 				<div class="layui-input-inline">
       				<input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
     			</div>
 			</div>
-			<div class="layui-input-inline">
-				<label for="" class="layui-form-label layui-bg-orange">制定人</label>
+			<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">制定人</label>
 				<div class="layui-input-inline">
 					<select name="modules" lay-verify="required" lay-search="">
           				<option value="">请选择</option>
@@ -425,12 +377,34 @@
 				</div>
 			</div>
 			<div class="layui-input-inline">
-				<label for="" class="layui-form-label layui-bg-orange">制定时间</label>
+				<label style="margin:0 10px 0 20px;font-size:13px;">制定时间</label>
 				<div class="layui-input-inline">
 					<input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
 				</div>
 			</div>
 		</div>
 
+
+<!-- 制定人和制定时间 -->
+<div style="display:none;" id="nameAndTimeDiv">
+
+	  
+<div class="layui-inline" style="padding-left:0px;">
+	<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定日期</label>
+	<div class="layui-input-inline">
+		<input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+	</div>
+</div>
+<div style="padding-left:0px;margin-top:15px;">
+<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定人</label>
+	<div class="layui-input-inline">
+		<select name="modules" lay-verify="required" lay-search="">
+          <option value="">请选择</option>
+          <option value="1">张三</option>
+          <option value="2">王五</option>
+        </select>
+	</div>
+</div>
+ </div>	
 </body>
 </html>

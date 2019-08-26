@@ -21,8 +21,8 @@
 <script type="text/html" id="toolbarDemo">
 <div class="layui-input-inline">
   <div class="layui-btn-container" style="margin-top:10px;padding-left:20px;">
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">审核领料单 </button>
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">申请领料</button>
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i class="layui-icon layui-icon-friends"></i>审核领料单 </button>
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckLength"><i class="layui-icon layui-icon-upload-circle"></i>申请领料</button>
   </div>
 </div>
 </script>
