@@ -1,9 +1,11 @@
 package com.drug.entity;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class Menu {
+public class Menu implements Serializable{
 	/**
 	 * 菜单ID
 	 */
