@@ -17,74 +17,26 @@
  
 <div class="layui-input-inline">
   <div class="layui-btn-container" style="margin-top:10px;padding-left:20px;">
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">审核日计划 </button>
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">制定生产订单</button>
+	<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i class="layui-icon layui-icon-friends"></i>审核日计划 </button>
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckLength"><i class="layui-icon layui-icon-add-1"></i>制定生产订单</button>
   </div>
 
 
 </div>
-	<label width="120px" style="margin:0 5px 0 20px;">状态查询</label>
+<div class="layui-input-inline" style="margin-top:10px;">
+<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">状态查询</label>
 	<div class="layui-input-inline">
 		<select name="city" lay-verify="">
   			<option value="">审核状态</option>
-  			<option value="010" selected>未审核</option>
+  			<option value="010" >未审核</option>
   			<option value="021">审核未通过</option>
  			<option value="0571">审核通过</option>
 		</select>  
 	</div>
-</script>
-
-<script type="text/html" id="toolbarDemo2">
-  <div class="layui-inline" style="padding-left:20px;">
-      <label width="120px" style="margin:0 5px 0 0px;">药品选择</label>
-      <div class="layui-input-inline">
-        <select name="modules" lay-verify="required" lay-search="">
-          <option value="">请选择</option>
-          <option value="1">阿莫西林</option>
-          <option value="2">板蓝根</option>
-          <option value="3">肤痒颗粒</option>
-          <option value="4">维C</option>
-          <option value="5">脑白金</option>
-          <option value="6">upload</opt
-          <option value="7">laydate</option>
-          <option value="8">laypage</option>
-          <option value="9">flow</option>
-          <option value="10">util</option>
-          <option value="11">code</option>
-          <option value="12">tree</option>
-          <option value="13">layedit</option>
-          <option value="14">nav</option>
-          <option value="15">tab</option>
-          <option value="16">table</option>
-          <option value="17">select</option>
-          <option value="18">checkbox</option>
-          <option value="19">switch</option>
-          <option value="20">radio</option>
-        </select>
-      </div>
-	
-	<label width="120px" style="margin:0 5px 0 20px;">输入生产数量</label>
-	<div class="layui-input-inline">
-		 <input type="text" name="username" lay-verify="number" placeholder="请输入" autocomplete="off" class="layui-input">
-	</div>
-	<button type="button" class="layui-btn layui-btn-normal">添加</button>
-
-
-	<label width="120px" style="margin:0 5px 0 60px;">请选择制定日期</label>
-	<div class="layui-input-inline">
-		<input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
-	</div>
-	<label width="120px" style="margin:0 5px 0 20px;">制定人</label>
-	<div class="layui-input-inline">
-		<select name="modules" lay-verify="required" lay-search="">
-          <option value="">请选择</option>
-          <option value="1">张三</option>
-          <option value="2">王五</option>
-        </select>
-	</div>
-  </div>
+</div>
 	
 </script>
+
 
 <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -118,7 +70,8 @@ layui.use(['table','laydate','form','layer'], function(){
       ,{field:'username', title:'月生产计划编号',unresize:true}
       ,{field:'email', title:'制定日期',unresize:true}
       ,{field:'experience', title:'负责人', unresize:true}
-      ,{field:'experience', title:'生产日计划总数', unresize:true}
+      ,{field:'experience', title:'药品种数', unresize:true}
+      ,{field:'experience', title:'生产总数', unresize:true}
       ,{field:'sex', title:'审核状态', unresize:true}
       ,{
 		fixed: 'right', width:178, align:'center', toolbar: '#barDemo',unresize:true
@@ -154,8 +107,8 @@ layui.use(['table','laydate','form','layer'], function(){
   		  title: '计划详情',
   		  type:1,
   		  shadeClose : true,
-  		  area : [ '600px', '400px' ],//大小
-  		  content: $("#test2"),
+  		  area : [ '700px', '460px' ],//大小
+  		  content: $("#dibId"),
   		  end : function() {
 					$('[lay-id="test2"]').css("display", "none");
 			  }
@@ -166,20 +119,28 @@ layui.use(['table','laydate','form','layer'], function(){
 		    ,url:'../json/demo1.json'
 		    ,totalRow: true
 		    ,cols: [[
-		      {type: 'checkbox', fixed: 'left', totalRowText: '合计'}
-		      ,{type: 'numbers'}
+		      {type: 'numbers',totalRowText: '合计'}
 		      ,{field:'id', title:'药品编号', unresize:true}
 		      ,{field:'username', title:'药品名称',unresize:true}
 		      ,{field:'experience', title:'日生产数量', totalRow: true,unresize:true}
 		      
 		    ]]
-		});    } else if(obj.event === 'del'){
-      layer.confirm('真的删除行么', function(index){
+		});    
+  	} else if(obj.event === 'del'){
+      layer.confirm('确认删除该计划？', function(index){
         obj.del();
         layer.close(index);
       });
     } else if(obj.event === 'edit'){
-      layer.alert('编辑行：<br>'+ JSON.stringify(data))
+    	layer.open({
+    		  title: '修改日计划',
+    		  type:1,
+    		  shadeClose : true,
+    		  content: $("#dibId"),
+    		  end : function() {
+  					$('[lay-id="test2"]').css("display", "none");
+  			  }
+    		});
     }
   });
 });
@@ -189,6 +150,9 @@ layui.use(['table','laydate','form','layer'], function(){
 
  
 <table class="layui-hide" id="test" lay-filter="test"></table>
-<table class="layui-hide" id="test2"  lay-filter="test2" style="display:none;"></table>
+<div  id="dibId">
+	<table class="layui-hide" id="test2"  lay-filter="test2" style="display:none;"></table>
+	
+</div>
 </body>
 </html>

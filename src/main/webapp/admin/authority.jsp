@@ -18,9 +18,14 @@
  
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
-
+	<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container" style="padding-left:20px;">
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i class="layui-icon layui-icon-add-1"></i>新增部门 </button>
+  </div>
+	
+</script>
 <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">分配权限</a>
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">管理权限</a>
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -107,7 +112,7 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
   });
   table.render({
     elem: '#test'
-    ,url:'demo1.json'
+    ,url:'json/demo1.json'
     ,toolbar: '#toolbarDemo'
     ,title: '领料单'
     ,cols: [[
@@ -130,7 +135,10 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
     	layer.open({
 			title : '权限管理',//标题
 			type : 1,//样式
+			shade: 0,
+			area: ['350px', '500px'],
 			content :$("#test12"),
+			
 			success : function(layero) {
 				var mask = $(".layui-layer-shade");
 				mask.appendTo(layero.parent());
@@ -152,12 +160,70 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
     }
   });
   
+  
+//工具栏事件
+	table.on('toolbar(test)', function(obj) {
+		var checkStatus = table.checkStatus(obj.config.id);
+		switch (obj.event) {
+		case 'getCheckData':
+			var index = layer.open({
+				title : '新增部门',//标题
+				type : 1,//样式
+				shade: 0,
+				offset: ['15%', '35%'],//设置位移
+				btn: ['确认', '取消'],
+				yes: function(index, layero){
+					var index2 = layer.confirm('你确认制定该生产计划？', {
+						  btn: ['确认', '取消'] //可以无限个按钮
+						  ,btn2: function(index, layero){
+						    layer.close(index2);
+						  }
+						}, function(index, layero){
+							layer.msg('新增成功');
+						});
+				}
+				,btn2: function(index, layero){
+					//按钮【按钮二】的回调
+					  layer.close(index);
+					 //return false 开启该代码可禁止点击该按钮关闭
+				},
+				
+				content :$("#branch"),
+				success : function(layero) {
+					var mask = $(".layui-layer-shade");
+					mask.appendTo(layero.parent());
+					//其中：layero是弹层的DOM对象
+				}
+			});
+			break;
+		};
+	});
+  
 });
 </script>
 
-<div id="test12" class="demo-tree-more" style="display:none;"></div>
+		<div id="test12" class="demo-tree-more" style="display:none;"></div>
 
-
+		<div class="site-text" style="margin: 5%; display: none" id="branch" target="test123">
+			<div class="layui-input-inline">
+				<label style="margin:0 10px 0 20px;font-size:13px;">部门编号</label>
+				<div class="layui-input-inline">
+      				<input type="text" name="username" lay-verify="required" placeholder="自动生成" autocomplete="off" class="layui-input">
+    			</div>
+			</div>
+			<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">部门名称</label>
+				<div class="layui-input-inline">
+      				<input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    			</div>
+			</div>
+			<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">部门描述</label>
+				<div class="layui-input-inline">
+      				<textarea name="" required lay-verify="required" placeholder="请输入部门描述" class="layui-textarea"></textarea>
+    			</div>
+			</div>
+		</div>
 
 </body>
 </html>

@@ -10,9 +10,13 @@
   <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>          
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
-<body>         
+<body style="margin:0;padding:0;">         
 <table class="layui-hide" id="test" lay-filter="test"></table>         
-
+<style>
+.layui-table, .layui-table-view {
+    margin: 0px 0;
+}
+</style>
 <script>
 layui.use('table', function(){
   var table = layui.table;
@@ -22,7 +26,7 @@ layui.use('table', function(){
 	,url: '../queryMenu.do'//数据接口
     ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
     ,cols: [[
-      {field:'menuId', title: '菜单ID', sort: true,align:'center'}
+      {field:'menuId', title: '菜单ID', align:'center'}
       ,{field:'menuName', title: '菜单名称',edit: 'text',templet:function(d){
     	  var left = (d.menuType-1)*40;
     	  
@@ -44,6 +48,7 @@ layui.use('table', function(){
     	  		return '<span class="layui-badge">二级目录</span>'
     	  }
       }}
+      ,{field:'menuType',title: '类型',edit: 'text',align:'center',hide:true}
       ,{field:'menuURL',edit: 'text',title: '菜单URL',align:'center'}
     ]]
 
