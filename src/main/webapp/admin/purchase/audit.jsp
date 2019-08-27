@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  <div id="audit" style="display: none;">
  	<table>
  		<tr>
- 			<td colspan="3"><label class="layui-form-label">原因：</label>
+ 			<td colspan="3"><label class="layui-form-label" style="font-size:13px;">原因：</label>
     <div class="layui-input-block" >
       <input name="a" class="layui-input" type="text" autocomplete="off" lay-verify="title" style="width: 300px;" id="cause">
     </div></td>
@@ -67,10 +67,10 @@ layui.use('table', function(){
   
   table.render({
 	  elem: '#test'
-		    ,url:'show.do'
+		    ,url:'admin/json/demo1.json'
 		    ,toolbar: '#toolbarDemo'
 		    ,title: '用户数据表'
-		    ,parseData:function(res){
+		    /* ,parseData:function(res){
 		    	console.log(res);
 		    	return{
 		    		code: 0, //解析接口状态
@@ -78,7 +78,7 @@ layui.use('table', function(){
 		    		count: 1000, //解析数据长度
 		    		data: res //解析数据列表
 		    	}
-		    }
+		    } */
     ,cols: [[
       {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
       ,{field:'username', title:'用户名', width:120}
@@ -133,7 +133,7 @@ layui.use('table', function(){
 	  var table = layui.table;
 	  table.render({
 	    elem: '#demo'
-	    ,url:'show.do'
+	    ,url:'admin/json/demo1.json'
 	    ,title: '用户数据表'
 	    ,parseData:function(res){
 	    	console.log(res);

@@ -28,26 +28,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <form class="layui-form" >
 <table style="width: 100%">
  	<tr>
- 		<td><label class="layui-form-label" style="margin-top: -5px">采购计划编号：</label>
+ 		<td><label class="layui-form-label" style="margin-top: -5px;font-size:13px;">采购计划编号：</label>
    			<div class="layui-input-block">
       			<input name="a" class="layui-input" type="text" autocomplete="off" lay-verify="title" style="width: 200px;height: 30px">
     		</div></td>
-    	<td><label class="layui-form-label" style="margin-top: -10px">计划员：</label>
+    	<td><label class="layui-form-label" style="margin-top: -10px;font-size:13px;">计划员：</label>
    			<div class="layui-input-block">
       			<input name="a" class="layui-input" type="text" autocomplete="off" lay-verify="title" style="width: 200px;height: 30px">
     		</div></td>
-		<td><label class="layui-form-label" style="margin-top: -10px">采购部门：</label>
+		<td><label class="layui-form-label" style="margin-top: -10px;font-size:13px;">采购部门：</label>
    			<div class="layui-input-block">
       			<input name="a" class="layui-input" type="text" autocomplete="off" lay-verify="title" style="width: 200px;height: 30px">
     		</div></td>
  	</tr>
  	<tr>
- 		<td><label class="layui-form-label" style="margin-top: -20px">采购员：</label>
+ 		<td><label class="layui-form-label" style="margin-top: -20px;font-size:13px;">采购员：</label>
    			<div class="layui-input-block">
       			<input name="a" class="layui-input" type="text" autocomplete="off" lay-verify="title" style="width: 200px;height: 30px ;margin-top: -20px">
     		</div></td>
  		<td>
-			<label class="layui-form-label" style="margin-top: -20px">审核状态：</label>
+			<label class="layui-form-label" style="margin-top: -20px;font-size:13px;">审核状态：</label>
       <div class="layui-input-inline" style="width: 200px;height: 30px;margin-top: -20px">
        <select name="interest" lay-filter="aihao">
         <option value="">全部状态</option>
@@ -58,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 		</td>
 		<td>
-			<label class="layui-form-label" style="margin-top: -20px">计划制定日期：</label>
+			<label class="layui-form-label" style="margin-top: -20px;font-size:13px;">计划制定日期：</label>
    			<div class="layui-input-block">
       			<input name="date" class="layui-input" id="date" type="text" placeholder="yyyy-MM-dd" autocomplete="off" lay-verify="date" style="width: 200px;height: 30px"/>
     		</div>
@@ -71,13 +71,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <table class="layui-hida" id="test" lay-filter="test"></table>
 
 
-<iframe id="updatepurchaseReturn" src="admin/production/updatepurchaseReturn.jsp" style="display: none;" frameborder="0" width="1200px;" height="500px"></iframe>
+<iframe id="updatepurchaseReturn" src="admin/purchase/updatepurchaseReturn.jsp" style="display: none;" frameborder="0" width="1000px;" height="500px"></iframe>
  
  
  
 <script id="toolbarDemo" type="text/html">
   <div class="layui-btn-container">
-	<button class="layui-btn layui-btn-sm" lay-event="select">搜索</button>
+	<button class="layui-btn layui-btn-sm" lay-event="select"><i class="layui-icon layui-icon-search"></i>搜索</button>
   </div>
 </script>
  
@@ -96,10 +96,10 @@ layui.use('table', function(){
   
   table.render({
     elem: '#test'
-    ,url:'show.do'
+    ,url:'admin/json/demo1.json'
     ,toolbar: '#toolbarDemo'
     ,title: '用户数据表'
-    ,parseData:function(res){
+    /* ,parseData:function(res){
     	console.log(res);
     	return{
     		code: 0, //解析接口状态
@@ -107,7 +107,7 @@ layui.use('table', function(){
     		count: 1000, //解析数据长度
     		data: res //解析数据列表
     	}
-    }
+    } */
     ,cols: [[
       {field:'stuid', title:'采购订单号', width:120, fixed: 'left', unresize: true}
       ,{field:'stuName', title:'下单时间', width:120}
@@ -139,7 +139,8 @@ layui.use('table', function(){
 	    var layer = layui.layer;
 	    layer.open({
 	    	type: 1, 
-	    	area: ['auto', 'auto'],
+	    	area: ['1000px', '500px'],
+	    	offset: ['0px', '50px'],
 	    	content: $('#purchaseOrderDetails') //这里content是一个普通的String
 	    });
 
@@ -155,6 +156,7 @@ layui.use('table', function(){
 	    layer.open({
 	    	type: 1, 
 	    	area: ['auto', 'auto'],
+	    	offset: ['00px', '50px'],
 	    	content: $('#updatepurchaseReturn') //这里content是一个普通的String
 	    });
     }
@@ -164,9 +166,9 @@ layui.use('table', function(){
 	  var table = layui.table;
 	  table.render({
 	    elem: '#demo'
-	    ,url:'show.do'
+	    ,url:'admin/json/demo1.json'
 	    ,title: '用户数据表'
-	    ,parseData:function(res){
+	    /* ,parseData:function(res){
 	    	console.log(res);
 	    	return{
 	    		code: 0, //解析接口状态
@@ -174,7 +176,7 @@ layui.use('table', function(){
 	    		count: 1000, //解析数据长度
 	    		data: res //解析数据列表
 	    	}
-	    }
+	    } */
 	    ,cols: [[
 	      {type: 'checkbox', fixed: 'left'}
 	      ,{field:'stuid', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}

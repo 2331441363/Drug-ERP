@@ -29,13 +29,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div id="div" style="display: none;">
  	<form class="layui-form" action="">
   <div class="layui-form-item">
-    <label class="layui-form-label">单行输入框</label>
+    <label class="layui-form-label" style="font-size:13px;">单行输入框</label>
     <div class="layui-input-block">
       <input name="title" class="layui-input" type="text" placeholder="请输入标题" autocomplete="off" lay-verify="title">
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">验证必填项</label>
+    <label class="layui-form-label" style="font-size:13px;">验证必填项</label>
     <div class="layui-input-block">
       <input name="username" class="layui-input" type="text" placeholder="请输入" autocomplete="off" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？">
     </div>
@@ -43,19 +43,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <div class="layui-form-item">
     <div class="layui-inline">
-      <label class="layui-form-label">多规则验证</label>
+      <label class="layui-form-label" style="font-size:13px;">多规则验证</label>
       <div class="layui-input-inline">
         <input name="number" class="layui-input" type="text" autocomplete="off" lay-verify="required|number">
       </div>
     </div>
     <div class="layui-inline">
-      <label class="layui-form-label">验证日期</label>
+      <label class="layui-form-label" style="font-size:13px;">验证日期</label>
       <div class="layui-input-inline">
         <input name="date" class="layui-input" id="date" type="text" placeholder="yyyy-MM-dd" autocomplete="off" lay-verify="date">
       </div>
     </div>
     <div class="layui-inline">
-      <label class="layui-form-label">验证链接</label>
+      <label class="layui-form-label" style="font-size:13px;">验证链接</label>
       <div class="layui-input-inline">
         <input name="url" class="layui-input" type="tel" autocomplete="off" lay-verify="url">
       </div>
@@ -63,13 +63,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   
   <div class="layui-form-item">
-    <label class="layui-form-label">验证身份证</label>
+    <label class="layui-form-label" style="font-size:13px;">验证身份证</label>
     <div class="layui-input-block">
       <input name="identity" class="layui-input" type="text" placeholder="" autocomplete="off" lay-verify="identity">
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">自定义验证</label>
+    <label class="layui-form-label" style="font-size:13px;">自定义验证</label>
     <div class="layui-input-inline">
       <input name="password" class="layui-input" type="password" placeholder="请输入密码" autocomplete="off" lay-verify="pass">
     </div>
@@ -78,7 +78,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <div class="layui-form-item">
     <div class="layui-inline">
-      <label class="layui-form-label">范围</label>
+      <label class="layui-form-label" style="font-size:13px;">范围</label>
       <div class="layui-input-inline" style="width: 100px;">
         <input name="price_min" class="layui-input" type="text" placeholder="￥" autocomplete="off">
       </div>
@@ -90,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   
   <div class="layui-form-item">
-    <label class="layui-form-label">单行选择框</label>
+    <label class="layui-form-label" style="font-size:13px;">单行选择框</label>
     <div class="layui-input-block">
       <select name="interest" lay-filter="aihao">
         <option value=""></option>
@@ -104,9 +104,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   
   
-  <div class="layui-form-item">
     <div class="layui-inline">
-      <label class="layui-form-label">分组选择框</label>
+      <label class="layui-form-label" style="font-size:13px;">分组选择框</label>
       <div class="layui-input-inline">
         <select name="quiz">
           <option value="">请选择问题</option>
@@ -120,48 +119,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </select>
       </div>
     </div>
-    <div class="layui-inline">
-      <label class="layui-form-label">搜索选择框</label>
-      <div class="layui-input-inline">
-        <select name="modules" lay-search="" lay-verify="required">
-          <option value="">直接选择或搜索选择</option>
-          <option value="1">layer</option>
-          <option value="2">form</option>
-          <option value="3">layim</option>
-          <option value="4">element</option>
-          <option value="5">laytpl</option>
-          <option value="6">upload</option>
-          <option value="7">laydate</option>
-          <option value="8">laypage</option>
-          <option value="9">flow</option>
-          <option value="10">util</option>
-          <option value="11">code</option>
-          <option value="12">tree</option>
-          <option value="13">layedit</option>
-          <option value="14">nav</option>
-          <option value="15">tab</option>
-          <option value="16">table</option>
-          <option value="17">select</option>
-          <option value="18">checkbox</option>
-          <option value="19">switch</option>
-          <option value="20">radio</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  
-  
-  <div class="layui-form-item">
-    <label class="layui-form-label">复选框</label>
-    <div class="layui-input-block">
-      <input name="like[write]" title="写作" type="checkbox">
-      <input name="like[read]" title="阅读" type="checkbox" checked="">
-      <input name="like[game]" title="游戏" type="checkbox">
-    </div>
-  </div>
   
   <div class="layui-form-item" pane="">
-    <label class="layui-form-label">原始复选框</label>
+    <label class="layui-form-label" style="font-size:13px;">原始复选框</label>
     <div class="layui-input-block">
       <input name="like1[write]" title="写作" type="checkbox" checked="" lay-skin="primary">
       <input name="like1[read]" title="阅读" type="checkbox" lay-skin="primary">
@@ -170,19 +130,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   
   <div class="layui-form-item">
-    <label class="layui-form-label">开关-默认关</label>
+    <label class="layui-form-label" style="font-size:13px;">开关-默认关</label>
     <div class="layui-input-block">
       <input name="close" type="checkbox" lay-skin="switch" lay-text="ON|OFF">
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">开关-默认开</label>
+    <label class="layui-form-label" style="font-size:13px;">开关-默认开</label>
     <div class="layui-input-block">
       <input name="open" type="checkbox" checked="" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">单选框</label>
+    <label class="layui-form-label" style="font-size:13px;">单选框</label>
     <div class="layui-input-block">
       <input name="sex" title="男" type="radio" checked="" value="男">
       <input name="sex" title="女" type="radio" value="女">
@@ -190,7 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
   </div>
   <div class="layui-form-item layui-form-text">
-    <label class="layui-form-label">普通文本域</label>
+    <label class="layui-form-label" style="font-size:13px;">普通文本域</label>
     <div class="layui-input-block">
       <textarea class="layui-textarea" placeholder="请输入内容">请输入内容</textarea>
     </div>
@@ -210,9 +170,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  
 <script id="toolbarDemo" type="text/html">
   <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
-	<input type="text" placeholder="请供应商姓名"  class="input-text layui-text" id="select">
-	<button class="layui-btn layui-btn-sm" lay-event="select">搜索</button>
+    <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>新增</button>
+	<input type="text" placeholder="请供应商姓名" class="layui-text"  id="select" style="width:150px;height:30px;">
+	<button class="layui-btn layui-btn-sm" lay-event="select"><i class="layui-icon layui-icon-search"></i>搜索</button>
   </div>
 </script>
  
@@ -231,10 +191,10 @@ layui.use('table', function(){
   
   table.render({
     elem: '#test'
-    ,url:'show.do'
+    ,url:'admin/json/demo1.json'
     ,toolbar: '#toolbarDemo'
     ,title: '用户数据表'
-    ,parseData:function(res){
+    /* ,parseData:function(res){
     	console.log(res);
     	return{
     		code: 0, //解析接口状态
@@ -242,7 +202,7 @@ layui.use('table', function(){
     		count: 1000, //解析数据长度
     		data: res //解析数据列表
     	}
-    }
+    } */
     ,cols: [[
       {type: 'checkbox'}
       ,{field:'stuid', title:'ID', width:80,  sort: true}
@@ -304,7 +264,8 @@ layui.use('table', function(){
 	    layer.open({
 	    	type: 1, 
 	    	title:'详细信息',
-	    	area: ['auto', 'auto'],
+	    	offset: ['0px', '50px'],
+	    	area: ['1000px', '500px'],
 	    	content: $('#material') //这里content是一个普通的String
 	    });
 
@@ -314,9 +275,9 @@ layui.use('table', function(){
 	  var table = layui.table;
 	  table.render({
 	    elem: '#demo'
-	    ,url:'show.do'
+	    ,url: 'admin/json/demo1.json'
 	    ,title: '用户数据表'
-	    ,parseData:function(res){
+	    /* ,parseData:function(res){
 	    	console.log(res);
 	    	return{
 	    		code: 0, //解析接口状态
@@ -324,14 +285,14 @@ layui.use('table', function(){
 	    		count: 1000, //解析数据长度
 	    		data: res //解析数据列表
 	    	}
-	    }
+	    } */
 	    ,cols: [[
 	      {type: 'checkbox', fixed: 'left'}
-	      ,{field:'stuid', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-	      ,{field:'stuName', title:'用户名', width:120, edit: 'text'}
-	      ,{field:'stuAge', title:'邮箱', width:150, edit: 'text'}
-	      ,{field:'stuSex', title:'性别', width:80, edit: 'text', sort: true}
-	      ,{field:'claId', title:'城市', width:100}
+	      ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+	      ,{field:'username', title:'用户名', width:120, edit: 'text'}
+	      ,{field:'email', title:'邮箱', width:150, edit: 'text'}
+	      ,{field:'sex', title:'性别', width:80, edit: 'text', sort: true}
+	      ,{field:'city', title:'城市', width:100}
 	      ,{field:'sign', title:'签名'}
 	      ,{field:'experience', title:'积分', width:80, sort: true}
 	      ,{field:'ip', title:'IP', width:120}
