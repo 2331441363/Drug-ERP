@@ -124,7 +124,6 @@
 			var laydate = layui.laydate;
 			var form = layui.form;
 			
-			
 			table.render({
 				elem : '#test',
 				url : '../json/demo1.json',
@@ -168,12 +167,21 @@
 				elem : '#test3',
 				type : 'month'
 			});
-
+			//常规用法
+			laydate.render({
+				elem : '#test5'
+			});
+			//常规用法
+			laydate.render({
+				elem : '#test1'
+			});
+			
 			//工具栏事件
 			table.on('toolbar(test)', function(obj) {
 				var checkStatus = table.checkStatus(obj.config.id);
 				switch (obj.event) {
 				case 'getCheckData':
+					
 					var index = layer.open({
 						title : '制定计划详情',//标题
 						type : 1,//样式
@@ -181,36 +189,43 @@
 						offset: ['5%', '15%'],//设置位移
 						btn: ['确认', '取消'],
 						yes: function(index, layero){
+							
 							var index2 = layer.confirm('你确认制定该生产计划？', {
 								  btn: ['确认', '取消'] //可以无限个按钮
 								  ,btn2: function(index, layero){
 								    layer.close(index2);
 								  }
-								}, function(index, layero){
-									
+								}, function(layero){
 									layer.close(index2);
-									layer.open({
+									var index88 = layer.open({
 										  type: 1,
-										  shade: 0,
+										  shade: 0.25,
+										  area: ['400px', '350px'],
 										  content: $('#nameAndTimeDiv'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
 										  success: function(layero, index){
 											  form.render();
-										  }	
+											  },
+										  btn: ['确认', '取消'],
+										  yes: function(layero){
+											  layer.close(index);
+											  layer.close(index88);
+											  layer.msg('计划制定成功');
+											}
+										  ,btn2: function(index, layero){
+												  layer.close(index88);
+											}
 									});
 									
 								});
 						}
 						,btn2: function(index, layero){
-							//按钮【按钮二】的回调
 							  layer.close(index);
-							 //return false 开启该代码可禁止点击该按钮关闭
 						},
 						area: ['880px', '550px'],
 						content :$("#table2Div"),
 						success : function(layero) {
 							var mask = $(".layui-layer-shade");
 							mask.appendTo(layero.parent());
-							//其中：layero是弹层的DOM对象
 						},
 						end : function() {
 							$('[lay-id="test2"]').css("display", "none");
@@ -247,18 +262,99 @@
 						}
 						]]
 					});
-					//常规用法
-					laydate.render({
-						elem : '#test1'
-					});
+					
+					
+					
 					break;
 				case 'getCheckLength':
 					var data = checkStatus.data;
-					layer.msg('选中了：' + data.length + ' 个');
+					if(data.length == 1){
+						//判断月计划审核状态
+						if(data[0].sex == '男'){
+							var index2 = layer.confirm('你确认制定该生产计划？', {
+								  btn: ['确认', '取消'] //可以无限个按钮
+								  ,btn2: function(index, layero){
+								    layer.close(index2);
+								  }
+								}, function(layero){
+									layer.close(index2);
+									var index88 = layer.open({
+										  type: 1,
+										  shade: 0.25,
+										  area: ['400px', '350px'],
+										  content: $('#nameAndTimeDiv'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+										  success: function(layero, index){
+											  form.render();
+											  },
+										  btn: ['确认', '取消'],
+										  yes: function(layero){
+											  layer.close(index);
+											  layer.close(index88);
+											  layer.msg('计划制定成功');
+											}
+										  ,btn2: function(index, layero){
+												  layer.close(index88);
+											}
+									});
+									
+								});
+						}else{
+							layer.msg('该月计划未审核');
+						}
+						
+					}else if(data.length >1){
+						layer.msg('最多只能选择一条月计划');
+					}else {
+						layer.msg('请选择一条月计划');
+					}
+					
 					break;
 				case 'isAll':
-					layer.msg(checkStatus.isAll ? '全选' : '未全选')
+					var data = checkStatus.data;
+					if(data.length == 1){
+						//判断月计划审核状态
+						if(data[0].sex == '男'){
+							var index2 = layer.confirm('你确认审核该生产计划？', {
+								  btn: ['确认', '取消'] //可以无限个按钮
+								  ,btn2: function(index, layero){
+								    layer.close(index2);
+								  }
+								}, function(layero){
+									layer.close(index2);
+									var index88 = layer.open({
+										  type: 1,
+										  shade: 0.25,
+										  area: ['400px', '350px'],
+										  content: $('#nameAndTimeDiv2'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+										  success: function(layero, index){
+											  form.render();
+											
+											  },
+										  btn: ['确认', '取消'],
+										  yes: function(layero){
+											  layer.close(index);
+											  layer.close(index88);
+											  layer.msg('计划审核成功');
+											}
+										  ,btn2: function(index, layero){
+												  layer.close(index88);
+											}
+									});
+									
+								});
+						}else{
+							layer.msg('该月计划已审核');
+						}
+						
+					}else if(data.length >1){
+						layer.msg('最多只能审核一条月计划');
+					}else {
+						layer.msg('请选择一条要审核月计划');
+					}
+					
+					
 					break;
+					
 				}
 				;
 			});
@@ -330,9 +426,7 @@
 							    });
 							}
 							,btn2: function(index, layero){
-								//按钮【按钮二】的回调
 								  layer.close(index);
-								 //return false 开启该代码可禁止点击该按钮关闭
 							},
 							area: ['880px', '550px'],
 							content :$("#table2Div"),
@@ -383,27 +477,64 @@
 	</script>
 	
 	<!-- 制定人和制定时间 -->
-<div style="display:none;width:400px;height:400px;" id="nameAndTimeDiv">
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 0px;">
-  <legend>添加采购商品</legend>
-</fieldset>
-	  
-<div class="layui-inline" style="padding-left:0px;">
+<div style="display:none;" id="nameAndTimeDiv" >
+
+<form class="layui-form" lay-filter="formAuthority" id="formIdOne">	  
+<div class="layui-inline" style="padding-left:0px;margin-top:20px;">
 	<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定日期</label>
 	<div class="layui-input-inline">
 		<input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
 	</div>
 </div>
 <div style="padding-left:0px;margin-top:15px;">
-<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定人</label>
+<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定人员</label>
 	<div class="layui-input-inline">
-		<select name="modules" lay-verify="required" lay-search="">
-          <option value="">请选择</option>
-          <option value="1">张三</option>
-          <option value="2">王五</option>
-        </select>
+		<select name="city" lay-verify="" lay-search="">
+  			<option value="">制定人</option>
+  			<option value="010">张三</option>
+  			<option value="021">李四</option>
+ 			<option value="0571">王五</option>
+		</select>  
+	</div>
+<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 10px;font-size:13px;">计划描述</label>
+				<div class="layui-input-inline" style="margin-left:-5px;">
+      				<textarea name="des" required lay-verify="required" cols="35px" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
+    			</div>
+			</div>	
+</div>
+</form>
+ </div>	
+ 
+ 	<!-- 审核人和审核时间 -->
+<div style="display:none;" id="nameAndTimeDiv2" >
+
+<form class="layui-form" lay-filter="formAuthority2" id="formIdOne2">	  
+
+<div class="layui-inline" style="padding-left:0px;margin-top:20px;">
+	<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">审核日期</label>
+	<div class="layui-input-inline">
+		<input type="text" class="layui-input" id="test5" placeholder="yyyy-MM-dd">
 	</div>
 </div>
+<div style="padding-left:0px;margin-top:15px;">
+<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">审核人员</label>
+	<div class="layui-input-inline">
+		<select name="city" lay-verify="" lay-search="">
+  			<option value="">制定人</option>
+  			<option value="010">张三</option>
+  			<option value="021">李四</option>
+ 			<option value="0571">王五</option>
+		</select>  
+	</div>
+<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 10px;font-size:13px;">备注信息</label>
+				<div class="layui-input-inline" style="margin-left:-5px;">
+      				<textarea name="des" required lay-verify="required" cols="35px" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
+    			</div>
+			</div>	
+</div>
+</form>
  </div>	
 	</body>
 	</html>

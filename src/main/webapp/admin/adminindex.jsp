@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../layui/css/layui.css">
   <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
   <script>
-			var delay=500;             //文字出现的时间间隔
+			var delay=400;             //文字出现的时间间隔
 			var text="医药ERP";  //预定文字
 			var i=0;                //初始化变量 i
 			$(function(){
@@ -204,6 +204,10 @@
   		background-color: #FF359A; 
 	}
 
+
+	.layui-layout-admin .layui-header .layui-nav {
+    	margin-left: 35px;
+	}
   </style>
 
 </head>
@@ -215,9 +219,9 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     
     <ul class="layui-nav layui-layout-left">
-      <li class="layui-nav-item layadmin-flexible" lay-unselect="">
+      <li class="layui-nav-item layadmin-flexible" lay-unselect="" id="22ej">
             <a href="javascript:;" layadmin-event="flexible" class="kit-side-fold"  title="侧边伸缩">
-              <i class="layui-icon layui-icon-shrink-right" style="color:white;" id="LAY_app_flexible"></i>
+              <i class="layui-icon layui-icon-shrink-right" style="color:white;font-size:15px;" id="LAY_app_flexible"></i>
             </a>
       </li>
       
@@ -347,10 +351,30 @@ layui.use('element', function(){
 
 $(function(){
 	$(".layui-tab ul").children('li').first().children('.layui-tab-close').css("display",'none');
+	$("#22ej").click(function(){
+		var classVal= $("#LAY_app_flexible").attr("class");
+		if(classVal == 'layui-icon layui-icon-shrink-right'){
+			$("#LAY_app_flexible").attr("class","layui-icon layui-icon-spread-left");
+			hide();
+		}else{
+			$("#LAY_app_flexible").attr("class","layui-icon layui-icon-shrink-right");
+			show();
+		}
+		
+	});
 });
+
+function hide(){
+    $('.layui-side span').hide();  
+    $('.layui-side').animate({width:'55px'});
+    $('.layui-body').animate({left:'125px'});
+}
+function show(){
+    $('.layui-side span').show();  
+    $('.layui-side').animate({width:'250px'});
+    $('.layui-body').animate({left:'250px'});
+}
+
 </script>
-
-
-
 </body>
 </html>
