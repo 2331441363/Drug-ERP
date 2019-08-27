@@ -1,16 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>菜单</title>
-  <link rel="stylesheet" href="../layui/css/layui.css">
-  <script src="../layui/layui.js"></script>
-  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>          
-  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+<meta charset="UTF-8">
+<title>分店退货单(总店付款)</title>
+<link rel="stylesheet" href="../layui/css/layui.css" media="all">
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.4.1.min.js"></script>
+<script src="../layui/layui.js"></script>
+<style type="text/css">
+
+body {
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+}
+.demoTable {
+	width: 100%;
+	height: 50px;
+	margin: 0px auto;
+	line-height: 50px;
+}
+label{
+	font-size: 13px;
+}
+</style>
 </head>
-<body>  
+<body>
 <script>
 	layui.use('laydate', function(){
 	  var laydate = layui.laydate;
@@ -21,37 +37,7 @@
 		  });
 	});
 </script>
-<form class="layui-form" action="">
-			<div class="layui-inline" style="margin-top: 20px;">
-					<label class="layui-form-label" >付款日期:</label>
-				<div class="layui-input-inline" >
-					<input type="text"  class="layui-input" id="test5"
-						placeholder="年--月--日 ">
-				</div>
-			</div>
-	
-  <div class="layui-inline" style="margin-top: 20px;">
-      <label class="layui-form-label">供应商：</label>
-      <div class="layui-input-inline">
-        <select name="audit" lay-verify="required" lay-search="required">
-          <option value="1">请选择</option>
-          <option value="2">王五</option>
-        </select>
-      </div>
-    </div>
 
- <div class="layui-inline" style="margin-top: 20px;">
-      <label class="layui-form-label">项目：</label>
-      <div class="layui-input-inline">
-        <select name="audit" lay-verify="required" lay-search="required">
-          <option value="1">请选择</option>
-          <option value="2">xx</option>
-        </select>
-      </div>
-    </div>
-    
-    
-</form>
 
 <table id="demo" lay-filter="test"></table>
 <script>
@@ -63,25 +49,22 @@
 		 	table2 =  table.render({
 		    elem: '#demo'
 		    ,height:563
-		    ,url: 'flowerServlet?action=selectAll' //数据接口
-		    ,title: '付款单查询'
+		    ,url: '../json/demo1.json' //数据接口
+		    ,title: '分店退货单'
 		    ,page: true //开启分页
 		    ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
 		    ,totalRow: true //开启合计行
 		    ,cols: [[ //表头
-		    	{type:'checkbox'}
-		        ,{field: 'id', title: '编号', width:150, sort: true}
-		        ,{field: 'payPerson', title: '付款人', width:120}
-		        ,{field: 'project', title: '项目', width:120}
-		        , {field: 'payDate', title: '付款日期', width:120}
-		        , {field: 'dept', title: '部门', width:120}
-		        ,{field: 'provider', title: '供应商', width:120}
-		        , {field: 'companyAccount', title: '公司账户', width:120}
-		        , {field: 'money', title: '付款金额', width:120}
-		        , {field: 'moneyUpper', title: '金额大写', width:120}
-		        , {field: 'payMethod', title: '付款方式', width:120}
-		        ,{field: 'payType', title: '付款类型', width:140}
-		        ,{fixed: 'payNote', title:'备注', toolbar: '#barDemo', width:180}
+		    	{type:'checkbox', fixed: 'left'}
+		        ,{field: 'orderId', title: '订单号', width:150, sort: true,unresize:true}
+		        ,{field: 'orderDate', title: '下单日期',unresize:true}
+		        ,{field: 'productName', title: '商品名称', unresize:true}
+		        , {field: 'productQuantity', title: '商品数量',unresize:true}
+		        , {field: 'total', title: '合计', unresize:true}
+		        ,{field: 'backTime', title: '退货日期', unresize:true}
+		        ,{
+		    		fixed: 'right', title:'操作',width:178, align:'center', toolbar: '#barDemo',unresize:true
+		          }
 		    ]]
 		  });
 		  
@@ -154,3 +137,40 @@
   <a class="layui-btn layui-btn-xs" lay-event="edit" style="width:60px;height:30px;line-height:30px">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="width:60px;height:30px;line-height:30px">删除</a>
 </script>
+
+ <script type="text/html" id="toolbarDemo">
+<form class="layui-form" action="" >
+			<div class="layui-inline" style="margin-left:20px;">
+					<label  >退货日期：</label>
+				<div class="layui-input-inline"  style="margin-left:5px;">
+					<input type="text"  class="layui-input" id="test5"
+						placeholder="年--月--日 ">
+				</div>
+			</div>
+	
+  <div class="layui-inline" style="margin-left:20px;">
+      <label>订单号：</label>
+      <div class="layui-input-inline"  style="margin-left:5px;">
+       <input  type="text" name="username" 
+					placeholder="请输入" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+<div class="layui-inline" >
+			<button class="layui-btn layui-btn-normal" data-type="reload">搜索</button>		
+		</div>     
+    
+</form>
+
+	 <div class="layui-inline" style="margin-top:20px;">
+      <label class="layui-form-label">审核</label>
+      <div class="layui-input-inline">
+        <select name="audit" lay-verify="required" lay-search="required">
+          <option value="1">审核通过</option>
+          <option value="2">审核不通过</option>
+        </select>
+      </div>
+    </div>
+</script>
+</body>
+</html>

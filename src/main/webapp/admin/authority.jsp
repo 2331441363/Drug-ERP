@@ -18,9 +18,14 @@
  
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
-
+	<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container" style="padding-left:20px;">
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i class="layui-icon layui-icon-add-1"></i>新增部门 </button>
+  </div>
+	
+</script>
 <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">分配权限</a>
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">管理权限</a>
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -35,61 +40,64 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
   ,util = layui.util
 //模拟数据
   ,data = [{
-    title: '一级2'
+    title: 'ALL'
     ,id: 2
     ,spread: true
     ,children: [{
-      title: '二级2-1'
+      title: '系统信息管理'
       ,id: 5
       ,spread: true
       ,children: [{
-        title: '三级2-1-1'
+        title: '员工管理'
         ,id: 11
+        ,spread: true
+        ,children: [{
+            title: '新增'
+            ,id: 11
+          },{
+        	  title:'删除'
+        	  ,id:22
+          }]
       },{
-        title: '三级2-1-2'
-        ,id: 12
-      }]
+          title: '部门管理'
+              ,id: 11
+              ,spread: true
+              ,children: [{
+                  title: '新增'
+                  ,id: 11
+                },{
+              	  title:'删除'
+              	  ,id:22
+                }]
+            }]
     },{
-      title: '二级2-2'
-      ,id: 6
-      ,spread: true	//打开
-      ,children: [{
-        title: '三级2-2-1'
-        ,id: 13
-      },{
-        title: '三级2-2-2'
-        ,id: 14
-        ,disabled: true
-      }]
-    }]
-  },{
-    title: '一级3'
-    ,id: 16
-    ,spread: true	//打开
-    ,children: [{
-      title: '二级3-1'
-      ,id: 17
-      ,fixed: true
-      ,children: [{
-        title: '三级3-1-1'
-        ,id: 18
-        ,spread: true	//打开
-      },{
-        title: '三级3-1-2'
-        ,id: 19
-      }]
-    },{
-      title: '二级3-2'
-      ,id: 27
-      ,spread: true	//打开
-      ,children: [{
-        title: '三级3-2-1'
-        ,id: 28
-      },{
-        title: '三级3-2-2'
-        ,id: 29
-      }]
-    }]
+        title: '采购管理'
+            ,id: 5
+            ,spread: true
+            ,children: [{
+              title: '采购申请'
+              ,id: 11
+              ,spread: true
+              ,children: [{
+                  title: '新增'
+                  ,id: 11
+                },{
+              	  title:'删除'
+              	  ,id:22
+                }]
+            },{
+                title: '采购计划'
+                    ,id: 11
+                    ,spread: true
+                    ,children: [{
+                        title: '新增'
+                        ,id: 11
+                      },{
+                    	  title:'删除'
+                    	  ,id:22
+                      }]
+                  }]
+          }]
   }]
   
   
@@ -107,7 +115,7 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
   });
   table.render({
     elem: '#test'
-    ,url:'demo1.json'
+    ,url:'json/demo1.json'
     ,toolbar: '#toolbarDemo'
     ,title: '领料单'
     ,cols: [[
@@ -130,7 +138,10 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
     	layer.open({
 			title : '权限管理',//标题
 			type : 1,//样式
+			shade: 0,
+			area: ['350px', '500px'],
 			content :$("#test12"),
+			
 			success : function(layero) {
 				var mask = $(".layui-layer-shade");
 				mask.appendTo(layero.parent());
@@ -143,21 +154,91 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
 		
 		
 	} else if(obj.event === 'del'){
-      layer.confirm('真的删除行么', function(index){
+      layer.confirm('确认删除该部门吗', function(index){
         obj.del();
         layer.close(index);
       });
     } else if(obj.event === 'edit'){
-      layer.alert('编辑行：<br>'+ JSON.stringify(data))
+    	
+    	//formTest 即 class="layui-form" 所在元素对应的 lay-filter="" 对应的值
+    	form.val("formAuthority", {
+    	  "id": "21321321" // "name": "value"
+    	  ,"name": "销售部门"
+    	  ,"des": "我爱layui"
+    	})
+    	
+    	var index = layer.open({
+			title : '编辑部门',//标题
+			type : 1,//样式
+			shade: 0,
+			offset: ['15%', '35%'],//设置位移
+			btn: ['确认', '取消'],
+			yes: function(index, layero){
+				layer.close(index);
+				layer.msg('编辑成功');
+			}
+			,btn2: function(index, layero){
+				  layer.close(index);
+			},
+			content :$("#branch"),
+		});
     }
   });
+  
+  
+//工具栏事件
+	table.on('toolbar(test)', function(obj) {
+		var checkStatus = table.checkStatus(obj.config.id);
+		switch (obj.event) {
+		case 'getCheckData':
+            $("#formIdOne")[0].reset();
+			var index = layer.open({
+				title : '新增部门',//标题
+				type : 1,//样式
+				shade: 0,
+				offset: ['15%', '35%'],//设置位移
+				btn: ['确认', '取消'],
+				yes: function(index, layero){
+					layer.close(index);
+					layer.msg('新增成功');
+				}
+				,btn2: function(index, layero){
+					  layer.close(index);
+				},
+				
+				content :$("#branch"),
+			});
+			break;
+		};
+	});
   
 });
 </script>
 
-<div id="test12" class="demo-tree-more" style="display:none;"></div>
+		<div id="test12" class="demo-tree-more" style="display:none;"></div>
 
-
+		<div class="site-text" style="margin: 5%; display: none" id="branch" target="test123">
+		<form class="layui-form" lay-filter="formAuthority" id="formIdOne">
+			<div class="layui-input-inline">
+				<label style="margin:0 10px 0 20px;font-size:13px;">部门编号</label>
+				<div class="layui-input-inline">
+      				<input type="text" name="id" lay-verify="required" disabled placeholder="自动生成" autocomplete="off" class="layui-input">
+    			</div>
+			</div>
+			<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">部门名称</label>
+				<div class="layui-input-inline">
+      				<input type="text" name="name" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    			</div>
+			</div>
+			<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">部门描述</label>
+				<div class="layui-input-inline">
+      				<textarea name="des" required lay-verify="required" cols="25px" placeholder="请输入部门描述" class="layui-textarea"></textarea>
+    			</div>
+			</div>
+			</form>
+		</div>
 
 </body>
 </html>

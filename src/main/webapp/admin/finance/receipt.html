@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="<%=basePath %>"><!-- 整个页面全部指定为这个地址 -->
+<meta charset="UTF-8">
+<title>总店收款</title>
+<link rel="stylesheet" href="../layui/css/layui.css" media="all">
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.4.1.min.js"></script>
+<script src="../layui/layui.js"></script>
+<style type="text/css">
+
+body {
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+}
+.demoTable {
+	width: 100%;
+	height: 50px;
+	margin: 0px auto;
+	line-height: 50px;
+}
+.textTd{
+	padding-left: 10px;
+	padding-top: 20px;
+	width: 170px;
+	height: 10px;
+}
+.trs{
+	padding-top: 20px;
+	text-align: right;
+	padding-left: 35px;
+}
+</style>
+</head>
+<body>
+<script>
+	layui.use('laydate', function(){
+	  var laydate = layui.laydate;
+		//日期时间选择器
+		  laydate.render({
+		    elem: '#test1'
+		    ,type: 'date'
+		  });
+	});
+</script>
+<form class="layui-form" action="" >
+<table  style="font-size: 13px;width: 96%;height: 100%">
+		<tr>
+					<td class="trs">收款日期:</td>
+					<td class="textTd"><input type="text" lay-verify="required" lay-reqtext="收款日期是必填项"  class="layui-input" id="test1" 
+					autocomplete="off"	placeholder="年--月--日 ">
+					</td>
+	
+      <td class="trs">收款人:</td>
+        <td class="textTd"><select name="audit" lay-verify="required" lay-reqtext="收款人是必填项"  lay-verify="required" lay-search="required">
+          <option value="1">请选择</option>
+          <option value="2">王五</option>
+        </select>
+		</td>
+
+     <td class="trs">部门:</td>
+        <td class="textTd"><select name="audit" lay-verify="required" lay-reqtext="部门是必填项"  lay-search="required">
+          <option value="1">请选择</option>
+          <option value="2">财务部</option>
+        </select>
+    	</td>
+    </tr>
+    <tr>
+     <td class="trs">分店:</td>
+      <td class="textTd"><select name="audit" lay-verify="required" lay-reqtext="客户是必填项"  lay-search="required">
+          <option value="1">请选择</option>
+          <option value="2">王五</option>
+        </select>
+        </td>
+				<td class="trs">公司账户:</td>
+					<td class="textTd"><select name="audit" lay-verify="required" lay-reqtext="公司账户是必填项"  lay-search="required" id="compAccount">
+						<option>请选择</option>
+						<option>xx</option>
+					</select>
+				</td>
+
+				<td class="trs">收款金额:</td>
+					<td class="textTd"><input  type="text" name="username"  lay-verify="required" lay-reqtext="收款金额是必填项" 
+					placeholder="请输入" autocomplete="off" class="layui-input">
+				</td>
+
+		</tr>
+		<tr>
+
+				<td class="trs">收款类型:</td>
+					<td class="textTd"><select lay-verify="required"
+						lay-reqtext="收款类型是必填项"  id="Type">
+						<option>请选择</option>
+						<option>总店销售单</option>
+						<option>采购退货单</option>
+					</select>
+				</td>
+
+				<td class="trs">收款方式:</td>
+					<td class="textTd"><select lay-verify="required"
+						lay-reqtext="收款方式是必填项"  id="Method">
+						<option>请选择</option>
+						<option>现金</option>
+						<option>网银</option>
+						<option>支付宝</option>
+						<option>刷卡</option>
+					</select>
+					</td>
+				</tr>
+				
+				<tr>
+			    <td class="trs">备注:</td>
+			      <td class="textTd" colspan="5" >
+			      	<textarea placeholder="请输入内容" cols="100px" rows="20px"></textarea>
+			      </td>
+			</tr>
+	</table>
+
+			<div class="layui-form-item" style="margin-top: 30px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo2" style="margin-left: 700px;">确定</button>
+			</div>
+	</form>
+	
+	
+	<script>
+layui.use(['form'], function(){
+  var form = layui.form
+});
+</script>
+</body>
+</html>

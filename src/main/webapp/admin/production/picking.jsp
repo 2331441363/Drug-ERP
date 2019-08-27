@@ -4,13 +4,13 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>领料单</title>
+  <title>生产领料</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
   <script src="../layui/layui.js"></script>
-  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
@@ -21,8 +21,8 @@
 <script type="text/html" id="toolbarDemo">
 <div class="layui-input-inline">
   <div class="layui-btn-container" style="margin-top:10px;padding-left:20px;">
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">审核领料单 </button>
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">申请领料</button>
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i class="layui-icon layui-icon-friends"></i>审核领料单 </button>
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckLength"><i class="layui-icon layui-icon-upload-circle"></i>申请领料</button>
   </div>
 </div>
 </script>
@@ -51,7 +51,7 @@ layui.use(['table','laydate','form','layer'], function(){
   
   table.render({
     elem: '#test'
-    ,url:'demo1.json'
+    ,url:'../json/demo1.json'
     ,toolbar: '#toolbarDemo'
     ,title: '领料单'
     ,cols: [[
@@ -88,7 +88,7 @@ layui.use(['table','laydate','form','layer'], function(){
     	  
     	  table.render({
   		    elem: '#test2'
-  		    ,url:'demo1.json'
+  		    ,url:'../json/demo1.json'
   		    ,totalRow: true
   		    ,cols: [[
   		      {type: 'checkbox', fixed: 'left', totalRowText: '合计'}
