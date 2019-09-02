@@ -18,7 +18,7 @@
 			<p:value>com.mysql.jdbc.Driver</p:value>
 		</p:property>
 		<p:property name="url">
-			<p:value>jdbc:mysql://112.74.89.58:32899/lijie?characterEncoding=utf8</p:value>
+			<p:value>jdbc:mysql://112.74.89.58:40432/lijie?characterEncoding=utf8</p:value>
 		</p:property>
 		<p:property name="username" value="abc"/>
 		<p:property name="password" value="123456"/>

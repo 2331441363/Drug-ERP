@@ -32,12 +32,12 @@
 				</div>
 
 				<div class="layui-inline">
-					<label class="layui-form-label">出发地</label>
+					<label class="layui-form-label">审核</label>
 					<div class="layui-input-inline">
 						<select name="city" lay-verify="">
-							<option value="">生产地选择</option>
-							<option value="021">供应商1</option>
-							<option value="0571">供应商2</option>
+							<option value="">审核</option>
+							<option value="021">通过</option>
+							<option value="0571">未通过</option>
 						</select>
 					</div>
 				</div>
@@ -62,7 +62,7 @@
 				</div>
 
 				<div class="layui-inline">
-					<label class="layui-form-label">出库备注</label>
+					<label class="layui-form-label">备注</label>
 					<div class="layui-input-inline"">
 						<input type=" tel" name="phone" lay-verify="required"
 							autocomplete="off" class="layui-input">
@@ -255,29 +255,29 @@
 					title : 'ID',
 					width : 80,
 					fixed : 'left',
-					unresize : true,
-					sort : true
+					unresize : true
 				}, {
 					field : 'Serial',
-					title : '入库编号',
-					width : 110,
+					title : '入库编号'
 				}, {
 					field : 'Quantity',
-					title : '货物类型',
-					width : 110,
+					title : '货物类型'
+				}, {
+					field : 'Quantity',
+					title : '货物类型'
+				}, {
+					field : 'Serial',
+					title : '货物数量'
 				}, {
 					field : 'Time',
-					title : '订单生成时间',
-					width : 140,
+					title : '订单生成时间'
 				}, {
 					field : 'examine',
-					title : '审核状态',
-					width : 110,
+					title : '审核状态'
 				}, {
 					fixed : 'right',
 					title : '操作',
-					toolbar : '#barDemo',
-					width : 180
+					toolbar : '#barDemo'
 				} ] ],
 				page : true
 			});
