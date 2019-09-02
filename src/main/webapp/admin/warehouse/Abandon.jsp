@@ -142,38 +142,30 @@
 				}, {
 					field : 'Id',
 					title : 'ID',
-					width : 80,
 					fixed : 'left',
-					unresize : true,
+					unresize : true
 				}, {
 					field : 'Name',
-					title : '入库编号',
-					width : 110,
+					title : '入库编号'
 				}, {
 					field : 'Serial',
-					title : '药物名称 ',
-					width : 110,
+					title : '药物名称 '
 				}, {
 					field : 'Theme',
-					title : '药物类型',
-					width : 110,
+					title : '药物类型'
 				}, {
 					field : 'Quantity',
-					title : '药物数量',
-					width : 110,
+					title : '药物数量'
 				}, {
 					field : 'Department',
-					title : '入库仓库',
-					width : 110,
+					title : '入库仓库'
 				}, {
 					field : 'Time',
-					title : '入库时间',
-					width : 120,
+					title : '入库时间'
 				}, {
 					fixed : 'right',
 					title : '操作',
-					toolbar : '#barDemo',
-					width : 150
+					toolbar : '#barDemo'
 				} ] ],
 				page : true
 			});
