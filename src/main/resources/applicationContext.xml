@@ -6,12 +6,10 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd ">
-	<!-- 开启组件扫描：通过注解实例化对象 -->
-	<context:component-scan base-package="com.drug"></context:component-scan>
-	
 	<!-- 实例化映射器与适配器 -->
 	<mvc:annotation-driven></mvc:annotation-driven>
-	
+		<!-- 开启组件扫描：通过注解实例化对象 -->
+	<context:component-scan base-package="com.drug"></context:component-scan>
 	<!-- 创建数据源 -->
 	<p:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<p:property name="driverClassName">

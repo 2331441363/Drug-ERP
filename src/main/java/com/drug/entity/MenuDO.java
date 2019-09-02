@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class Menu implements Serializable{
+public class MenuDO implements Serializable{
 	/**
 	 * 菜单ID
 	 */

@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
-import com.drug.entity.Menu;
+import com.drug.entity.MenuDO;
 
 @Repository
 public interface MenuMapper {
@@ -14,7 +14,7 @@ public interface MenuMapper {
 	 * @return Menu集
 	 */
 	@Select("SELECT * FROM menu")
-	List<Menu> queryByMenu();
+	List<MenuDO> queryByMenu();
 	
 	/**
 	 * 修改菜单
@@ -22,6 +22,6 @@ public interface MenuMapper {
 	 * @return 受影响行数
 	 */
 	@Update("UPDATE menu SET menuName = #{menuName},menuType=#{menuType},menuIcon = #{menuIcon},menuURL= #{menuURL},menuParent=#{menuParent} WHERE menuId = #{menuId}")
-	Integer updateByMenu(Menu menu);
+	Integer updateByMenu(MenuDO menu);
 	
 }

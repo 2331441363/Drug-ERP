@@ -46,18 +46,27 @@
 
 		<script type="text/html" id="barDemo">
 			<a class="layui-btn layui-btn-xs" lay-event="manageMe">管理药品</a>
-			<a class="layui-btn layui-btn-xs" lay-event="manageAe">管理配方</a>
+			<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="manageAe">管理配方</a>
 		</script>
 
 
 		<script type="text/html" id="barDemo2">
-			<a class="layui-btn layui-btn-xs" lay-event="manageMe">删除</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="">删除</a>
 		</script>
 		<script>
 			layui.use(['table', 'laydate', 'form'], function() {
 				var table = layui.table; //表格
 				var laydate = layui.laydate;
 				var form = layui.form;
+				laydate.render({
+					elem: '#test1', //指定元素
+				});
+				laydate.render({
+					elem: '#test5', //指定元素
+				});
+				laydate.render({
+					elem: '#test66', //指定元素
+				});
 				//执行一个 table 实例
 				table.render({
 					elem: '#demo',
@@ -110,53 +119,14 @@
 					],page: true, //开启分页
 				});
 
-				var operator = '<option value="">请选择或者(输入)入库仓库</option>';
-				$.ajax({
-					url: 'json/qualityInspector.json',
-					//pe: "post",
-					dataType: "json",
-					async: false, //这得注意是同步
-					success: function(result) {
-						console.log(result)
-						for (var x in result) {
-							operator += '<option value = "' + result[x].id + '">' + result[x].name + '</option>'
-						}
-						$("#warehouseOperator").html(operator);
-					}
-				});
-
-
-				var operator = '<option value="">请选择或者(输入)入库仓库</option>';
-				$.ajax({
-					url: '../json/demo1.json',
-					//pe: "post",
-					dataType: "json",
-					async: false, //这得注意是同步
-					success: function(result) {
-						console.log(result)
-						for (var x in result) {
-							operator += '<option value = "' + result[x].id + '">' + result[x].name + '</option>'
-						}
-						$("#warehouseOperator1").html(operator);
-					}
-				});
-				form.render('select'); //需要渲染一下
-
-
-				laydate.render({
-					elem: '#test1', //指定元素
-				});
-				laydate.render({
-					elem: '#test2', //指定元素
-				});
-
-					//监听弹出层头部工具栏
+				//监听弹出层头部工具栏
 				table.on('toolbar(test)', function(obj) {
 					var checkStatus = table.checkStatus(obj.config.id);
 					//获得选择的对象
 					var data = checkStatus.data;
 					switch (obj.event) {
 						case 'addWarehouse':	//新增药品
+							
 							layer.open({
 								title: '新增药品',
 								type: 1, //Page层类型
@@ -174,7 +144,10 @@
 										layer.msg('添加成功');
 									}
 								},
-								content: $("#addDetails")
+								content: $("#addDetails"),
+								success: function(layero, index){
+									  form.render();
+									  }
 							});
 							break;
 						case 'updateDetails':	//新增配方
@@ -227,16 +200,25 @@
 											  ,btn2: function(index, layero){
 											    layer.close(index2);
 											  }
-											}, function(index, layero){
+											}, function(layero){
 												layer.close(index2);
-												layer.open({
+												var index88 = layer.open({
 													  type: 1,
-													  shade: 0,
-													  area: ['300px', '300px'],
+													  shade: 0.25,
+													  area: ['400px', '350px'],
 													  content: $('#nameAndTimeDiv'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
 													  success: function(layero, index){
 														  form.render();
-													  }	
+														  },
+													  btn: ['确认', '取消'],
+													  yes: function(layero){
+														  layer.close(index);
+														  layer.close(index88);
+														  layer.msg('配方制定成功');
+														}
+													  ,btn2: function(index, layero){
+															  layer.close(index88);
+														}
 												});
 												
 											});
@@ -254,32 +236,86 @@
 							}
 							break;
 						case "removeWarehouse":	//审核药品
-							//判断是否选择一行以上的
-							if (data.length != 0) {
-								layer.confirm('确认删除？', function(index) {
-									var id = new Array(); //声明数组
-									for (var i in data) {
-										id[i] = data[i].fpId; //得到复选框的值
-										console.log(id[i])
-									}
-									/* $.ajax({
-										url: "controller路径",
-										type: "POST",
-										traditional: true, //传数组一定要加的
-										data: {
-											"id": id
-										},
-										dataType: "json",
-										success: function(result) {
-									
-										}
-									}); */
-								});
-							} else {
-								layer.msg("请选择一行以上的选项");
+							if(data.length == 1){
+								//判断月计划审核状态
+								if(data[0].sex == '男'){
+									var index2 = layer.confirm('你确认审核该药品？', {
+										  btn: ['确认', '取消'] //可以无限个按钮
+										  ,btn2: function(index, layero){
+										    layer.close(index2);
+										  }
+										}, function(layero){
+											layer.close(index2);
+											var index88 = layer.open({
+												  type: 1,
+												  shade: 0.25,
+												  area: ['400px', '350px'],
+												  content: $('#nameAndTimeDiv2'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+												  success: function(layero, index){
+													  form.render();
+													  },
+												  btn: ['确认', '取消'],
+												  yes: function(layero){
+													  layer.close(index);
+													  layer.close(index88);
+													  layer.msg('审核成功');
+													}
+												  ,btn2: function(index, layero){
+														  layer.close(index88);
+													}
+											});
+											
+										});
+								}else{
+									layer.msg('该药品已审核');
+								}
+								
+							}else if(data.length >1){
+								layer.msg('最多只能审核一件商品');
+							}else {
+								layer.msg('请选择一件商品');
 							}
 							break;
 						case "capacityWarning":	//审核配方
+							if(data.length == 1){
+								//判断月计划审核状态
+								if(data[0].sex == '男'){
+									var index2 = layer.confirm('你确认审核该配方？', {
+										  btn: ['确认', '取消'] //可以无限个按钮
+										  ,btn2: function(index, layero){
+										    layer.close(index2);
+										  }
+										}, function(layero){
+											layer.close(index2);
+											var index88 = layer.open({
+												  type: 1,
+												  shade: 0.25,
+												  area: ['400px', '350px'],
+												  content: $('#nameAndTimeDiv2'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+												  success: function(layero, index){
+													  form.render();
+													  },
+												  btn: ['确认', '取消'],
+												  yes: function(layero){
+													  layer.close(index);
+													  layer.close(index88);
+													  layer.msg('审核成功');
+													}
+												  ,btn2: function(index, layero){
+														  layer.close(index88);
+													}
+											});
+											
+										});
+								}else{
+									layer.msg('该配方已审核');
+								}
+								
+							}else if(data.length >1){
+								layer.msg('一次只能为一件药品审核配方');
+							}else {
+								layer.msg('请选择一件要审核配方的商品');
+							}
 							break;
 						
 					};
@@ -291,6 +327,30 @@
 						layEvent = obj.event; //获得 lay-event 对应的值
 						//管理药品
 					if (layEvent === 'manageMe') {
+						form.val("formAuthority", {
+					    	  "id": "21321321" // "name": "value"
+					    	  ,"name": "销售部门"
+					    	  ,"specification": "克"
+					    	  ,"price": "99"
+					    	  ,"time": "2018-12-11"
+					    	  ,"staffName": "2"
+					    	  ,"time2": "2018-12-11"
+					    	});
+						
+						var index = layer.open({
+							title : '管理药品',//标题
+							type : 1,//样式
+							shade: 0,
+							btn: ['确认', '取消'],
+							yes: function(index, layero){
+								layer.close(index);
+								layer.msg('修改成功');
+							}
+							,btn2: function(index, layero){
+								  layer.close(index);
+							},
+							content :$("#addDetails"),
+						});
 						
 					}else if(layEvent === 'manageAe') {	//管理配方
 						table.render({
@@ -342,69 +402,118 @@
 		</script>
 		
 		<div class="site-text" style="margin: 5%; display: none" id="addDetails" target="test123">
+		<form class="layui-form" lay-filter="formAuthority" id="formIdOne">
 			<div class="layui-input-inline">
+				<label style="margin:0 10px 0 20px;font-size:13px;">药品编号</label>
+				<div class="layui-input-inline">
+      				<input type="text" name="id" lay-verify="required"  disabled placeholder="自动生成" autocomplete="off" class="layui-input">
+    			</div>
+			</div>
+			<div class="layui-input-inline" style="margin-top:10px;">
 				<label style="margin:0 10px 0 20px;font-size:13px;">药品名称</label>
 				<div class="layui-input-inline">
-      				<input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+      				<input type="text" name="name" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
     			</div>
 			</div>
 			<div class="layui-input-inline" style="margin-top:10px;">
 				<label style="margin:0 10px 0 20px;font-size:13px;">药品规格</label>
 				<div class="layui-input-inline">
-      				<input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+      				<input type="text" name="specification" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
     			</div>
 			</div>
 			<div class="layui-input-inline" style="margin-top:10px;">
 				<label style="margin:0 10px 0 20px;font-size:13px;">药品价格</label>
 				<div class="layui-input-inline">
-      				<input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+      				<input type="text" name="price" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
     			</div>
 			</div>
 			<div class="layui-input-inline" style="margin-top:10px;">
 				<label style="margin:0 10px 0 20px;font-size:13px;">质保日期</label>
 				<div class="layui-input-inline">
-      				<input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+      				<input type="text" name="time" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
     			</div>
 			</div>
 			<div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 20px;font-size:13px;">制定人</label>
+				<label style="margin:0 10px 0 20px;font-size:13px;">制定员工</label>
 				<div class="layui-input-inline">
-					<select name="modules" lay-verify="required" lay-search="">
+					<select name="staffName" lay-verify="required" lay-search="">
           				<option value="">请选择</option>
          			 	<option value="1">张三</option>
           				<option value="2">王五</option>
         			</select>
 				</div>
 			</div>
-			<div class="layui-input-inline">
+			<div class="layui-input-inline" style="margin-top:10px;">
 				<label style="margin:0 10px 0 20px;font-size:13px;">制定时间</label>
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+					<input type="text" class="layui-input" id="test1" name="time2" placeholder="yyyy-MM-dd">
 				</div>
 			</div>
+			</form>
 		</div>
 
 
-<!-- 制定人和制定时间 -->
-<div style="display:none;" id="nameAndTimeDiv">
+	
+	<!-- 制定人和制定时间 -->
+<div style="display:none;" id="nameAndTimeDiv" >
 
-	  
-<div class="layui-inline" style="padding-left:0px;">
-	<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定日期</label>
+<form class="layui-form" lay-filter="formAuthority2" id="formIdOne2">	  
+<div class="layui-inline" style="padding-left:0px;margin-top:20px;">
+	<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">制定日期</label>
 	<div class="layui-input-inline">
-		<input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+		<input type="text" class="layui-input" id="test66" placeholder="yyyy-MM-dd">
 	</div>
 </div>
 <div style="padding-left:0px;margin-top:15px;">
-<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定人</label>
+<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">制定人员</label>
 	<div class="layui-input-inline">
-		<select name="modules" lay-verify="required" lay-search="">
-          <option value="">请选择</option>
-          <option value="1">张三</option>
-          <option value="2">王五</option>
-        </select>
+		<select name="city" lay-verify="" lay-search="">
+  			<option value="">制定人</option>
+  			<option value="010">张三</option>
+  			<option value="021">李四</option>
+ 			<option value="0571">王五</option>
+		</select>  
+	</div>
+<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">计划描述</label>
+				<div class="layui-input-inline" style="margin-left:-5px;">
+      				<textarea name="des" required lay-verify="required" cols="35px" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
+    			</div>
+			</div>	
+</div>
+</form>
+ </div>	
+ 
+ 
+ <!-- 审核人和审核时间 -->
+<div style="display:none;" id="nameAndTimeDiv2" >
+
+<form class="layui-form" lay-filter="formAuthority3" id="formIdOne3">	  
+
+<div class="layui-inline" style="padding-left:0px;margin-top:20px;">
+	<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核日期</label>
+	<div class="layui-input-inline">
+		<input type="text" class="layui-input" id="test5" placeholder="yyyy-MM-dd">
 	</div>
 </div>
+<div style="padding-left:0px;margin-top:15px;">
+<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核人员</label>
+	<div class="layui-input-inline">
+		<select name="city" lay-verify="" lay-search="">
+  			<option value="">制定人</option>
+  			<option value="010">张三</option>
+  			<option value="021">李四</option>
+ 			<option value="0571">王五</option>
+		</select>  
+	</div>
+<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">备注信息</label>
+				<div class="layui-input-inline" style="margin-left:-5px;">
+      				<textarea name="des" required lay-verify="required" cols="35px" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
+    			</div>
+			</div>	
+</div>
+</form>
  </div>	
 </body>
 </html>

@@ -11,16 +11,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
   <meta charset="utf-8">
-  <title>采购计划列表</title>
+  <title>layui</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="layui/css/layui.css"  media="all">
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>          
+  <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.4.1.min.js"></script>          
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-<div>
+ <div>
 <form class="layui-form" >
 <table style="width: 100%">
  	<tr>
@@ -64,24 +64,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  </table>
 </form>
  </div>
-<table class="layui-hida" id="test" lay-filter="test"></table>
-
-
-<iframe id="addPurchasePlan" src="admin/purchase/addPurchasePlan.jsp" style="display: none;" frameborder="0" width="1000px;" height="500px" ></iframe>
-
-
-
-
+<table class="layui-hide" id="test" lay-filter="test"></table>
+ 
 <script id="toolbarDemo" type="text/html">
-	<div class="layui-inline">
-		<button class="layui-btn layui-btn-sm" lay-event="select"><i class="layui-icon layui-icon-search"></i>查询</button>
-		<button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>新增</button>
-	<div>
-		
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i class="layui-icon layui-icon-search"></i>搜索</button>
+    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckLength"><i class="layui-icon layui-icon-add-1"></i>新增</button>
+  </div>
 </script>
  
 <script id="barDemo" type="text/html">
-  <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
               
@@ -97,16 +90,7 @@ layui.use('table', function(){
     elem: '#test'
     ,url:'admin/json/demo1.json'
     ,toolbar: '#toolbarDemo'
-    /* ,title: '用户数据表'
-    	,parseData:function(res){
-        	console.log(res);
-        	return{
-        		code: 0, //解析接口状态
-        		msg:"", //解析提示文本
-        		count: 1000, //解析数据长度
-        		data: res //解析数据列表
-        	}
-        } */
+    ,title: '用户数据表'
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
       ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
@@ -130,20 +114,12 @@ layui.use('table', function(){
   table.on('toolbar(test)', function(obj){
     var checkStatus = table.checkStatus(obj.config.id);
     switch(obj.event){
-      case 'add':
-    	  var layer = layui.layer;
-  	    layer.open({
-  	    	type: 1, 
-  	    	title:'详细信息',
-  	    	offset: ['0px', '50px'],
-  	    	area: ['auto', 'auto'],
-  	    	content: $('#addPurchasePlan') //这里content是一个普通的String
-  	    });
-    	  break;
-      case 'select':
-    	  
-    	  alert("zz");
-    	  break;
+      case 'getCheckData':
+        
+      break;
+      case 'getCheckLength':
+        
+      break;
     };
   });
   
@@ -157,43 +133,18 @@ layui.use('table', function(){
         layer.close(index);
       });
     } else if(obj.event === 'edit'){
-    	
-    	var layer = layui.layer;
-	    layer.open({
-	    	type: 1, 
-	    	title:'详细信息',
-	    	area: ['auto', 'auto'],
-	    	offset: ['0px', '50px'],
-	    	content: $('#addPurchasePlan') //这里content是一个普通的String
-	    });
+      layer.prompt({
+        formType: 2
+        ,value: data.email
+      }, function(value, index){
+        obj.update({
+          email: value
+        });
+        layer.close(index);
+      });
     }
   });
 });
-</script>
-<script>
-layui.use(['form', 'layedit', 'laydate'], function(){
-  var form = layui.form
-  ,layer = layui.layer
-  ,layedit = layui.layedit
-  ,laydate = layui.laydate;
-  
-  //日期
-  laydate.render({
-    elem: '#date'
-  });
-
-  
-  
- 
-  
-  
-});
-</script>
-<script type="text/javascript">
-	function checkForm(frm){
-		/* alert(frm.a.value); */
-		return false;
-	}
 </script>
 
 </body>

@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>领料单</title>
+  <title>生产领料</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -16,7 +16,10 @@
 <body>
 
 <table class="layui-hide" id="test" lay-filter="test"></table>
+<div id="table2Div">
 <table class="layui-hide" id="test2"  style="display:none;"></table>
+	</div>
+
 
 <script type="text/html" id="toolbarDemo">
 <div class="layui-input-inline">
@@ -29,7 +32,6 @@
 
 <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
@@ -41,7 +43,7 @@ layui.use(['table','laydate','form','layer'], function(){
   var form = layui.form;
   //常规用法
   laydate.render({
-    elem: '#test1'
+    elem: '#test5'
   });
   //年月选择器
   laydate.render({
@@ -72,45 +74,152 @@ layui.use(['table','laydate','form','layer'], function(){
   //工具栏事件
   table.on('toolbar(test)', function(obj){
     var checkStatus = table.checkStatus(obj.config.id);
+    var data = checkStatus.data;
     switch(obj.event){
       case 'getCheckData':
+    	  if(data.length == 1){
+				//判断订单审核状态
+				if(data[0].sex == '男'){
+					var index2 = layer.confirm('你确认审核该领料单？', {
+						  btn: ['确认', '取消'] //可以无限个按钮
+						  ,btn2: function(index, layero){
+						    layer.close(index2);
+						  }
+						}, function(layero){
+							layer.close(index2);
+							var index88 = layer.open({
+								  type: 1,
+								  shade: 0.25,
+								  area: ['400px', '350px'],
+								  content: $('#nameAndTimeDiv2'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+								  success: function(layero, index){
+									  form.render();
+									  },
+								  btn: ['确认', '取消'],
+								  yes: function(layero){
+									  layer.close(index88);
+									  layer.msg('领料单审核成功');
+									}
+								  ,btn2: function(index, layero){
+										  layer.close(index88);
+									}
+							});
+							
+						});
+				}else{
+					layer.msg('该订单已审核');
+				}
+				
+			}else if(data.length >1){
+				layer.msg('最多只能审核一个订单');
+			}else {
+				layer.msg('请选择要审核的订单');
+			}
     	  
-    	  layer.open({
-    		  title: '计划详情',
-    		  type:1,
-    		  area : [ '600px', '400px' ],//大小
-    		  content: $("#test2"),
+      break;
+      case 'getCheckLength':
+    	  if(data.length == 1){
+				//判断领料订单状态
+				if(data[0].sex == '男'){
+					 var index2 = layer.confirm('确定为该订单申请领料？', {
+						  btn: ['确认', '取消'] //可以无限个按钮
+						  ,btn2: function(index, layero){
+						    layer.close(index2);
+						  }
+						}, function(layero){
+							layer.close(index2);
+							layer.msg('已发起领料');
+							
+						});
+				}else{
+					layer.msg('该领料订单未审核');
+				}
+				
+			}else if(data.length >1){
+				layer.msg('一次只能为一个订单领料');
+			}else {
+				layer.msg('请选择要领料的领料订单');
+			}
+      break;
+    };
+  });
+  
+  //监听工具条
+  table.on('tool(test)', function(obj){
+    var data = obj.data;
+    if(obj.event === 'detail'){
+    	layer.open({
+  		  title: '订单详情',
+  		  type:1,
+  		  area : [ '660px', '415px' ],//大小
+  		  content: $("#table2Div"),
 				end : function() {
 					$('[lay-id="test2"]').css("display", "none");
 				}
-    		  
-    		});
-    	  
-    	  table.render({
-  		    elem: '#test2'
-  		    ,url:'../json/demo1.json'
-  		    ,totalRow: true
-  		    ,cols: [[
-  		      {type: 'checkbox', fixed: 'left', totalRowText: '合计'}
-  		      ,{type: 'numbers'}
-  		      ,{field:'id', title:'药品编号', unresize:true}
-  		      ,{field:'username', title:'药品名称',unresize:true}
-  		      ,{field:'experience', title:'今日生产数量', totalRow: true,unresize:true}
-  		      
-  		    ]]
+  		  
   		});
-      break;
-      case 'getCheckLength':
-        var data = checkStatus.data;
-        layer.msg('选中了：'+ data.length + ' 个');
-      break;
-      case 'isAll':
-        layer.msg(checkStatus.isAll ? '全选': '未全选')
-      break;
-    };
+  	  
+  	  table.render({
+		    elem: '#test2'
+		    ,url:'../json/demo1.json'
+		    ,cols: [[
+		      {type: 'checkbox', fixed: 'left', totalRowText: '合计'}
+		      ,{type: 'numbers'}
+		      ,{field:'id', title:'原料编号', unresize:true}
+		      ,{field:'username', title:'原料名称',unresize:true}
+		      ,{field:'experience', title:'所需数量（g/kg）', unresize:true}
+		    ]]
+		});
+  	} else if(obj.event === 'del'){
+      layer.confirm('确认删除该计划？', function(index){
+        obj.del();
+        layer.close(index);
+      });
+    } else if(obj.event === 'edit'){
+    	layer.open({
+    		  title: '修改日计划',
+    		  type:1,
+    		  shadeClose : true,
+    		  content: $("#dibId"),
+    		  end : function() {
+  					$('[lay-id="test2"]').css("display", "none");
+  			  }
+    		});
+    }
   });
 });
 </script>
 
+
+<!-- 审核人和审核时间 -->
+<div style="display:none;" id="nameAndTimeDiv2" >
+
+<form class="layui-form" lay-filter="formAuthority2" id="formIdOne2">	  
+
+<div class="layui-inline" style="padding-left:0px;margin-top:20px;">
+	<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核日期</label>
+	<div class="layui-input-inline">
+		<input type="text" class="layui-input" id="test5" placeholder="yyyy-MM-dd">
+	</div>
+</div>
+<div style="padding-left:0px;margin-top:15px;">
+<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核人员</label>
+	<div class="layui-input-inline">
+		<select name="city" lay-verify="" lay-search="">
+  			<option value="">制定人</option>
+  			<option value="010">张三</option>
+  			<option value="021">李四</option>
+ 			<option value="0571">王五</option>
+		</select>  
+	</div>
+<div class="layui-input-inline" style="margin-top:10px;">
+				<label style="margin:0 10px 0 20px;font-size:13px;">备注信息</label>
+				<div class="layui-input-inline" style="margin-left:-5px;">
+      				<textarea name="des" required lay-verify="required" cols="35px" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
+    			</div>
+			</div>	
+</div>
+</form>
+ </div>	
 </body>
 </html>

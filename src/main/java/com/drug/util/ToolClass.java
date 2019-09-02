@@ -1,10 +1,10 @@
-package com.drug.tool;
+package com.drug.util;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 工具类
+ * 前端返回数据工具类
  * @author lijie
  *
  */
@@ -15,11 +15,9 @@ public class ToolClass {
 	 */
 	public static Map<String,Object> responseByData() {
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("code", 0);
-		map.put("msg","");
-		map.put("count", 1000);	//总行数，用于分页
+		map.put("code", 0);		//返回状态码
+		map.put("msg","");		
+		map.put("count", 0);	//总行数，用于分页
 		return map;
 	}
-	
-	
 }

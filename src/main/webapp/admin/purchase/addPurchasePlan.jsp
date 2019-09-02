@@ -20,19 +20,19 @@
   <table class="layui-table">
   	<tr>
   		<td>
-  			<label class="layui-form-label">采购员</label>
+  			<label class="layui-form-label" style="font-size:13px;">采购员</label>
    			<div class="layui-input-block">
       			<input name="a" class="layui-input" type="text" autocomplete="off" lay-verify="title">
     		</div>
 		</td>
   		<td>
-  			<label class="layui-form-label">预计金额</label>
+  			<label class="layui-form-label" style="font-size:13px;">预计金额</label>
     			<div class="layui-input-block">
       				<input name="a" class="layui-input" type="text" autocomplete="off" lay-verify="title">
     			</div>
     	</td>
     	<td>
-    		<label class="layui-form-label">采购类型</label>
+    		<label class="layui-form-label" style="font-size:13px;">采购类型</label>
    			<div class="layui-input-block">
       			<select name="interest" lay-filter="aihao">
         			<option value=""></option>
@@ -43,7 +43,7 @@
   	</tr>
   	<tr>
   		<td>
-  			<label class="layui-form-label">申请部门</label>
+  			<label class="layui-form-label" style="font-size:13px;">申请部门</label>
    			<div class="layui-input-block">
       			<select name="interest" lay-filter="aihao">
         			<option value=""></option>
@@ -52,13 +52,13 @@
     		</div>
   		</td>
   		<td>
-  			<label class="layui-form-label">计划制定时间</label>
+  			<label class="layui-form-label" style="font-size:13px;">计划制定时间</label>
    			<div class="layui-input-block">
       			<input name="date" class="layui-input" id="date1" type="text" placeholder="yyyy-MM-dd" autocomplete="off" lay-verify="date"/>
     		</div>
   		</td>
   		<td>
-  			<label class="layui-form-label">预计到货时间</label>
+  			<label class="layui-form-label" style="font-size:13px;">预计到货时间</label>
       		<div class="layui-input-inline">
        	 	<input name="date" class="layui-input" id="date2" type="text" placeholder="yyyy-MM-dd" autocomplete="off" lay-verify="date"/>
        	 	</div>
@@ -66,13 +66,13 @@
   	</tr>
   	<tr>
   		<td>
-  			<label class="layui-form-label">仓库地址</label>
+  			<label class="layui-form-label" style="font-size:13px;">仓库地址</label>
    			<div class="layui-input-block">
       			<input name="title" class="layui-input" type="text" autocomplete="off" lay-verify="title">
     		</div>
   		</td>
   		<td colspan="2">
-  			<label class="layui-form-label">备注</label>
+  			<label class="layui-form-label" style="font-size:13px;">备注</label>
    			<div class="layui-input-block">
       			<input name="title" class="layui-input" type="text" autocomplete="off" lay-verify="title">
     		</div>
@@ -83,7 +83,7 @@
   <table class="layui-hida" id="test" lay-filter="test"></table>
   <script id="toolbarDemo" type="text/html">
   <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-sm" lay-event="add">增行</button>
+    <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>增行</button>
   </div>
 </script>
 <script id="barDemo" type="text/html">
