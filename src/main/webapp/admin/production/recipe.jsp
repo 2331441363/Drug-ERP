@@ -51,13 +51,22 @@
 
 
 		<script type="text/html" id="barDemo2">
-			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="manageMe">删除</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="">删除</a>
 		</script>
 		<script>
 			layui.use(['table', 'laydate', 'form'], function() {
 				var table = layui.table; //表格
 				var laydate = layui.laydate;
 				var form = layui.form;
+				laydate.render({
+					elem: '#test1', //指定元素
+				});
+				laydate.render({
+					elem: '#test5', //指定元素
+				});
+				laydate.render({
+					elem: '#test66', //指定元素
+				});
 				//执行一个 table 实例
 				table.render({
 					elem: '#demo',
@@ -110,44 +119,7 @@
 					],page: true, //开启分页
 				});
 
-				var operator = '<option value="">请选择或者(输入)入库仓库</option>';
-				$.ajax({
-					url: 'json/qualityInspector.json',
-					//pe: "post",
-					dataType: "json",
-					async: false, //这得注意是同步
-					success: function(result) {
-						console.log(result)
-						for (var x in result) {
-							operator += '<option value = "' + result[x].id + '">' + result[x].name + '</option>'
-						}
-						$("#warehouseOperator").html(operator);
-					}
-				});
-
-
-				var operator = '<option value="">请选择或者(输入)入库仓库</option>';
-				$.ajax({
-					url: '../json/demo1.json',
-					//pe: "post",
-					dataType: "json",
-					async: false, //这得注意是同步
-					success: function(result) {
-						console.log(result)
-						for (var x in result) {
-							operator += '<option value = "' + result[x].id + '">' + result[x].name + '</option>'
-						}
-						$("#warehouseOperator1").html(operator);
-					}
-				});
-				laydate.render({
-					elem: '#test1', //指定元素
-				});
-				laydate.render({
-					elem: '#test2', //指定元素
-				});
-
-					//监听弹出层头部工具栏
+				//监听弹出层头部工具栏
 				table.on('toolbar(test)', function(obj) {
 					var checkStatus = table.checkStatus(obj.config.id);
 					//获得选择的对象
@@ -487,13 +459,13 @@
 
 <form class="layui-form" lay-filter="formAuthority2" id="formIdOne2">	  
 <div class="layui-inline" style="padding-left:0px;margin-top:20px;">
-	<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定日期</label>
+	<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">制定日期</label>
 	<div class="layui-input-inline">
-		<input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+		<input type="text" class="layui-input" id="test66" placeholder="yyyy-MM-dd">
 	</div>
 </div>
 <div style="padding-left:0px;margin-top:15px;">
-<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定人员</label>
+<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">制定人员</label>
 	<div class="layui-input-inline">
 		<select name="city" lay-verify="" lay-search="">
   			<option value="">制定人</option>
@@ -503,7 +475,7 @@
 		</select>  
 	</div>
 <div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 10px;font-size:13px;">计划描述</label>
+				<label style="margin:0 10px 0 20px;font-size:13px;">计划描述</label>
 				<div class="layui-input-inline" style="margin-left:-5px;">
       				<textarea name="des" required lay-verify="required" cols="35px" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
     			</div>
@@ -519,13 +491,13 @@
 <form class="layui-form" lay-filter="formAuthority3" id="formIdOne3">	  
 
 <div class="layui-inline" style="padding-left:0px;margin-top:20px;">
-	<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">审核日期</label>
+	<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核日期</label>
 	<div class="layui-input-inline">
 		<input type="text" class="layui-input" id="test5" placeholder="yyyy-MM-dd">
 	</div>
 </div>
 <div style="padding-left:0px;margin-top:15px;">
-<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">审核人员</label>
+<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核人员</label>
 	<div class="layui-input-inline">
 		<select name="city" lay-verify="" lay-search="">
   			<option value="">制定人</option>
@@ -535,7 +507,7 @@
 		</select>  
 	</div>
 <div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 10px;font-size:13px;">备注信息</label>
+				<label style="margin:0 10px 0 20px;font-size:13px;">备注信息</label>
 				<div class="layui-input-inline" style="margin-left:-5px;">
       				<textarea name="des" required lay-verify="required" cols="35px" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
     			</div>

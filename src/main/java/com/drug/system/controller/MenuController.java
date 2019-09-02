@@ -8,14 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.drug.entity.Menu;
-import com.drug.system.biz.MenuBiz;
-import com.drug.tool.ToolClass;
+import com.drug.entity.MenuDO;
+import com.drug.system.service.MenuService;
+import com.drug.util.ToolClass;
 
 @Controller
 public class MenuController {
 	@Autowired
-	private MenuBiz menuBiz;
+	private MenuService menuBiz;
 	
 	/**
 	 * 查询所有菜单
@@ -23,7 +23,8 @@ public class MenuController {
 	@RequestMapping("/queryMenu")
 	@ResponseBody
 	public Map<String,Object> queryByMenu(){
-		List<Menu> menuList = menuBiz.queryByMenu();
+		List<MenuDO> menuList = menuBiz.queryByMenu();
+		menuList.forEach(System.out::println);
 		Map<String,Object> map = ToolClass.responseByData();
 		map.put("data", menuList);
 		return map;
@@ -31,7 +32,7 @@ public class MenuController {
 	
 	@RequestMapping("/updateMenu")
 	@ResponseBody
-	public Integer updateByMenu(Menu menu){
+	public Integer updateByMenu(MenuDO menu){
 		Integer row = menuBiz.updateByMenu(menu);
 		return row;
 	}

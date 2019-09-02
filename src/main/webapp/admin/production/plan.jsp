@@ -481,13 +481,13 @@
 
 <form class="layui-form" lay-filter="formAuthority" id="formIdOne">	  
 <div class="layui-inline" style="padding-left:0px;margin-top:20px;">
-	<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定日期</label>
+	<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">制定日期</label>
 	<div class="layui-input-inline">
 		<input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
 	</div>
 </div>
 <div style="padding-left:0px;margin-top:15px;">
-<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">制定人员</label>
+<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">制定人员</label>
 	<div class="layui-input-inline">
 		<select name="city" lay-verify="" lay-search="">
   			<option value="">制定人</option>
@@ -497,7 +497,7 @@
 		</select>  
 	</div>
 <div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 10px;font-size:13px;">计划描述</label>
+				<label style="margin:0 10px 0 20px;font-size:13px;">计划描述</label>
 				<div class="layui-input-inline" style="margin-left:-5px;">
       				<textarea name="des" required lay-verify="required" cols="35px" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
     			</div>
@@ -512,13 +512,13 @@
 <form class="layui-form" lay-filter="formAuthority2" id="formIdOne2">	  
 
 <div class="layui-inline" style="padding-left:0px;margin-top:20px;">
-	<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">审核日期</label>
+	<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核日期</label>
 	<div class="layui-input-inline">
 		<input type="text" class="layui-input" id="test5" placeholder="yyyy-MM-dd">
 	</div>
 </div>
 <div style="padding-left:0px;margin-top:15px;">
-<label width="120px" style="margin:0 5px 0 10px;font-size:13px;">审核人员</label>
+<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核人员</label>
 	<div class="layui-input-inline">
 		<select name="city" lay-verify="" lay-search="">
   			<option value="">制定人</option>
@@ -528,7 +528,7 @@
 		</select>  
 	</div>
 <div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 10px;font-size:13px;">备注信息</label>
+				<label style="margin:0 10px 0 20px;font-size:13px;">备注信息</label>
 				<div class="layui-input-inline" style="margin-left:-5px;">
       				<textarea name="des" required lay-verify="required" cols="35px" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
     			</div>

@@ -17,7 +17,7 @@
 			});
 			function scrollit(){
 				//设置 id 为 demo 的对象内的文字为从变量 text 的 0 开始到 i 间的文字加"_"
-				font.innerText=text.slice(0,i++)+"_";
+				font.innerText=text.slice(0,i++)+"﹑";
 				if(i>text.length){       //当 i 大于 text 的文本长度时
 					i=0              //重设 i 为 0，使文字重新从第一个文字出现
 					//延时执行scrollit()函数,delay*10是为了让显示完整文字的时间长一点
@@ -228,7 +228,7 @@
       
     </ul>
     <ul class="layui-nav layui-layout-right">
-      <li class="layui-nav-item" ><a href=""><i class="layui-icon layui-icon-screen-restore" id="unlock" style="color:white;font-size:18px;"></i></a></li>
+      <li class="layui-nav-item" ><a href=""><i class="layui-icon layui-icon-screen-restore" id="btn" style="color:white;font-size:18px;"></i></a></li>
       <li class="layui-nav-item" ><a href=""><i class="layui-icon layui-icon-notice" style="color:white;font-size:18px;"></i></a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">
@@ -259,7 +259,7 @@
 </div>
 
   
-  <div class="layui-body">
+  <div class="layui-body" id="content">
     <!-- 内容主体区域 -->
     <div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="docDemoTabBrief">
   			<ul class="layui-tab-title">
@@ -374,6 +374,9 @@ function show(){
     $('.layui-side').animate({width:'250px'});
     $('.layui-body').animate({left:'250px'});
 }
+
+
+
 
 </script>
 </body>
