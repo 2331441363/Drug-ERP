@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.warehouse.mapper.WarehouseMapper">
+	<!--仓库管理新增仓库 -->
+	<insert id="insertWarehouse" parameterType="WarehouseDO">
+		INSERT INTO
+		warehouse(empId,warehouse_serial,warehouse_name,warehouse_type,warehouse_time)
+		VALUES(#{empId},#{WarehouseSerial},#{WarehouseName},#{WarehouseType},#{WarehouseTime});
+	</insert>
+
+	<!-- 查询所有仓库信息,分页加条件查询 -->
+	<select id="getWarehouse" resultType="WarehouseDO"
+		parameterType="Map">
+		<if test="warehouseType=='全部仓库'">
+			SELECT * FROM warehouse LIMIT #{page},#{rows}
+		</if>
+		<if test="warehouseType!=null">
+			SELECT * FROM warehouse
+			<if test="warehouseType=='原材料仓库'  ">
+				where warehouse_type=#{warehouseType}
+				LIMIT
+				#{page},#{rows}
+			</if>
+			<if test="warehouseType=='成品仓库' ">
+				where warehouse_type=#{warehouseType}
+				LIMIT
+				#{page},#{rows}
+			</if>
+			<if test="warehouseType=='废弃仓库' ">
+				where warehouse_type=#{warehouseType}
+				LIMIT
+				#{page},#{rows}
+			</if>
+		</if>
+		<if test="warehouseType==null">
+			SELECT * FROM warehouse LIMIT #{page},#{rows}
+		</if>
+	</select>
+
+	<!-- 查询出总行数 -->
+	<select id="getCount" resultType="int">
+		SELECT count(*) from warehouse
+	</select>
+</mapper>

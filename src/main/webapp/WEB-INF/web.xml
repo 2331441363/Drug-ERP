@@ -12,9 +12,8 @@
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	 
-	
-  <servlet>
+
+    <servlet>
 		<servlet-name>springmvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		
@@ -30,4 +29,20 @@
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
+	
+	
+	<!-- 配置由Spring提供的过滤器，用于整合shiro框架 -->
+  	<!-- 在项目启动的过程中，当前过滤器会从Spring工厂中提取同名对象 -->
+    <filter>
+    	<filter-name>shiroFilter</filter-name>
+    	<filter-class>
+      		org.springframework.web.filter.DelegatingFilterProxy
+    	</filter-class>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>shiroFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+
 </web-app>

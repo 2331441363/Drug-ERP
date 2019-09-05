@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.drug.warehouse.mapper.FinishedGoodsSheetMapper">
+	<!--查询出所有成品仓库 -->
+	<resultMap type="WarehouseDO"
+		id="WarehouseDOAndFinishedGoodsSheetDO">
+		<result column="warehouseId" property="warehouseId" />
+		<result column="warehouseType" property="warehouseType" />
+		<result column="warehouseName" property="warehouseName" />
+		<collection property="finishedGoodsSheetDOList"
+			ofType="FinishedGoodsSheetDO">
+			<result column="finishedGoodsSheetId"
+				property="finishedGoodsSheetId" />
+			<result column="finishedGoodsSheetName"
+				property="finishedGoodsSheetName" />
+			<result column="finishedGoodsSheetQuantity"
+				property="finishedGoodsSheetQuantity" />
+			<result column="finishedGoodsSheetType"
+				property="finishedGoodsSheetType" />
+			<result column="warehouseId" property="warehouseId" />
+		</collection>
+	</resultMap>
+
+
+	<!-- 查询成品仓库所有信息 -->
+	<select id="selectFinishedGoodsSheet"
+		resultMap="WarehouseDOAndFinishedGoodsSheetDO" parameterType="Map">
+		SELECT *
+		from finished_goods_sheet f
+		inner join warehouse w
+		on f.warehouse_id = w.warehouse_id LIMIT
+		#{page},#{rows}
+	</select>
+
+	<!-- 查询成品仓库总行数 -->
+	<select id="getFinCount" resultType="int">
+		SELECT count(*) from
+		finished_goods_sheet
+	</select>
+</mapper>

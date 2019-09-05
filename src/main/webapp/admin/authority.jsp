@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ tagliburi="http://shiro.apache.org/tags" prefix="shiro" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,13 +18,14 @@
 
  
 <table class="layui-hide" id="test" lay-filter="test"></table>
-
+        <shiro:hasRole name="1001">
 	<script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container" style="padding-left:20px;">
     <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i class="layui-icon layui-icon-add-1"></i>新增部门 </button>
   </div>
 	
 </script>
+</shiro:hasRole>
 <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">管理权限</a>
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>

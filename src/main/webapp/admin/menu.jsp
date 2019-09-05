@@ -46,6 +46,8 @@ layui.use('table', function(){
     	  		return '<span class="layui-badge layui-bg-blue">一级目录</span>'
     	  	case 2:
     	  		return '<span class="layui-badge">二级目录</span>'
+    	  	case 3:
+    	  		return '<span class="layui-badge layui-bg-orange">操作</span>'
     	  }
       }}
       ,{field:'menuType',title: '类型',edit: 'text',align:'center',hide:true}

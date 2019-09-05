@@ -24,4 +24,6 @@ public interface MenuMapper {
 	@Update("UPDATE menu SET menuName = #{menuName},menuType=#{menuType},menuIcon = #{menuIcon},menuURL= #{menuURL},menuParent=#{menuParent} WHERE menuId = #{menuId}")
 	Integer updateByMenu(MenuDO menu);
 	
+	
+	
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:beans xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd ">
+	
+	<p:bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<p:property name="securityManager" ref="securityManager" /> <!--加载管理器-->
+		<p:property name="loginUrl" value="/admin/login.jsp" />    <!--没有登录的时候，跳转到这个页面-->
+		<p:property name="unauthorizedUrl" value="/admin/nopermission.jsp" /> <!--当没有权限的时候，跳转到这个url-->
+		 
+		<p:property name="filterChainDefinitions">
+			<p:value>
+				/admin/login.jsp = anon <!--anon:可以不需要登录-->
+				/logout.do = logout	<!-- 请求logout.do地址，shiro去清除session -->
+				/admin/production/* = authc, roles[1001]  <!-- authc  表示需要认证才能访问的页面  perms 表示需要该权限才能访问的页面 -->
+				/admin/purchase/* = authc, roles[1001]
+				/admin/warehouse/* = authc, roles[1001]
+				/admin/finance/* = authc, roles[1001]
+				/admin/** = authc 
+			</p:value>
+		</p:property>
+		<!-- 将LogoutFilter注入shiro过滤器 -->
+		<p:property name="filters">
+        	<p:map>
+            	<p:entry key="logout" value-ref="logoutFilter" />
+        	</p:map>
+    	</p:property>
+	</p:bean>
+	<!-- shiro清除session 自定义跳转路径 -->
+    <p:bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+         <p:property name="redirectUrl" value="/admin/login.jsp" />
+    </p:bean>
+	<!-- 自定义Realm -->
+	<p:bean id="myShiroRealm" class="com.drug.shiro.LoginReaml">
+	</p:bean>
+
+	<!-- 缓存 ：可换redis -->
+	<p:bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"></p:bean>
+	
+	<p:bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 注入realm -->
+		<p:property name="realm" ref="myShiroRealm"/>
+		<p:property name="cacheManager" ref="cacheManager"></p:property>
+	</p:bean>
+
+	<!--声明一个Service 注入到自定义Realm-->
+	
+	<!-- <p:bean id="accountService" class="com.Service.Impl.ShiroServiceImpl"/> </bean> -->
+</p:beans>

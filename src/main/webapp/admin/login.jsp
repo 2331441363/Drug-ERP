@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="../css/custom.css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
   </head>
   <body>
     <div class="page login-page">
@@ -44,15 +46,15 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
-                  <form method="post" class="form-validate">
+                  <form method="post" class="form-validate" id="formId">
                     <div class="form-group">
-                      <input id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
+                      <input id="login-username" type="text" name="empUserId" required data-msg="Please enter your username" class="input-material">
                       <label for="login-username" class="label-material">User Name</label>
                     </div>
                     <div class="form-group">
-                      <input id="login-password" type="password" name="loginPassword" required data-msg="Please enter your password" class="input-material">
+                      <input id="login-password" type="password" name="empPassword" required data-msg="Please enter your password" class="input-material">
                       <label for="login-password" class="label-material">Password</label>
-                    </div><a id="login" href="index.html" class="btn btn-primary">Login</a>
+                    </div><a id="login" style="color:white;" class="btn btn-primary">Login</a>
                     <!-- This should be submit button but I replaced it with <a> for demo purposes-->
                   </form><a href="" class="forgot-pass">Forgot Password?</a><br><small>Do not have an account? </small><a href="" class="signup">Signup</a>
                 </div>
@@ -76,5 +78,39 @@
     <script src="../js/jquery.validate.min.js"></script>
     <!-- Main File-->
     <script src="../js/front.js"></script>
+    <script type="text/javascript">
+    if(window != top) {				    
+        top.location.href = window.location.href;
+    }
+    layui.use('layer', function(){
+    	  var layer = layui.layer;
+    	  
+    	  $("#login").click(function(){
+  			var id = $('[name="empUserId"]').val();
+  			var password = $('[name="empPassword"]').val();
+  			if(id == null || id == "" || password == null || password == ""){
+  				layer.msg('用户账号或密码不能为空');
+  			}else{
+  				$.ajax({
+          			type:'post',
+          			url:"../login.do",
+          			data:$("#formId").serialize(),
+          			dataType:'html',
+          			success:function(back){
+          				if(back == 'true'){
+          					layer.msg("登录成功");
+          					location.href="adminindex.jsp";
+          				}else{
+          					layer.msg("用户名或密码不正确");
+          				}
+          				
+          			}
+          		});
+  			}
+  			
+  		});
+   });              
+    	
+    </script>
   </body>
 </html>

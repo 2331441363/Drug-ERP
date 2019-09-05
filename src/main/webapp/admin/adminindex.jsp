@@ -267,7 +267,7 @@
   			</ul>
   			<div class="layui-tab-content" id="main" style="height:590px;">
   			        <div class="layui-tab-item layui-show" id = "boxscroll4" style="height:100%;width:100%;">
-  						<iframe src="login.jsp" style="height:100%;width:100%;"  scrolling="auto" id="iframe" class="layadmin-iframe"  frameborder="0"></iframe>
+  						<iframe src="index.jsp" style="height:100%;width:100%;"  scrolling="auto" id="iframe" class="layadmin-iframe"  frameborder="0"></iframe>
   					</div>
   			</div>
 	</div>
