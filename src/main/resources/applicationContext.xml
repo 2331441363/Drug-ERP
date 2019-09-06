@@ -32,7 +32,7 @@
 		<p:property name="configLocation" value="classpath:mybatis-config.xml"></p:property>  
 		<!-- 取别名 -->
 		<p:property name="typeAliasesPackage"
-			value="com.drug.entity"></p:property>
+			value="com.drug"></p:property>
 	</p:bean>
 	
 	<!-- 扫描mapper接口，产生代理对象 -->
