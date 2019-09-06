@@ -1,6 +1,9 @@
 package com.drug.system.service;
 
 
+import java.util.List;
+
+import com.drug.dto.EmployeeDTO;
 import com.drug.entity.EmployeeDO;
 
 /**
@@ -15,4 +18,11 @@ public interface EmployeeService {
 	 * @return
 	 */
 	EmployeeDO getEmployeByUserId(String empUserId);
+	
+	/**
+	 * 查询所有员工/单个员工详细信息及员工部门信息（一对一）、
+	 * @param empId 员工id
+	 * @return List<EmployeeDTO> 员工及相关信息DTO
+	 */
+	List<EmployeeDTO> getAllEmploye(int empId);
 }
