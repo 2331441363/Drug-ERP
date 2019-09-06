@@ -1,14 +1,14 @@
-package com.drug.entity;
+package com.drug.dto;
 
 import lombok.Data;
 
 /**
 * @author 李杰
-* @version 创建时间：2019年9月3日 上午9:11:45
-* 类说明：实体：员工对象
+* @version 创建时间：2019年9月5日 下午2:56:48
+* 类说明：员工数据DTO
 */
 @Data
-public class EmployeeDO {
+public class EmployeeDTO {
 	/**
 	 * 员工id
 	 */
@@ -69,5 +69,13 @@ public class EmployeeDO {
 	 */
 	private Integer departmentId;
 	
+	/**
+	 * 部门名称
+	 */
+	private String departmentName;
 	
+	/**
+	 * 部门描述
+	 */
+	private String departmentDes;
 }
