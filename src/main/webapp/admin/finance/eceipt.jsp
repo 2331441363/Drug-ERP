@@ -33,7 +33,7 @@ label{
 		//日期时间选择器
 		  laydate.render({
 		    elem: '#test5'
-		    ,type: 'date'
+		    ,type: 'datetime'
 		  });
 	});
 </script>
@@ -57,7 +57,7 @@ label{
 		    ,cols: [[ //表头
 		    	{type:'checkbox', fixed: 'left'}
 		        ,{field: 'orderId', title: '订单号', width:150, sort: true,unresize:true}
-		        ,{field: 'orderTime', title: '下单日期', unresize:true}
+		        ,{field: 'orderTime', title: '下单时间', unresize:true}
 		        ,{field: 'branchName', title: '分店', unresize:true}
 		        ,{field: 'merchantName', title: '商品名称', unresize:true}
 		        , {field: 'merchantQuantity', title: '商品数量', unresize:true}
@@ -145,7 +145,7 @@ label{
  <script type="text/html" id="toolbarDemo">
 <form class="layui-form" action="" >
 			<div class="layui-inline" style="margin-left:20px;">
-					<label >下单日期：</label>
+					<label >下单时间：</label>
 				<div class="layui-input-inline" style="margin-left:5px;">
 					<input type="text"  class="layui-input" id="test5"
 						placeholder="年--月--日 ">
@@ -174,7 +174,7 @@ label{
     </div>
 
 <div class="layui-inline" >
-			<button class="layui-btn layui-btn-normal" data-type="reload">搜索</button>		
+			<button class="layui-btn layui-btn-sm  layui-btn-normal" data-type="reload">搜索</button>		
 		</div>    
 </form>
 

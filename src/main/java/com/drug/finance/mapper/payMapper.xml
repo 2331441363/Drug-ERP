@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.finance.mapper.payMapper">
+	<!-- 查询付款单 -->
+	<select id="getPay" resultType="Pay">
+		SELECT pay_id,pay_date,pay_person,dept,
+pay_branch,company_account,money,pay_type,
+pay_note FROM pay where is_show=0
+	</select>
+	
+	<insert id="addPay" parameterType="Pay">
+		INSERT INTO pay(pay_date,pay_person,dept,pay_branch,
+company_account,money,pay_type,pay_note)
+ VALUES(#{payDate},#{payPerson},#{dept},#{payBranch},#{companyAccount},#{money},#{payType},#{payNote})
+	</insert>
+</mapper>

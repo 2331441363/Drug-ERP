@@ -25,7 +25,59 @@ body {
 label{
 	font-size: 13px;
 }
+.textTd{
+	padding-left: 10px;
+	padding-top: 20px;
+	width: 170px;
+	height: 10px;
+}
+.trs{
+	padding-top: 20px;
+	text-align: right;
+	padding-left: 30px;
+}
 </style>
+
+<script type="text/javascript">
+	$("#addReceipt").on("click",function(){
+		alert("sssss");
+		//付款时间
+		var date =$("#test1").val();
+		alert(date);
+		//付款人
+		var payer =$("#payer").val();
+		//部门
+		var dept =$("#dept").val();
+		//分店
+		var branch =$("#branch").val();
+		//公司账户
+		var comAccount =$("#comAccount").val();
+		//付款金额
+		var money =$("#money").val();
+		//付款类型
+		var type =$("#type").val();
+		//备注
+		var text =$("#text").val();
+		
+		
+		$.ajax({
+			url:'insertReceipt.do',
+			type:'post',
+			data:'date='+date+'&payer='+payer+'&dept='+dept+
+			'&branch='+branch+'&comAccount='+comAccount+'&money='+money
+			+'&type='+type+'&text='+text,
+			dataType:'json',
+			success:function(back){
+				
+				if (back='ok') {
+					//新增收款单成功	
+					layer.msg("新增收款单成功");
+				}
+			}
+		});
+		
+	});
+</script>
 </head>
 <body>
 	<script>
@@ -34,7 +86,7 @@ label{
 		//日期时间选择器
 		  laydate.render({
 		    elem: '#test5'
-		    ,type: 'date'
+		    ,type: 'datetime'
 		  });
 	});
 </script>
@@ -43,7 +95,7 @@ label{
 	<script type="text/html" id="toolbarDemo">
 	<form class="layui-form" action="">
 		<div class="layui-inline"  style="margin-left:20px;">
-			<label >收款日期：</label>
+			<label >收款时间：</label>
 			<div class="layui-input-inline">
 				<input type="text" class="layui-input" id="test5"
 					placeholder="年--月--日 ">
@@ -71,81 +123,75 @@ label{
 			</div>
 		</div>
 		<div class="layui-inline" >
-			<button class="layui-btn layui-btn-normal" data-type="reload">搜索</button>		
+			<button class="layui-btn layui-btn-sm  layui-btn-normal" data-type="reload">搜索</button>		
 		</div> 
 	</form>
 
 	<div id="layerDemo" class="layui-btn-group demoTable">
-  		<button data-method="offset"  class="layui-btn layui-btn-normal"  data-type="auto"><i class="layui-icon"></i>收款单</button>
+  		<button data-method="offset"  class="layui-btn layui-btn-sm  layui-btn-normal"  data-type="auto"  lay-event="add"><i class="layui-icon"></i>新增收款单</button>
 	</div>	
 	</script>
 
 	<table id="demo" lay-filter="test"></table>
 	<script>
+	$(function(){
+		
+	
 		var table2 = null ;
-		layui.use('table', function(){
+		layui.use(['table','form','laydate'], function(){
 			var table = layui.table, form = layui.form;
+			var laydate = layui.laydate;
+			var $ = layui.$;
 		  
+			laydate.render({
+			    elem: '#test1'
+			    ,type: 'datetime'
+			  });
+			
+			
 		  //执行一个 table 实例
 		 	table2 =  table.render({
 		    elem: '#demo'
 		    ,height:563
-		    ,url: '../json/demo1.json' //数据接口
+		    ,url: '../../listReceipt.do' //数据接口
 		    ,title: '收款单查询'
 		    ,page: true //开启分页
 		    ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
 		    ,totalRow: true //开启合计行
 		    ,cols: [[ //表头
 		    	{type: 'checkbox', fixed: 'left'}
-		        ,{field: 'receiptId', title: '编号', width:150, sort: true,unresize:true}
-		        ,{field: 'receiptPayee', title: '收款人', unresize:true}
-		        , {field: 'receiptTime', title: '收款日期', unresize:true}
-		        , {field: 'receiptBranch', title: '部门', unresize:true}
-		        ,{field: 'receiptClient', title: '分店', unresize:true}
-		        , {field: 'receiptAccount', title: '公司账户',unresize:true}
-		        , {field: 'receiptMoney', title: '收款金额', unresize:true}
-		        , {field: 'receiptTerm', title: '收款方式', unresize:true}
-		        ,{field: 'receiptType', title: '收款类型', unresize:true}
-		        ,{field: 'receiptForm', title:'备注', unresize:true}
+		        ,{field: 'receipt_id', title: '编号', width:150, sort: true,unresize:true}
+		        ,{field: 'receipt_time', title: '收款人', unresize:true}
+		        , {field: 'receipt_payee', title: '收款时间', unresize:true}
+		        , {field: 'receipt_dept', title: '部门', unresize:true}
+		        ,{field: 'receipt_bsubbranch', title: '分店', unresize:true}
+		        , {field: 'receipt_account', title: '公司账户',unresize:true}
+		        , {field: 'receipt_money', title: '收款金额', unresize:true}	
+		        ,{field: 'receipt_type', title: '收款类型', unresize:true}
+		        ,{field: 'receipt_form', title:'备注', unresize:true}
 		        ,{
 		    		fixed: 'right', title:'操作',width:178, align:'center', toolbar: '#barDemo',unresize:true
 		          }
 		    ]]
 		  });
 		  	  
-		 	  //触发事件
-		 	  var active = {
-		 	     offset: function(othis){
-		 	      var type = othis.data('type')
-		 	      ,text = othis.text();
-		 	      
-		 	      layer.open({
-		 	         type: 1, 
-		 	         title : '收款单' //标题
-		 	        ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-		 	        ,id: 'layerDemo'+type //防止重复弹出
-		 	       ,content: '<iframe src="receipt.html" width="100%" height= "98%" name="topFrame" scrolling="no" frameborder="0" id="topFrame"></iframe>'
-		 	        ,area: ['60%', '90%']
-					,success:function(){
-						layui.use('laydate', function(){
-							  var laydate = layui.laydate;
-								//日期时间选择器
-								  laydate.render({
-								    elem: '#test1'
-								    ,type: 'date'
-								  });
-							});
-						form.render();//表单渲染
-					}
-		 	      });
-		 	    }
-		 	  }
-		 	  
-		 	  $('#layerDemo .layui-btn').on('click', function(){
-		 	    var othis = $(this), method = othis.data('method');
-		 	    active[method] ? active[method].call(this, othis) : '';
-		 	  });
-		 	  
+		 	   
+		 	//头工具栏事件
+		 	   table.on('toolbar(test)', function(obj){
+		 	    var checkStatus = table.checkStatus(obj.config.id);
+		 	     switch(obj.event){
+		 	      case 'add':
+		 	    		layer.open({
+		 	    			 type: 1, 
+		 	    		  title: '新增收款单'
+		 	    		  ,content: $("#addReceiptForm")
+		 	    		  ,area: ['70%', '95%']
+		 	    		}); 
+		 	    		form.render();
+		 	      break;
+		 	    }; 
+		 	  }); 
+		 	   
 		 	$(function() {
 			 	//查询
 		 		$("#seachTable").on("click",function(){
@@ -209,6 +255,7 @@ label{
 		});
 		
 	});
+	});
 		
 </script>
 
@@ -216,5 +263,73 @@ label{
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+
+<form class="layui-form" action="" id="addReceiptForm" style="display: none;">
+<table  style="font-size: 13px;width: 96%;height: 100%">
+		<tr>
+					<td class="trs">收款时间:</td>
+					<td class="textTd"><input type="text" lay-verify="required" lay-reqtext="收款日期是必填项"  class="layui-input" id="test1" 
+					autocomplete="off"	placeholder="年--月--日 ">
+					</td>
+	
+      <td class="trs">收款人:</td>
+        <td class="textTd"><select name="audit" id="payer"  lay-verify="required" lay-reqtext="收款人是必填项"  lay-verify="required" lay-search="required">
+          <option value="1">请选择</option>
+          <option value="2">王五</option>
+        </select>
+		</td>
+
+     <td class="trs">部门:</td>
+        <td class="textTd"><select name="audit" id="dept" lay-verify="required" lay-reqtext="部门是必填项"  lay-search="required">
+          <option value="1">请选择</option>
+          <option value="2">财务部</option>
+        </select>
+    	</td>
+    </tr>
+    <tr>
+     <td class="trs">分店:</td>
+      <td class="textTd"><select name="audit" id="branch"  lay-verify="required" lay-reqtext="客户是必填项"  lay-search="required">
+          <option value="1">请选择</option>
+          <option value="2">王五</option>
+        </select>
+        </td>
+				<td class="trs">公司账户:</td>
+					<td class="textTd"><select name="audit" id="comAccount"  lay-verify="required" lay-reqtext="公司账户是必填项"  lay-search="required" id="compAccount">
+						<option>请选择</option>
+						<option>xx</option>
+					</select>
+				</td>
+
+				<td class="trs">收款金额:</td>
+					<td class="textTd"><input  type="text" id="money" name="username"  lay-verify="required|number" lay-reqtext="收款金额是必填项" 
+					placeholder="请输入" autocomplete="off" class="layui-input">
+				</td>
+
+		</tr>
+		<tr>
+
+				<td class="trs">收款类型:</td>
+					<td class="textTd"><select lay-verify="required"
+						lay-reqtext="收款类型是必填项"  id="type" >
+						<option>请选择</option>
+						<option>总店销售单</option>
+						<option>采购退货单</option>
+					</select>
+				</td>
+
+				
+				</tr>
+				
+				<tr>
+			    <td class="trs">备注:</td>
+			    <td style="padding-left: 10px;padding-top: 20px;" colspan="5" ><textarea placeholder="请输入内容" id="text" cols="70px" rows="15px"></textarea>
+			    </td>
+			</tr>
+	</table>
+
+			<div class="layui-form-item" style="margin-top: 15px;">
+				<button class="layui-btn layui-btn-sm  layui-btn-normal" lay-submit="" lay-filter="demo2" style="margin-left: 700px;" id="addReceipt">确定</button>
+			</div>
+	</form>
 </body>
 </html>
