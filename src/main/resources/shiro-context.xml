@@ -14,11 +14,13 @@
 		 
 		<p:property name="filterChainDefinitions">
 			<p:value>
-			<!-- /admin/production/* = authc, roles[1001]  authc  表示需要认证才能访问的页面  perms 表示需要该权限才能访问的页面 -->
-				<!--  /admin/purchase/* = authc, roles[1001]
+				/admin/login.jsp = anon <!--anon:可以不需要登录-->
+				/logout.do = logout	<!-- 请求logout.do地址，shiro去清除session -->
+				/admin/production/* = authc, roles[1001]  <!-- authc  表示需要认证才能访问的页面  perms 表示需要该权限才能访问的页面 -->
+				/admin/purchase/* = authc, roles[1001]
 				/admin/warehouse/* = authc, roles[1001]
 				/admin/finance/* = authc, roles[1001]
-				/admin/** = authc  --> 
+				/admin/** = authc 
 			</p:value>
 		</p:property>
 		<!-- 将LogoutFilter注入shiro过滤器 -->

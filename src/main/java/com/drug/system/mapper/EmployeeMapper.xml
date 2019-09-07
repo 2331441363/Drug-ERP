@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.system.mapper.EmployeeMapper">
+
+	<!-- 查询员工 -->
+	<select id="getAllEmploye" parameterType="int" resultType="EmployeeDTO">
+		SELECT * FROM employee e join department d 
+		on e.departmentId = d.departmentId
+		<if test="_parameter != null and _parameter != 0">
+			WHERE emp_id = #{empId}
+		</if>
+	</select>
+	
+	
+	<!-- 搜索员工 -->
+	<select id="getSearchEmployee" ></select>
+</mapper>

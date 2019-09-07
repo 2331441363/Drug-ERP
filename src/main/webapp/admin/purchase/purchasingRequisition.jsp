@@ -20,9 +20,84 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
+<div id="form1" style="display: none;">
+<form class="layui-form" action="addPurchaseEmployee.do" method="post" >
+  <p>基本信息</p>
+  <table class="layui-table">
+  	<tr>
+  		<td>
+  			<div class="layui-inline">
+  			<label class="layui-form-label" style="font-size:13px;">申请员：</label>
+   			<div class="layui-input-inline">
+      			<select name="empId" id="empId" lay-verify="required" lay-search="" >
+      				<option value=""></option>
+      				<option value="1">zs</option>
+      			</select>
+    		</div>
+    		</div>
+		</td>
+  		<td>
+  		<label class="layui-form-label" style="font-size:13px;">申请部门：</label>
+   			<div class="layui-input-inline">
+      	<select name="departmentId" id="departmentId" lay-search="" lay-verify="required">
+          <option value=""></option>
+          <option value="1">layer</option>
+          <option value="2">form</option>
+          <option value="3">layim</option>
+          <option value="4">element</option>
+        </select>
+  			</div>
+    	</td>
+    	<td>
+  			<label class="layui-form-label" style="font-size:13px;">预计金额：</label>
+    			<div class="layui-input-block">
+      				<input name="purchaseAmount" id="purchaseAmount" class="layui-input" type="text" autocomplete="off" lay-verify="required">
+    			</div>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td colspan="3">
+  			<label class="layui-form-label" style="font-size:13px;">申请原因：</label>
+   			<div class="layui-input-block">
+      			<textarea class="layui-textarea" id="cause" name="cause" placeholder="请输入内容" lay-verify="required"></textarea>
+    		</div>
+  		</td>
+  	</tr>
+  </table>
+  <div class="layui-input-block" align="center">
+      <button class="layui-btn" lay-filter="demo1" id="submit" lay-submit="" lay-filter="login" >立即提交</button>
+  </div>
+
+</form>
+</div>
+
+
  <div style="display: none;" id="purchaseOrderDetails">
+ 	<form class="layui-form" action="addPurchaseRequestDetails.do" method="post" >
+ 		<table class="layui-table">
+ 			<tr>
+ 				<td><label class="layui-form-label" style="font-size:13px;">材料名称：</label>
+   			<div class="layui-input-inline">
+      			<select name="materialId" id="materialId" lay-verify="required" lay-search="" >
+      				<option value=""></option>
+      				<option value="1">zs</option>
+      			</select>
+    		</div></td>
+    		<td>
+    		<label class="layui-form-label" style="font-size:13px;">采购数量：</label>
+    			<div class="layui-input-block">
+      				<input name="number" id="number" class="layui-input" type="text" autocomplete="off" lay-verify="required">
+    			</div>
+    		</td>
+    		<td><input type="text" id="purchaseRequestId" name="purchaseRequestId" autocomplete="off"  style="display: none;"/>
+    		<button class="layui-btn" lay-filter="submit" lay-submit="" lay-filter="login" >添加</button></td>
+ 			</tr>
+ 		</table>
+ 	</form>
  	<table class="layui-hide" id="demo" lay-filter="demo"></table>
  </div>
+ 
+ 
  <div>
 <form class="layui-form" >
 <table style="width: 100%">
@@ -70,8 +145,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <table class="layui-hida" id="test" lay-filter="test"></table>
 
 
-<iframe id="addPurchasingRequisition" src="admin/purchase/addPurchasingRequisition.jsp" style="display: none;" frameborder="0" width="1000px;" height="500px"></iframe>
- 
  
  
 <script id="toolbarDemo" type="text/html">
@@ -91,64 +164,72 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 --> 
  
-<script>
-layui.use('table', function(){
-  var table = layui.table;
-  
+<script type="text/javascript">
+layui.use([ 'table', 'laydate', 'element','form','layer', 'layedit', 'laydate'], function(){
+	var layer = layui.layer;
+	var element = layui.element;
+	var table = layui.table;
+	var laydate = layui.laydate;
+	var form = layui.form;
+
   table.render({
     elem: '#test'
-    ,url:'admin/json/demo1.json'
+    ,url:'showPurchaseEmployee.do'
     ,toolbar: '#toolbarDemo'
     ,title: '用户数据表'
-    /* ,parseData:function(res){
-    	console.log(res);
-    	return{
-    		code: 0, //解析接口状态
-    		msg:"", //解析提示文本
-    		count: 1000, //解析数据长度
-    		data: res //解析数据列表
-    	}
-    } */
+    ,contentType: 'jsonp'
+    ,request: {
+        pageName: 'page' //页码的参数名称，默认：page
+        ,limitName: 'limit'
+    }
+    ,even : true
+    ,method : 'post'
+    ,page: true
+    
+    ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+    	limits:[10,20,30]//每页条数的选择项
+   	    ,limit:10 //一页显示多少条
+	}
     ,cols: [[
-    	,{field:'stuid', title:'ID', width:80,  sort: true}
-        ,{field:'stuName', title:'用户名', width:120, edit: 'text'}
-        ,{field:'stuAge', title:'邮箱', width:150, edit: 'text'}
-        ,{field:'stuSex', title:'性别', width:80, edit: 'text', sort: true}
-        ,{field:'claId', title:'城市', width:100}
-        ,{field:'sign', title:'签名'}
-        ,{field:'experience', title:'积分', width:80, sort: true}
-        ,{field:'ip', title:'IP', width:120}
-        ,{field:'logins', title:'登入次数', width:100, sort: true}
-        ,{field:'joinTime', title:'加入时间', width:120}
+    	,{field:'purchaseRequestId', title:'采购申请编号', width:80,  sort: true}
+        ,{field:'emp_name', title:'员工姓名', width:120}
+        ,{field:'departmentName', title:'所属部门', width:150}
+        ,{field:'auditStatus', title:'审核状态', width:120}
+        ,{field:'timeOfApplication', title:'申请时间', width:100}
+        ,{field:'purchaseAmount', title:'预计金额',width:100}
+        ,{field:'cause', title:'申请原因'}
         ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
     ]]
-    ,page: true
+    
   });
   
   //头工具栏事件
   table.on('toolbar(test)', function(obj){
     var checkStatus = table.checkStatus(obj.config.id);
+    
     switch(obj.event){
       case 'select':
     	  break;
       case 'add':
-    	  var layer = layui.layer;
+    	var layer = layui.layer;
   	    layer.open({
   	    	type: 1, 
-  	    	title:'详细信息',
-  	    	area: ['auto', 'auto'],
+  	    	title:'采购申请',
+  	    	area: ['1000px', '350px'],
   	    	offset: ['0px', '50px'],
-  	    	content: $('#addPurchasingRequisition') //这里content是一个普通的String
+  	    	content: $('#form1') //这里content是一个普通的String
   	    });
+  	    
     	  break;
     };
   });
   table.on('edit(test)', function(obj){
-	  console.log(obj.value); 
+	  
 	  alert(obj.value);
   });
   table.on('rowDouble(test)', function(obj){
 	    var layer = layui.layer;
+	    $('#purchaseRequestId').prop('value',obj.data.purchaseRequestId);
 	    layer.open({
 	    	type: 1, 
 	    	title:'详细信息',
@@ -156,7 +237,22 @@ layui.use('table', function(){
 	    	offset: ['0px', '50px'],
 	    	content: $('#purchaseOrderDetails') //这里content是一个普通的String
 	    });
-
+	    layui.use('table', function(){
+	  	  var table = layui.table;
+	  	  var tableIns =table.render({
+	  	    elem: '#demo'
+	  	    ,url:'selectByIdPurchaseRequest.do?id='+obj.data.purchaseRequestId
+	  	    ,title: '用户数据表'
+	  	    ,cols: [[
+	  	      {field:'purchaseRdId', title:'采集申请详情ID', fixed: 'left', unresize: true, sort: true}
+	  	      ,{field:'materialId', title:'材料id',edit: 'text'}
+	  	      ,{field:'number', title:'采购数量',  edit: 'text'}
+	  	      ,{field:'subtotal', title:'小计',  edit: 'text'}
+	  	    ]]
+	  	    ,page: true
+	  	  });
+	  	  
+	  	});
 	});
 
   //监听行工具事件
@@ -170,329 +266,68 @@ layui.use('table', function(){
       });
     }else if(obj.event==='edit'){
     	
-    	var layer = layui.layer;
-	    layer.open({
-	    	type: 1, 
-	    	title:'详细信息',
-	    	area: ['auto', 'auto'],
-	    	offset: ['0px', '50px'],
-	    	content: $('#addPurchasingRequisition') //这里content是一个普通的String
-	    });
+    	
     }
   });
   
-  layui.use('table', function(){
-	  var table = layui.table;
-	  table.render({
-	    elem: '#demo'
-	    ,url:'admin/json/demo1.json'
-	    ,title: '用户数据表'
-	    /* ,parseData:function(res){
-	    	console.log(res);
-	    	return{
-	    		code: 0, //解析接口状态
-	    		msg:"", //解析提示文本
-	    		count: 1000, //解析数据长度
-	    		data: res //解析数据列表
-	    	}
-	    } */
-	    ,cols: [[
-	      {type: 'checkbox', fixed: 'left'}
-	      ,{field:'stuid', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-	      ,{field:'stuName', title:'用户名', width:120, edit: 'text'}
-	      ,{field:'stuAge', title:'邮箱', width:150, edit: 'text'}
-	      ,{field:'stuSex', title:'性别', width:80, edit: 'text', sort: true}
-	      ,{field:'claId', title:'城市', width:100}
-	      ,{field:'sign', title:'签名'}
-	      ,{field:'experience', title:'积分', width:80, sort: true}
-	      ,{field:'ip', title:'IP', width:120}
-	      ,{field:'logins', title:'登入次数', width:100, sort: true}
-	      ,{field:'joinTime', title:'加入时间', width:120}
-	    ]]
-	    ,page: true
-	  });
-	  
-	});
-
-});
-
-
-
-</script>
-
-
-
-
-<script>
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
+  layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
   
-  //常规用法
-  laydate.render({
-    elem: '#test1'
-  });
   
-  //国际版
-  laydate.render({
-    elem: '#test1-1'
-    ,lang: 'en'
-  });
-  
-  //年选择器
-  laydate.render({
-    elem: '#test2'
-    ,type: 'year'
-  });
-  
-  //年月选择器
-  laydate.render({
-    elem: '#test3'
-    ,type: 'month'
-  });
-  
-  //时间选择器
-  laydate.render({
-    elem: '#test4'
-    ,type: 'time'
-  });
-  
-  //日期时间选择器
-  laydate.render({
-    elem: '#test5'
-    ,type: 'datetime'
-  });
-  
-  //日期范围
-  laydate.render({
-    elem: '#test6'
-    ,range: true
-  });
-  
-  //年范围
-  laydate.render({
-    elem: '#test7'
-    ,type: 'year'
-    ,range: true
-  });
-  
-  //年月范围
-  laydate.render({
-    elem: '#test8'
-    ,type: 'month'
-    ,range: true
-  });
-  
-  //时间范围
-  laydate.render({
-    elem: '#test9'
-    ,type: 'time'
-    ,range: true
-  });
-  
-  //日期时间范围
-  laydate.render({
-    elem: '#test10'
-    ,type: 'datetime'
-    ,range: true
-  });
-  
-  //自定义格式
-  laydate.render({
-    elem: '#test11'
-    ,format: 'yyyy年MM月dd日'
-  });
-  laydate.render({
-    elem: '#test12'
-    ,format: 'dd/MM/yyyy'
-  });
-  laydate.render({
-    elem: '#test13'
-    ,format: 'yyyyMMdd'
-  });
-  laydate.render({
-    elem: '#test14'
-    ,type: 'time'
-    ,format: 'H点m分'
-  });
-  laydate.render({
-    elem: '#test15'
-    ,type: 'month'
-    ,range: '~'
-    ,format: 'yyyy-MM'
-  });
-  laydate.render({
-    elem: '#test16'
-    ,type: 'datetime'
-    ,range: '到'
-    ,format: 'yyyy年M月d日H时m分s秒'
-  });
-  
-  //开启公历节日
-  laydate.render({
-    elem: '#test17'
-    ,calendar: true
-  });
-  
-  //自定义重要日
-  laydate.render({
-    elem: '#test18'
-    ,mark: {
-      '0-10-14': '生日'
-      ,'0-12-31': '跨年' //每年的日期
-      ,'0-0-10': '工资' //每月某天
-      ,'0-0-15': '月中'
-      ,'2017-8-15': '' //如果为空字符，则默认显示数字+徽章
-      ,'2099-10-14': '呵呵'
-    }
-    ,done: function(value, date){
-      if(date.year === 2017 && date.month === 8 && date.date === 15){ //点击2017年8月15日，弹出提示语
-        layer.msg('这一天是：中国人民抗日战争胜利72周年');
+  //创建一个编辑器
+  var editIndex = layedit.build('LAY_demo_editor');
+ 
+  //自定义验证规则
+  form.verify({
+    title: function(value){
+      if(value.length < 5){
+        return '标题至少得5个字符啊';
       }
     }
-  });
-  
-  //限定可选日期
-  var ins22 = laydate.render({
-    elem: '#test-limit1'
-    ,min: '2016-10-14'
-    ,max: '2080-10-14'
-    ,ready: function(){
-      ins22.hint('日期可选值设定在 <br> 2016-10-14 到 2080-10-14');
+    ,pass: [
+      /^[\S]{6,12}$/
+      ,'密码必须6到12位，且不能出现空格'
+    ]
+    ,content: function(value){
+      layedit.sync(editIndex);
     }
   });
   
-  //前后若干天可选，这里以7天为例
-  laydate.render({
-    elem: '#test-limit2'
-    ,min: -7
-    ,max: 7
-  });
-  
-  //限定可选时间
-  laydate.render({
-    elem: '#test-limit3'
-    ,type: 'time'
-    ,min: '09:30:00'
-    ,max: '17:30:00'
-    ,btns: ['clear', 'confirm']
-  });
-  
-  //同时绑定多个
-  lay('.test-item').each(function(){
-    laydate.render({
-      elem: this
-      ,trigger: 'click'
+  //监听指定开关
+  form.on('switch(switchTest)', function(data){
+    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+      offset: '6px'
     });
+    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
   });
   
-  //初始赋值
-  laydate.render({
-    elem: '#test19'
-    ,value: '1989-10-14'
-    ,isInitValue: true
+  //监听提交
+  form.on('submit(demo1)', function(data){
+	
   });
   
-  //选中后的回调
-  laydate.render({
-    elem: '#test20'
-    ,done: function(value, date){
-      layer.alert('你选择的日期是：' + value + '<br>获得的对象是' + JSON.stringify(date));
-    }
+  form.on('submit(submit)', function(data){
+	  $.ajax({
+		  url:'addPurchaseRequestDetails.do',
+		  type:'post',
+		  dataType:'json',
+		  data:data.field,
+		  success:function(back){
+			  if(back>0){
+				  window.location.reload();
+			  }else{
+				  alert('添加失败');
+			  }
+		  }
+	  });
+	  return false;
   });
   
-  //日期切换的回调
-  laydate.render({
-    elem: '#test21'
-    ,change: function(value, date){
-      layer.msg('你选择的日期是：' + value + '<br><br>获得的对象是' + JSON.stringify(date));
-    }
-  });
-  //不出现底部栏
-  laydate.render({
-    elem: '#test22'
-    ,showBottom: false
-  });
-  
-  //只出现确定按钮
-  laydate.render({
-    elem: '#test23'
-    ,btns: ['confirm']
-  });
-  
-  //自定义事件
-  laydate.render({
-    elem: '#test24'
-    ,trigger: 'mousedown'
-  });
-  
-  //点我触发
-  laydate.render({
-    elem: '#test25'
-    ,eventElem: '#test25-1'
-    ,trigger: 'click'
-  });
-  
-  //双击我触发
-  lay('#test26-1').on('dblclick', function(){
-    laydate.render({
-      elem: '#test26'
-      ,show: true
-      ,closeStop: '#test26-1'
-    });
-  });
-  
-  //日期只读
-  laydate.render({
-    elem: '#test27'
-    ,trigger: 'click'
-  });
-  
-  //非input元素
-  laydate.render({
-    elem: '#test28'
-  });
-  
-  //墨绿主题
-  laydate.render({
-    elem: '#test29'
-    ,theme: 'molv'
-  });
-  
-  //自定义颜色
-  laydate.render({
-    elem: '#test30'
-    ,theme: '#393D49'
-  });
-  
-  //格子主题
-  laydate.render({
-    elem: '#test31'
-    ,theme: 'grid'
-  });
-  
-  
-  //直接嵌套显示
-  laydate.render({
-    elem: '#test-n1'
-    ,position: 'static'
-  });
-  laydate.render({
-    elem: '#test-n2'
-    ,position: 'static'
-    ,lang: 'en'
-  });
-  laydate.render({
-    elem: '#test-n3'
-    ,type: 'month'
-    ,position: 'static'
-  });
-  laydate.render({
-    elem: '#test-n4'
-    ,type: 'time'
-    ,position: 'static'
-  });
-});
-</script>
 
+});
+
+
+</script>
 </body>
 </html>

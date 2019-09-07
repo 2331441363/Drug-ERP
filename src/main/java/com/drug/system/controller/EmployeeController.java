@@ -1,5 +1,8 @@
 package com.drug.system.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
@@ -9,8 +12,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.drug.dto.EmployeeDTO;
 import com.drug.entity.EmployeeDO;
 import com.drug.system.service.EmployeeService;
 
@@ -21,7 +26,15 @@ import com.drug.system.service.EmployeeService;
 */
 @Controller
 public class EmployeeController {
+	@Autowired
+	private EmployeeService employeeService;
 	
+	/**
+	 * 员工登录
+	 * @param employee 登录员工对象
+	 * @param session 会话
+	 * @return string 登录结果
+	 */
 	@RequestMapping("/login")
 	@ResponseBody
 	public String empLogin(EmployeeDO employee,HttpSession session) {
@@ -42,7 +55,23 @@ public class EmployeeController {
         } catch (UnknownAccountException e) {
             return "false";
         }
-
         return "true";
 	}
+	
+	
+	/**
+	 * 查询员工/员工详细信息
+	 */
+	@RequestMapping("/queryEmploye")
+	@ResponseBody
+	public List<EmployeeDTO> getAllEmploye(@RequestParam(required=false)Integer empId) {
+		List<EmployeeDTO> listEmployee = new ArrayList<>();
+		if(empId != null) {
+			listEmployee = employeeService.getAllEmploye(100);
+		}else {
+			listEmployee = employeeService.getAllEmploye(0);
+		}
+		return listEmployee;
+	}
+	
 }
