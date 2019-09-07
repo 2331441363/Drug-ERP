@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +13,6 @@
 <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-	<table class="layui-hide" id="test" lay-filter="test"></table>
-
 	<script type="text/javascript">
 		$(function() {
 			show();
@@ -22,7 +21,7 @@
 		function show() {
 			$
 					.ajax({
-						url : '../../selectAbandonedWarehouse.do',
+						url : '../../selectWarehouseType.do',
 						dataType : 'json',
 						success : function(back) {
 							var sum = "<div class='layui-input-inline'> <select name='warehouseName' id='warehouseName' layui-verify=''><option value=''>请选择一个仓库</option> ";
@@ -38,11 +37,12 @@
 		};
 	</script>
 
+
 	<script type="text/html" id="toolbarDemo">
 			<div class="layui-form-item" id="divs" name="divs">
 				<div class="layui-inline">
 					<div class="layui-input-inline">
-						<input type="text" id="abandonedWarehouseName" name="abandonedWarehouseName" required lay-verify="required" placeholder="请输入药物名称" autocomplete="off" class="layui-input">
+						<input type="text" id="finishedGoodsSheetName" name="finishedGoodsSheetName" required lay-verify="required" placeholder="请输入药物名称" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-inline">
@@ -53,10 +53,9 @@
 				</div>
 			</div>
 </script>
-
+	<table class="layui-hide" id="test" lay-filter="test"></table>
 	<script type="text/html" id="barDemo">
-			<a class="layui-btn layui-btn-xs" lay-event="edit">详情</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">修改</a>
 </script>
 
 
@@ -67,33 +66,29 @@
 
 			table.render({
 				elem : '#test',
-				url : '../../selectAbandonedWarehouseUBW.do',
+				url : '../../selectFinishedGoodsSheet.do',
 				toolbar : '#toolbarDemo',
 				title : '用户数据表',
 				cols : [ [ {
 					type : 'checkbox',
 					fixed : 'left'
 				}, {
-					field : 'abandonedWarehouseId',
+					field : 'finishedGoodsSheetId',
 					title : 'ID',
 					fixed : 'left',
-					unresize : true
+					unresize : true,
 				}, {
-					field : 'abandonedWarehouseName',
+					field : 'finishedGoodsSheetName',
 					title : '药物名称 '
 				}, {
-					field : 'abandonedWarehouseQuantity',
-					title : '药物数量'
-				}, {
-					field : 'abandonedWarehouseType',
+					field : 'finishedGoodsSheetType',
 					title : '药物类型'
+				}, {
+					field : 'finishedGoodsSheetQuantity',
+					title : '药物数量'
 				}, {
 					field : 'warehouseName',
 					title : '入库仓库'
-				}, {
-					fixed : 'right',
-					title : '操作',
-					toolbar : '#barDemo'
 				} ] ],
 				page : true
 			});
@@ -104,13 +99,13 @@
 				switch (obj.event) {
 				case 'Cxknmsl':
 					var warehouseName = $("#warehouseName").val();
-					var abandonedWarehouseName = $("#abandonedWarehouseName")
+					var finishedGoodsSheetName = $("#finishedGoodsSheetName")
 							.val();
 					show();
 					table.reload('test', {
 						where : {
 							warehouseName : warehouseName,
-							abandonedWarehouseName : abandonedWarehouseName
+							finishedGoodsSheetName : finishedGoodsSheetName
 						}
 					});
 					break;

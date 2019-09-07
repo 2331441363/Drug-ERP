@@ -22,7 +22,7 @@
 		function show() {
 			$
 					.ajax({
-						url : '../../selectAbandonedWarehouse.do',
+						url : '../../selectMaterialsWarehouseype.do',
 						dataType : 'json',
 						success : function(back) {
 							var sum = "<div class='layui-input-inline'> <select name='warehouseName' id='warehouseName' layui-verify=''><option value=''>请选择一个仓库</option> ";
@@ -42,7 +42,7 @@
 			<div class="layui-form-item" id="divs" name="divs">
 				<div class="layui-inline">
 					<div class="layui-input-inline">
-						<input type="text" id="abandonedWarehouseName" name="abandonedWarehouseName" required lay-verify="required" placeholder="请输入药物名称" autocomplete="off" class="layui-input">
+						<input type="text" id="MaterialsWarehouseName" name="MaterialsWarehouseName" required lay-verify="required" placeholder="请输入药物名称" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-inline">
@@ -60,6 +60,7 @@
 </script>
 
 
+	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 	<script>
 		layui.use('table', function() {
@@ -67,33 +68,29 @@
 
 			table.render({
 				elem : '#test',
-				url : '../../selectAbandonedWarehouseUBW.do',
+				url : '../../selectMaterialsWarehouse.do',
 				toolbar : '#toolbarDemo',
 				title : '用户数据表',
 				cols : [ [ {
 					type : 'checkbox',
 					fixed : 'left'
 				}, {
-					field : 'abandonedWarehouseId',
+					field : 'MaterialsWarehouseId',
 					title : 'ID',
+					width : 80,
 					fixed : 'left',
-					unresize : true
 				}, {
-					field : 'abandonedWarehouseName',
-					title : '药物名称 '
+					field : 'MaterialsWarehouseName',
+					title : '药物名称'
 				}, {
-					field : 'abandonedWarehouseQuantity',
+					field : 'MaterialsWarehouseQuantity',
 					title : '药物数量'
 				}, {
-					field : 'abandonedWarehouseType',
+					field : 'MaterialsWarehouseType',
 					title : '药物类型'
 				}, {
 					field : 'warehouseName',
 					title : '入库仓库'
-				}, {
-					fixed : 'right',
-					title : '操作',
-					toolbar : '#barDemo'
 				} ] ],
 				page : true
 			});
@@ -104,13 +101,13 @@
 				switch (obj.event) {
 				case 'Cxknmsl':
 					var warehouseName = $("#warehouseName").val();
-					var abandonedWarehouseName = $("#abandonedWarehouseName")
+					var materialsWarehouseName = $("#MaterialsWarehouseName")
 							.val();
 					show();
 					table.reload('test', {
 						where : {
 							warehouseName : warehouseName,
-							abandonedWarehouseName : abandonedWarehouseName
+							materialsWarehouseName : materialsWarehouseName
 						}
 					});
 					break;
@@ -136,7 +133,5 @@
 			});
 		});
 	</script>
-
 </body>
 </html>
-

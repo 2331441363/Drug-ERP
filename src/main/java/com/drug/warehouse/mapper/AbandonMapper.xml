@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.drug.warehouse.mapper.AbandonMapper">
+	<resultMap type="WarehouseDO"
+		id="WarehouseDOAndAbandonDO">
+		<result column="warehouse_id" property="warehouseId" />
+		<result column="warehouse_type" property="warehouseType" />
+		<result column="warehouse_name" property="warehouseName" />
+		<collection property="abandonedWarehouseDOLits"
+			ofType="AbandonedWarehouseDO">
+			<result column="abandoned_warehouse_id"
+				property="AbandonedWarehouseId" />
+			<result column="abandoned_warehouse_name"
+				property="AbandonedWarehouseName" />
+			<result column="abandoned_warehouse_quantity"
+				property="AbandonedWarehouseQuantity" />
+			<result column="abandoned_warehouse_type"
+				property="AbandonedWarehouseType" />
+			<result column="warehouse_id" property="warehouseId" />
+		</collection>
+	</resultMap>
+	<!-- 查询原材料仓库所有药物 -->
+	<select id="selectAbandonedWarehouseUBW"
+		resultMap="WarehouseDOAndAbandonDO " parameterType="Map">
+		SELECT *
+		from abandoned_warehouse a
+		inner join warehouse w
+		on
+		a.warehouse_id=w.warehouse_id
+		<if test="warehouseName!=null and warehouseName!=''">
+			where w.warehouse_name=#{warehouseName}
+			<if
+				test="abandonedWarehouseName!=null and abandonedWarehouseName!=''">
+				and a.abandoned_warehouse_name=#{abandonedWarehouseName}
+			</if>
+		</if>
+		<if test="warehouseName==null or warehouseName==''">
+			<if
+				test="abandonedWarehouseName!=null and abandonedWarehouseName!=''">
+				where
+				a.abandoned_warehouse_name=#{abandonedWarehouseName}
+			</if>
+		</if>
+		LIMIT
+		#{page},#{rows}
+	</select>
+
+	<!-- 查询出原材料数据总行数 -->
+	<select id="getAbaCount" resultType="Int">
+		SELECT count(*) from
+		abandoned_warehouse
+	</select>
+
+	<!-- 查询出所有原材料仓库 -->
+	<select id="selectAbandonedWarehouse"
+		resultType="WarehouseDO">
+		SELECT * from warehouse
+		where warehouse_type='废弃仓库'
+	</select>
+</mapper>

@@ -25,7 +25,7 @@ public class WarehouseController {
 	 * 查询所有仓库信息
 	 */
 	@RequestMapping("/getWarehouse.do")
-	public @ResponseBody Map<String, Object> getWarehouse(int page, int limit,String WarehouseType) {
+	public @ResponseBody Map<String, Object> getWarehouse(int page, int limit, String WarehouseType) {
 		Map<String, Object> map1 = new HashMap<String, Object>();
 		int page1 = (page - 1) * limit;
 		map1.put("page", page1);
@@ -64,6 +64,23 @@ public class WarehouseController {
 			return "redirect:/admin/warehouse/Warehouse.jsp";
 		} else {
 			// 新增失败后重新查询数据
+			return "redirect:/admin/warehouse/Warehouse.jsp";
+		}
+	}
+
+	/**
+	 * 修改仓库管理信息
+	 */
+	@RequestMapping("/updatewarehouse.do")
+	public String updatewarehouse(String warehouseName, int warehouseId) {
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("warehouseName", warehouseName);
+		map2.put("warehouseId", warehouseId);
+		//判断修改数量
+		int row=warehouseService.updatewarehouse(map2);
+		if(row>0) {
+			return "redirect:/admin/warehouse/Warehouse.jsp";
+		}else {
 			return "redirect:/admin/warehouse/Warehouse.jsp";
 		}
 	}

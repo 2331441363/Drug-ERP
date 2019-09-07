@@ -17,4 +17,9 @@ public interface FinishedGoodsSheetMapper {
 	 * 查询成品仓库总行数
 	 */
 	public int getFinCount();
+
+	/**
+	 * 查询出所有成品仓库
+	 */
+	public List<WarehouseDO> selectWarehouseType();
 }
