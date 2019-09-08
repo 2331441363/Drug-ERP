@@ -2,7 +2,9 @@ package com.drug.system.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.drug.dto.EmployeeDTO;
@@ -20,7 +22,7 @@ public interface EmployeeMapper {
 	 * @param empUserId 员工账号
 	 * @return 员工对象
 	 */
-	@Select("SELECT * FROM employee WHERE emp_user_id = #{empUserId}")
+	@Select("SELECT * FROM employee WHERE emp_user_id = #{empUserId} and is_deleted=0")
 	EmployeeDO getEmployeByUserId(String empUserId);
 
 	
@@ -31,5 +33,21 @@ public interface EmployeeMapper {
 	 */
 	List<EmployeeDTO> getAllEmploye(int empId);
 	
+
+	/**
+	 * 逻辑删除用户（修改）
+	 * @param empId 员工id
+	 * @return 受影响行数
+	 */
+	@Update("update employee set is_deleted = 1 where emp_id =#{empId}")
+	int updateByDeleteEmployee(int empId);
+	
+	
+	/**
+	 * 新增员工
+	 * @param employeeDo 新增员工对象
+	 * @return 受影响行数
+	 */
+	int insertByEmployee(EmployeeDO employeeDo);
 	
 }

@@ -17,7 +17,7 @@
 </style>
 <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
-<body>
+<body style="border:0px solid red;">
 
 
 	<table class="layui-hide" id="test" lay-filter="test"></table>
@@ -241,8 +241,7 @@
 				<div class="layui-input-inline">
 					<input type="text" name="empPassword" lay-verify="required"
 						placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
-				</div></td>
-			</tr>
+				</div></td>			</tr>
 			<tr>
 				<td><label style="margin: 0 10px 0 20px; font-size: 13px;">员工照片</label></td>
 				<td>

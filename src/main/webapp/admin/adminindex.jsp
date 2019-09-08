@@ -30,6 +30,7 @@
 			}
 		</script>
   <style type="text/css">
+
 	body{
 		margin:0px;
 		padding:0px;
@@ -38,19 +39,19 @@
   	/*顶部*/
   	.layui-header {
     	z-index: 1000;
-   	 	height: 75px;
+   	 	height: 70px;
    	 	padding:auto 30px;
    	 	background: -moz-linear-gradient(right,#9A2EFE,#5d20db,#1e9cf0);
-   	 	box-shadow: 3px 3px 5px #BDBDBD; 
+   	 	box-shadow: 3px 2px 5px #BDBDBD; 
 	}
 	
 	
 	/*左边导航*/
 	.layui-layout-admin .layui-side {
-    	top: 75px;
+    	top: 70px;
     	width: 250px;
     	overflow-x: hidden;
-		box-shadow:1px 1px 6px #BDBDBD;
+		box-shadow:1px 1px 3px #BDBDBD;
 		/*第一个参数是x轴阴影段长度
 			第二个参数是y轴阴影段长度
 			第三个参数是往四周阴影段长度
@@ -77,7 +78,7 @@
 	/*中间内容*/
 	.layui-layout-admin .layui-body {
     	position: fixed;
-    	top: 75px;
+    	top: 70px;
     	bottom:0px;
     	background:#FAFAFA;
 	}
@@ -122,7 +123,7 @@
 	/*顶部中间内容*/
 	.layui-layout-admin .layui-header .layui-nav {
     	background: 0 0;
-    	margin-top: 15px;
+    	margin-top: 10px;
     	margin-left:50px;
 	}
 	
@@ -181,7 +182,7 @@
 	
 	/*一级菜单文字位置*/
 	.layui-nav-item.layui-nav-itemed a span{
-		margin-left:10px;
+		margin-left:0px;
 	}
 	
 	/*tab选项卡*/
@@ -206,7 +207,13 @@
 
 
 	.layui-layout-admin .layui-header .layui-nav {
-    	margin-left: 35px;
+    	margin-left: 30px;
+	}
+	
+
+	.layui-tab-content {
+    	padding-top: 0px;
+    	padding-right: 0px;
 	}
   </style>
 
@@ -255,13 +262,13 @@
             
         </ul>
         
-    </div>
+    </div>k
 </div>
 
   
   <div class="layui-body" id="content">
     <!-- 内容主体区域 -->
-    <div class="layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="docDemoTabBrief">
+    <div class="layui-tab layui-tab-card" lay-allowClose="true" style="height:100%;" lay-filter="docDemoTabBrief">
   			<ul class="layui-tab-title">
   				<li class="layui-this" lay-id="index.jsp"><i class="layui-icon layui-icon-home " ></i></li>
   			</ul>
@@ -324,7 +331,7 @@ layui.use('element', function(){
 					str += '<li class="layui-nav-item"><a  href="javascript:;" ><i class="layui-icon '+jack[i].menuIcon+'" style="font-size:16px;"></i> <span style="margin-left:10px;font-weight:bold;">'+jack[i].menuName+'</span></a><dl class="layui-nav-child">';
 					for(var j = 0;j < jack.length;j++){
 						if(jack[i].menuId == jack[j].menuParent){
-							str +='<dd><a href="javascript:;"  name="'+jack[j].menuURL+'" class="'+jack[j].menuName+'"> <span >'+jack[j].menuName+'</span></a></dd>';
+							str +='<dd><a href="javascript:;"  name="'+jack[j].menuURL+'" class="'+jack[j].menuName+'"> <span ><i class="layui-icon layui-icon-right" name ="ic" style="font-size:13px;margin-right:15px;"></i>'+jack[j].menuName+'</span></a></dd>';
 						}
 					}
 				}
@@ -337,11 +344,15 @@ layui.use('element', function(){
 				$(".layui-nav-child dd a span").each(function(){
 					if($(this).html() == te){
 						$(this).css("color","white");
+						$(this).children("i").css("color","white");
 					}else{
 						$(this).css("color","#595b5c");
+						$(this).children("i").css("color","#595b5c");
 					}
 				});
 			});
+			
+			
 		}
 	});
     

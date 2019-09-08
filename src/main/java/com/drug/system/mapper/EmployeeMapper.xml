@@ -2,16 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.drug.system.mapper.EmployeeMapper">
 
-	<!-- 查询员工 -->
-	<select id="getAllEmploye" parameterType="int" resultType="EmployeeDTO">
+	<!-- 查询所有员工/单个员工详情/搜索员工 -->
+	<select id="getAllEmploye" parameterType="Map" resultType="EmployeeDTO">
 		SELECT * FROM employee e join department d 
-		on e.departmentId = d.departmentId
-		<if test="_parameter != null and _parameter != 0">
-			WHERE emp_id = #{empId}
+		on e.departmentId = d.departmentId WHERE is_deleted = 0 
+		<if test="empId != null and empId != 0 and empId != ''">
+			 and emp_id = #{empId}
+		</if>
+		<if test="">
+			and 
 		</if>
 	</select>
 	
-	
-	<!-- 搜索员工 -->
-	<select id="getSearchEmployee" ></select>
+	<!-- 新增员工 -->
+	<insert id="insertByEmployee" parameterType="EmployeeDO">
+		INSERT INTO employee 
+		VALUES(0,#{empUserId},#{empPassword},#{empName}
+		,#{empAge},#{empSex},#{empCard},#{empPhone},#{empAddress}
+		,#{empSalary},#{empPhoto},0,#{departmentId})
+	</insert>
+
 </mapper>
