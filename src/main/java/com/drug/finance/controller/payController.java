@@ -2,6 +2,7 @@ package com.drug.finance.controller;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,20 +11,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drug.entity.Pay;
 import com.drug.finance.service.payService;
+import com.drug.util.ToolClass;
 @Controller
 public class payController {
 	@Autowired
 	private payService payservice;	
-	
+		
 	/**
 	 * 查询付款单
 	 * @return
 	 */
-	@RequestMapping("/getPays.do")
-	public  List<Pay> getPays() {
+	@RequestMapping("/listPay")
+	@ResponseBody
+	public  Map<String,Object> listPay() {
+		System.out.println("cccccccc");
 		//查询所有付款单
 		List<Pay> listPay =payservice.getPay();
-		return listPay;
+		System.out.println("vvvvvvvvv");
+		Map<String,Object> map = ToolClass.responseByData();
+		map.put("data", listPay);
+		return map;
 		
 	}
 	
@@ -31,9 +38,9 @@ public class payController {
 	 * 新增付款单
 	 * @param pay 付款单
 	 */
-	@RequestMapping("/addPays.do")
+	@RequestMapping("/insertPay")
 	@ResponseBody
-	public String addPays(Pay pay) {
+	public String insertPay(Pay pay) {
 		payservice.addPay(pay);
 		return "ok";
 		

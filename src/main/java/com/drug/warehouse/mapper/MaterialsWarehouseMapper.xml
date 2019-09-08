@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.drug.warehouse.mapper.MaterialsWarehouseMapper">
+	<resultMap type="WarehouseDO"
+		id="WarehouseDOAndMaterialsWarehouse">
+		<result column="warehouse_id" property="warehouseId" />
+		<result column="warehouse_type" property="warehouseType" />
+		<result column="warehouse_name" property="warehouseName" />
+		<collection property="materialsWarehouseDOList"
+			ofType="MaterialsWarehouseDO">
+			<result column="materials_warehouse_id"
+				property="MaterialsWarehouseId" />
+			<result column="materials_warehouse_name"
+				property="MaterialsWarehouseName" />
+			<result column="materials_warehouse_quantity"
+				property="MaterialsWarehouseQuantity" />
+			<result column="materials_warehouse_type"
+				property="MaterialsWarehouseType" />
+			<result column="warehouse_id" property="warehouseId" />
+		</collection>
+	</resultMap>
+	<!-- 查询原材料仓库所有药物 -->
+	<select id="selectMaterialsWarehouse"
+		resultMap="WarehouseDOAndMaterialsWarehouse" parameterType="Map">
+		SELECT *
+		from materials_warehouse m
+		inner join warehouse w
+		on
+		m.warehouse_id=w.warehouse_id
+		<if test="warehouseName!=null and warehouseName!=''">
+			where w.warehouse_name=#{warehouseName}
+			<if
+				test="materialsWarehouseName!=null and materialsWarehouseName!=''">
+				and m.materials_warehouse_name=#{materialsWarehouseName}
+			</if>
+		</if>
+		<if test="warehouseName==null or warehouseName==''">
+			<if
+				test="materialsWarehouseName!=null and materialsWarehouseName!=''">
+				where
+				m.materials_warehouse_name=#{materialsWarehouseName}
+			</if>
+		</if>
+		LIMIT
+		#{page},#{rows}
+	</select>
+
+	<!-- 查询出原材料数据总行数 -->
+	<select id="getMatCount" resultType="Int">
+		SELECT count(*) from
+		materials_warehouse
+	</select>
+
+	<!-- 查询出所有原材料仓库 -->
+	<select id="selectMaterialsWarehouseype"
+		resultType="WarehouseDO">
+		SELECT * from warehouse
+		where warehouse_type='原材料仓库'
+	</select>
+</mapper>

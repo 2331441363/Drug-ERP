@@ -93,6 +93,11 @@ public class PurchaseEmployeeDO {
 		this.purchaseAmount = purchaseAmount;
 		this.cause = cause;
 	}
+	public PurchaseEmployeeDO() {
+		super();
+	}
+	
+	
 	
 	
 	

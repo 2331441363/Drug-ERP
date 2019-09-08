@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.drug.entity.Pay;
-@Service
 public interface payService {
 	/**
 	 * 查询付款单 

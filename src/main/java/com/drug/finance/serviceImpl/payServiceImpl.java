@@ -5,11 +5,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.drug.entity.Pay;
 import com.drug.finance.mapper.payMapper;
 import com.drug.finance.service.payService;
-@Repository
+@Service
 public class payServiceImpl implements payService{
 @Autowired
 	private payMapper paymapper;

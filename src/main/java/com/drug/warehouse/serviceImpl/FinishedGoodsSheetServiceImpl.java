@@ -32,4 +32,12 @@ public class FinishedGoodsSheetServiceImpl implements FinishedGoodsSheetService 
 		return finishedGoodsSheetMapper.getFinCount();
 	}
 
+	/**
+	 * 查询出所有成品仓库
+	 */
+	@Override
+	public List<WarehouseDO> selectWarehouseType() {
+		return finishedGoodsSheetMapper.selectWarehouseType();
+	}
+
 }

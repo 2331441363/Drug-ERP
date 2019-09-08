@@ -31,5 +31,5 @@ public class MaterialsWarehouseDO {
 	/**
 	 * 仓库管理信息表id
 	 */
-	private int WarehouseId;
+	private int warehouseId;
 }
