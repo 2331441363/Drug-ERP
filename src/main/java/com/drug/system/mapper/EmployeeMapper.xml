@@ -4,14 +4,22 @@
 
 	<!-- 查询所有员工/单个员工详情/搜索员工 -->
 	<select id="getAllEmploye" parameterType="Map" resultType="EmployeeDTO">
-		SELECT * FROM employee e join department d 
-		on e.departmentId = d.departmentId WHERE is_deleted = 0 
-		<if test="empId != null and empId != 0 and empId != ''">
-			 and emp_id = #{empId}
+		SELECT * FROM employee e 
+		JOIN department d 
+		ON e.departmentId = d.departmentId 
+		WHERE e.is_deleted = 0 
+		<if test="employee.empId != null and employee.empId != ''">
+			 AND emp_id like CONCAT('%',#{employee.empId},'%')
 		</if>
-		<if test="">
-			and 
+		
+		<if test="employee.empUserId != null and employee.empUserId != ''">
+			 AND emp_user_id like CONCAT('%',#{employee.empUserId},'%')
 		</if>
+		
+		<if test="employee.empName != null and employee.empName != ''">
+			 AND emp_name like CONCAT('%',#{employee.empName},'%')
+		</if>
+		LIMIT #{beginRow},#{endRow}
 	</select>
 	
 	<!-- 新增员工 -->
@@ -22,4 +30,26 @@
 		,#{empSalary},#{empPhoto},0,#{departmentId})
 	</insert>
 
+	
+	<!-- 得到总行数 -->
+	<select id="getSumEmployee" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*) FROM employee e 
+		JOIN department d 
+		ON e.departmentId = d.departmentId 
+		WHERE e.is_deleted = 0 
+		<if test="employee != null">
+			<if test="employee.empId != null and employee.empId != ''">
+			 	AND emp_id like CONCAT('%',#{employee.empId},'%')
+			</if>
+		
+			<if test="employee.empUserId != null and employee.empUserId != ''">
+				AND emp_user_id like CONCAT('%',#{employee.empUserId},'%')
+			</if>
+		
+			<if test="employee.empName != null and employee.empName != ''">
+			 	AND emp_name like CONCAT('%',#{employee.empName},'%')
+			</if>
+		</if>
+		
+	</select>
 </mapper>

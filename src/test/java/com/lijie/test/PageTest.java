@@ -1,6 +1,6 @@
 package com.lijie.test;
 
-import java.util.List;
+
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.drug.dto.EmployeeDTO;
+import com.drug.entity.DayPlanDO;
+import com.drug.production.service.DayPlanService;
 import com.drug.system.service.EmployeeService;
 
 /**
@@ -24,9 +25,14 @@ public class PageTest {
 	@Autowired
 	private EmployeeService employeeService;
 	
+	@Autowired
+	private DayPlanService dayPlanService;
+	
 	@Test
-	public void getAllEmploye() {
-		List<EmployeeDTO> listEmployee = employeeService.getAllEmploye(100);
-		listEmployee.forEach(System.out::println);
+	public void insertByDayPlan() {
+		DayPlanDO dayPlanDO = new DayPlanDO();
+		dayPlanDO.setPlanId("157052596");
+		dayPlanService.insertByDayPlan(dayPlanDO);
 	}
+
 }

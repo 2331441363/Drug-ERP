@@ -18,14 +18,14 @@
 
  
 <table class="layui-hide" id="test" lay-filter="test"></table>
-        <shiro:hasRole name="1001">
+        <shiro:hasRole name="1001"></shiro:hasRole>
 	<script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container" style="padding-left:20px;">
     <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="getCheckData"><i class="layui-icon layui-icon-add-1"></i>新增部门 </button>
   </div>
 	
 </script>
-</shiro:hasRole>
+
 <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">管理权限</a>
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -115,21 +115,25 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
       layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
     }
   });
-  table.render({
+  var tableIns = table.render({
     elem: '#test'
-    ,url:'json/demo1.json'
+    ,url:'../queryDepartmentPage.do'
     ,toolbar: '#toolbarDemo'
-    ,title: '领料单'
+    ,title: '部门表'
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
-      ,{field:'id', title:'部门编号', unresize:true}
-      ,{field:'username', title:'部门名称',unresize:true}
-      ,{field:'sex', title:'描述', unresize:true}
+      ,{field:'departmentId', title:'部门编号', unresize:true}
+      ,{field:'departmentName', title:'部门名称',unresize:true}
+      ,{field:'departmentDes', title:'描述', unresize:true}
       ,{
 		fixed: 'right', align:'center', toolbar: '#barDemo',unresize:true
       }
     ]]
-    ,page: true
+    ,page: {
+        limit: 5,//每页显示的条数
+        theme: '#1E9FFF',
+        limits: [5, 10],//每页条数的选择项
+    }
   });
   
   
@@ -157,17 +161,37 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
 		
 	} else if(obj.event === 'del'){
       layer.confirm('确认删除该部门吗', function(index){
-        obj.del();
         layer.close(index);
+        $.ajax({
+		    url:'../deleteDepartment.do',
+		    data:"departmentId="+data.departmentId,
+		    dataType:'html',
+		    success:function(data){
+		 		if(data == "false"){
+		 			layer.msg('删除失败',{icon: 5});
+		 		}else{
+		 			layer.close(index);
+		 			layer.msg('删除成功',{icon: 6});
+		 			tableIns.reload({
+						page: {
+						    curr: 1 //重新从第 1 页开始
+						  }
+						});
+		 		}
+		 		
+		 		
+		    }
+		})
       });
     } else if(obj.event === 'edit'){
     	
     	//formTest 即 class="layui-form" 所在元素对应的 lay-filter="" 对应的值
     	form.val("formAuthority", {
-    	  "id": "21321321" // "name": "value"
-    	  ,"name": "销售部门"
-    	  ,"des": "我爱layui"
+    		departmentId: data.departmentId // "name": "value"
+    	  ,departmentName: data.departmentName
+    	  ,departmentDes: data.departmentDes
     	})
+    	
     	
     	var index = layer.open({
 			title : '编辑部门',//标题
@@ -177,7 +201,26 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
 			btn: ['确认', '取消'],
 			yes: function(index, layero){
 				layer.close(index);
-				layer.msg('编辑成功');
+				$.ajax({
+				    url:'../updateDepartment.do',
+				    data:$("#formIdOne").serialize(),
+				    dataType:'html',
+				    success:function(data){
+				 		if(data == "false"){
+				 			layer.msg('修改失败',{icon: 5});
+				 		}else{
+				 			layer.close(index);
+				 			layer.msg('修改成功',{icon: 6});
+				 			tableIns.reload({
+								page: {
+								    curr: 1 //重新从第 1 页开始
+								  }
+								});
+				 		}
+				 		
+				 		
+				    }
+				})
 			}
 			,btn2: function(index, layero){
 				  layer.close(index);
@@ -201,8 +244,33 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
 				offset: ['15%', '35%'],//设置位移
 				btn: ['确认', '取消'],
 				yes: function(index, layero){
-					layer.close(index);
-					layer.msg('新增成功');
+					
+					$.ajax({
+					    url:'../insertDepartment.do',
+					    data:$("#formIdOne").serialize(),
+					    dataType:'html',
+					    success:function(data){
+					 		if(data == "false"){
+					 			layer.msg('新增失败',{icon: 5});
+					 		}else{
+					 			layer.close(index);
+					 			layer.msg('新增成功',{icon: 6});
+					 			tableIns.reload({
+									  where: { //设定异步数据接口的额外参数，任意设
+									    empId: $("#empId").val()
+									    ,empUserId: $("#empUserId").val()
+									    ,empName: $("#empName").val()
+									  }
+									  ,page: {
+									    curr: 1 //重新从第 1 页开始
+									  }
+									});
+					 		}
+					 		
+					 		
+					    }
+					})
+					
 				}
 				,btn2: function(index, layero){
 					  layer.close(index);
@@ -224,19 +292,19 @@ layui.use(['table','laydate','form','tree', 'util'], function(){
 			<div class="layui-input-inline">
 				<label style="margin:0 10px 0 20px;font-size:13px;">部门编号</label>
 				<div class="layui-input-inline">
-      				<input type="text" name="id" lay-verify="required" disabled placeholder="自动生成" autocomplete="off" class="layui-input">
+      				<input type="text" name="departmentId" lay-verify="required" readonly placeholder="自动生成" autocomplete="off" class="layui-input">
     			</div>
 			</div>
 			<div class="layui-input-inline" style="margin-top:10px;">
 				<label style="margin:0 10px 0 20px;font-size:13px;">部门名称</label>
 				<div class="layui-input-inline">
-      				<input type="text" name="name" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+      				<input type="text" name="departmentName" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
     			</div>
 			</div>
 			<div class="layui-input-inline" style="margin-top:10px;">
 				<label style="margin:0 10px 0 20px;font-size:13px;">部门描述</label>
 				<div class="layui-input-inline">
-      				<textarea name="des" required lay-verify="required" cols="25px" placeholder="请输入部门描述" class="layui-textarea"></textarea>
+      				<textarea name="departmentDes" required lay-verify="required" cols="25px" placeholder="请输入部门描述" class="layui-textarea"></textarea>
     			</div>
 			</div>
 			</form>

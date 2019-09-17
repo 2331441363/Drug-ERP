@@ -46,31 +46,37 @@ layui.use(['table','form','laydate'], function(){
   var table = layui.table;
   var form = layui.form;
   var laydate = layui.laydate;
-//常规用法
+	//常规用法
 	laydate.render({
 		elem : '#test5'
 	});
-  table.render({
+	
+  var tableIns = table.render({
     elem: '#test'
-    ,url:'../json/demo1.json'
+    ,url:'../../getAllOrderPlan.do'
     ,toolbar: '#toolbarDemo'
     ,title: '生产订单'
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
-      ,{field:'id', title:'生产订单号', unresize:true}
-      ,{field:'username', title:'生产总数量',unresize:true}
-      ,{field:'email', title:'生产总成本',unresize:true}
-      ,{field:'username', title:'完成量',unresize:true}
-      ,{field:'experience', title:'负责人', unresize:true}
-      ,{field:'experience', title:'订单生成时间', unresize:true}
-      ,{field:'sex', title:'生产状态', unresize:true}
-      ,{field:'sex', title:'领料状态', unresize:true}
-      ,{field:'sex', title:'审核状态', unresize:true}
+      ,{field:'orderPlanId', title:'生产订单号', unresize:true}
+      ,{field:'dayPlanId', title:'日计划编号',unresize:true}
+      ,{field:'empName', title:'负责人',unresize:true}
+      ,{field:'orderPlanTime', title:'创建时间',unresize:true}
+      ,{field:'orderState', title:'生产状态', unresize:true}
+      ,{field:'isPicking', title:'领料状态', unresize:true}
+      ,{field:'orderEntryState', title:'入库状态', unresize:true}
+      ,{field:'auditState', title:'审核状态', unresize:true}
+      ,{field : 'orderPlanNumber',title : '计划生产数',align : 'center',unresize : true}
+      ,{field : 'orderDetailNumber',title : '已生产数量',align : 'center',unresize : true}
       ,{
 		fixed: 'right', width:145, align:'center', toolbar: '#barDemo',unresize:true
       }
-    ]]
-    ,page: true
+    ]],
+    page: {
+        limit: 5,//每页显示的条数
+        theme: '#1E9FFF',
+        limits: [5, 10,20]//每页条数的选择项
+    }
   });
   
   
@@ -82,8 +88,8 @@ layui.use(['table','form','laydate'], function(){
     switch(obj.event){
       case 'getCheckData':
     	  if(data.length == 1){
-				//判断订单审核状态
-				if(data[0].sex == '男'){
+				//判断月计划审核状态
+				if(data[0].auditState == 0){
 					var index2 = layer.confirm('你确认审核该生产订单？', {
 						  btn: ['确认', '取消'] //可以无限个按钮
 						  ,btn2: function(index, layero){
@@ -94,37 +100,54 @@ layui.use(['table','form','laydate'], function(){
 							var index88 = layer.open({
 								  type: 1,
 								  shade: 0.25,
-								  area: ['400px', '350px'],
+								  area: ['400px', '400px'],
 								  content: $('#nameAndTimeDiv2'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
 								  success: function(layero, index){
 									  form.render();
+									  
 									  },
 								  btn: ['确认', '取消'],
 								  yes: function(layero){
-									  layer.close(index88);
-									  layer.msg('订单审核成功');
+									  $("#hiddenPlanId").val(data[0].orderPlanId);
+									  $.ajax({
+										  url:'../../auditOrderPlan.do',
+										  type:'post',
+										  data:$("#formIdOne2").serialize(),
+										  dataType:'html',
+										  success:function(back){
+											  if(back == 'true'){
+												  layer.msg('订单审核成功');
+												  tableIns.reload();
+											  }else{
+												  layer.msg('订单审核失败');
+											  }
+											  layer.close(index88);
+										  }
+									
+									  });
 									}
 								  ,btn2: function(index, layero){
 										  layer.close(index88);
 									}
 							});
 							
+							
 						});
 				}else{
-					layer.msg('该订单已审核');
+					layer.msg('该生产订单已审核');
 				}
 				
 			}else if(data.length >1){
-				layer.msg('最多只能审核一个订单');
+				layer.msg('最多只能审核一个生产订单');
 			}else {
-				layer.msg('请选择要审核的订单');
+				layer.msg('请选择一条要审核的生产订单');
 			}
       break;
       case 'getCheckLength':	//生成领料单
     	  if(data.length == 1){
-				//判断日计划审核状态
-				if(data[0].sex == '男'){
-					 var index2 = layer.confirm('你确认为该订单生成领料订单？', {
+				//判断生产订单审核状态
+				if(data[0].auditState == 1){
+					 var index2 = layer.confirm('你确认为该订单生成领料单？', {
 						  btn: ['确认', '取消'] //可以无限个按钮
 						  ,btn2: function(index, layero){
 						    layer.close(index2);
@@ -134,8 +157,10 @@ layui.use(['table','form','laydate'], function(){
 							layer.msg('领料订单生成成功');
 							
 						});
-				}else{
+				}else if(data[0].auditState == 0){
 					layer.msg('该生产订单未审核');
+				}else if(data[0].auditState == 2){
+					layer.msg('该生产订单审核未通过');
 				}
 				
 			}else if(data.length >1){
@@ -178,27 +203,36 @@ layui.use(['table','form','laydate'], function(){
 <div style="display:none;" id="nameAndTimeDiv2" >
 
 <form class="layui-form" lay-filter="formAuthority2" id="formIdOne2">	  
-
-<div class="layui-inline" style="padding-left:0px;margin-top:20px;">
+<input type="hidden" name="orderPlanId" id="hiddenPlanId" />
+<div style="padding-left:0px;margin-top:20px;">
+<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核状态</label>
+	<div class="layui-input-inline">
+		<select name="auditState" lay-verify="required" lay-search="">
+  			<option value="">状态选择</option>
+  			<option value="1">审核通过</option>
+  			<option value="2">审核未通过</option>
+		</select>  
+	</div>
+<div class="layui-inline" style="padding-left:0px;margin-top:15px;">
 	<label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核日期</label>
 	<div class="layui-input-inline">
-		<input type="text" class="layui-input" id="test5" placeholder="yyyy-MM-dd">
+		<input type="text" lay-verify="required" name="auditTime" class="layui-input"  id="test5" placeholder="yyyy-MM-dd">
 	</div>
 </div>
 <div style="padding-left:0px;margin-top:15px;">
 <label width="120px" style="margin:0 5px 0 20px;font-size:13px;">审核人员</label>
 	<div class="layui-input-inline">
-		<select name="city" lay-verify="" lay-search="">
-  			<option value="">制定人</option>
-  			<option value="010">张三</option>
-  			<option value="021">李四</option>
- 			<option value="0571">王五</option>
+		<select name="auditId" lay-verify="required" lay-search="">
+  			<option value="">审核人</option>
+  			<option value="100">张三</option>
+  			<option value="101">李四</option>
+ 			<option value="100">王五</option>
 		</select>  
 	</div>
 <div class="layui-input-inline" style="margin-top:10px;">
 				<label style="margin:0 10px 0 20px;font-size:13px;">备注信息</label>
 				<div class="layui-input-inline" style="margin-left:-5px;">
-      				<textarea name="des" required lay-verify="required" cols="35px" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
+      				<textarea  lay-verify="required" cols="35px" name="auditComment" rows="4px" placeholder="请输入计划描述" class="layui-textarea"></textarea>
     			</div>
 			</div>	
 </div>

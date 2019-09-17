@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drug.entity.Pay;
 import com.drug.finance.service.payService;
-import com.drug.util.ToolClass;
+import com.drug.util.ReturnDataUtils;
 @Controller
 public class payController {
 	@Autowired
@@ -28,7 +28,7 @@ public class payController {
 		//查询所有付款单
 		List<Pay> listPay =payservice.getPay();
 		System.out.println("vvvvvvvvv");
-		Map<String,Object> map = ToolClass.responseByData();
+		Map<String,Object> map = ReturnDataUtils.responseByData();
 		map.put("data", listPay);
 		return map;
 		

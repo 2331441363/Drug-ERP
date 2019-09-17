@@ -3,12 +3,14 @@ package com.drug.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Test;
+
 /**
  * 前端返回数据工具类
  * @author lijie
  *
  */
-public class ToolClass {
+public class ReturnDataUtils {
 	/**
 	 * Controller返回数据格式工具
 	 * @return
@@ -20,4 +22,6 @@ public class ToolClass {
 		map.put("count", 0);	//总行数，用于分页
 		return map;
 	}
+	
+	
 }

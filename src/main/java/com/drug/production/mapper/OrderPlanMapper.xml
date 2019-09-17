@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.production.mapper.OrderPlanMapper">
+	<!-- 新增生产订单 -->
+	<insert id="insertByOrderPlan" parameterType="DayPlanDO">
+		INSERT INTO order_plan 
+		VALUES(#{orderPlanId},#{empId},#{orderPlanTime},NULL,NULL,0,NULL,#{orderState},
+		#{orderEntryState},#{isPicking},#{isDeleted},#{dayPlanId},#{orderPlanNumber},#{orderDetailNumber},#{orderComment})
+	</insert>
+
+	<!-- 新增生产订单详情 -->
+	<insert id="insertByOrderPlanDetail" parameterType="List">
+        insert into order_details_plan(order_plan_id,drug_id,plan_number,order_details_plan_number) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.orderPlanId},#{item.drugId},#{item.planNumber},#{item.orderDetailsPlanNumber})
+        </foreach>
+    </insert>
+    
+    <!-- 查询所有生产订单 -->
+	<select id="getOrderPlan" parameterType="Map" resultType="OrderPlanDTO">
+		SELECT * FROM order_plan o join employee e 
+		on o.emp_id = e.emp_id 
+		 WHERE o.is_deleted = 0  		
+		<if test="orderPlan.auditState != null and orderPlan.auditState != ''">
+			 AND o.audit_state = #{orderPlan.auditState}
+		</if>
+		LIMIT #{beginRow},#{endRow}
+	</select>
+	
+	<!-- 得到总行数 -->
+	<select id="getSumLineOrderPlan" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*) FROM order_plan o join employee e 
+		on o.emp_id = e.emp_id 
+		 WHERE o.is_deleted = 0  		
+		<if test="orderPlan.auditState != null and orderPlan.auditState != ''">
+			 AND o.audit_state = #{orderPlan.auditState}
+		</if>
+		LIMIT #{beginRow},#{endRow}
+	</select>
+	
+	<!-- 审核生产订单 -->
+	<update id="updateAuditOrderState" parameterType="OrderPlanDO">
+		UPDATE order_plan SET audit_id=#{auditId},audit_time=#{auditTime},
+		audit_state=#{auditState},audit_comment=#{auditComment} 
+		WHERE order_plan_id = #{orderPlanId}
+	</update>
+	
+</mapper>

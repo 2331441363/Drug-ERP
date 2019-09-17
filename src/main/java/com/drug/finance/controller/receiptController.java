@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drug.entity.ReceiptDO;
 import com.drug.finance.service.receiptService;
-import com.drug.util.ToolClass;
+import com.drug.util.ReturnDataUtils;
 
 /**
 * @author 肖影
@@ -30,7 +30,7 @@ public class receiptController {
 	@ResponseBody
 	public Map<String,Object>  listReceipt() {
 		List<ReceiptDO> receiptList =receiptservice.getReceipt();
-		Map<String,Object> map = ToolClass.responseByData();
+		Map<String,Object> map = ReturnDataUtils.responseByData();
 		map.put("data", receiptList);
 		return map;
 	}

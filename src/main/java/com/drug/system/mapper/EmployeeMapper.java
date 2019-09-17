@@ -1,6 +1,7 @@
 package com.drug.system.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -31,7 +32,7 @@ public interface EmployeeMapper {
 	 * @param empId 员工id
 	 * @return List<EmployeeDTO> 员工及相关信息DTO
 	 */
-	List<EmployeeDTO> getAllEmploye(int empId);
+	List<EmployeeDTO> getAllEmploye(Map<String,Object> map);
 	
 
 	/**
@@ -39,8 +40,8 @@ public interface EmployeeMapper {
 	 * @param empId 员工id
 	 * @return 受影响行数
 	 */
-	@Update("update employee set is_deleted = 1 where emp_id =#{empId}")
-	int updateByDeleteEmployee(int empId);
+	@Update("update employee set is_deleted = 1 where emp_id = #{empId}")
+	Integer updateByDeleteEmployee(Integer empId);
 	
 	
 	/**
@@ -48,6 +49,20 @@ public interface EmployeeMapper {
 	 * @param employeeDo 新增员工对象
 	 * @return 受影响行数
 	 */
-	int insertByEmployee(EmployeeDO employeeDo);
+	Integer insertByEmployee(EmployeeDO employeeDo);
 	
+	
+	/**
+	 * 查询总员工数量
+	 * @return 总数
+	 */
+	int getSumEmployee(Map<String,Object> map);
+	
+	/**
+	 * 查询所有员工
+	 * @return 员工对象
+	 */
+	@Select("SELECT * FROM employee WHERE is_deleted=0")
+	List<EmployeeDO> getEmploye(String empUserId);
+
 }

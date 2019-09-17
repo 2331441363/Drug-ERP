@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drug.entity.WarehouseDO;
-import com.drug.util.ToolClass;
+import com.drug.util.ReturnDataUtils;
 import com.drug.warehouse.service.FinishedGoodsSheetService;
 
 @Controller
@@ -37,7 +37,7 @@ public class FinishedGoodsSheetController {
 		list.forEach(System.out::println);
 		// 获取总行数
 		int count = finishedGoodsSheetService.getFinCount();
-		Map<String, Object> map = ToolClass.responseByData();
+		Map<String, Object> map = ReturnDataUtils.responseByData();
 		map.put("data", list);
 		map.put("count", count);
 		return map;

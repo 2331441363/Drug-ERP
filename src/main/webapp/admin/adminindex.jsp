@@ -49,9 +49,9 @@
 	/*左边导航*/
 	.layui-layout-admin .layui-side {
     	top: 70px;
-    	width: 250px;
+    	width: 240px;
     	overflow-x: hidden;
-		box-shadow:1px 1px 3px #BDBDBD;
+		
 		/*第一个参数是x轴阴影段长度
 			第二个参数是y轴阴影段长度
 			第三个参数是往四周阴影段长度
@@ -73,7 +73,7 @@
 	
 	/*配合设置左边导航宽度*/
 	.layui-side-scroll {
-    	width: 270px;
+    	width: 260px;
 	}
 	/*中间内容*/
 	.layui-layout-admin .layui-body {
@@ -85,14 +85,14 @@
 	
 	/*中间内容位置*/
 	.layui-body {
-    	left: 250px;
+    	left: 240px;
     	
 	}
 	
 	/*左下导航颜色*/
 	.layui-nav-tree {
     	background: white;
-    	width:250px;
+    	width:240px;
 	}
 	/*左上导航颜色*/
 	.layui-side-scroll {
@@ -212,8 +212,13 @@
 	
 
 	.layui-tab-content {
-    	padding-top: 0px;
+    	padding-top: 10px;
     	padding-right: 0px;
+	}
+	
+	.layui-tab-card{
+		border-bottom:none;
+		border-top:none;
 	}
   </style>
 
@@ -272,7 +277,7 @@
   			<ul class="layui-tab-title">
   				<li class="layui-this" lay-id="index.jsp"><i class="layui-icon layui-icon-home " ></i></li>
   			</ul>
-  			<div class="layui-tab-content" id="main" style="height:590px;">
+  			<div class="layui-tab-content" id="main" style="height:595px;">
   			        <div class="layui-tab-item layui-show" id = "boxscroll4" style="height:100%;width:100%;">
   						<iframe src="index.jsp" style="height:100%;width:100%;"  scrolling="auto" id="iframe" class="layadmin-iframe"  frameborder="0"></iframe>
   					</div>
@@ -331,7 +336,7 @@ layui.use('element', function(){
 					str += '<li class="layui-nav-item"><a  href="javascript:;" ><i class="layui-icon '+jack[i].menuIcon+'" style="font-size:16px;"></i> <span style="margin-left:10px;font-weight:bold;">'+jack[i].menuName+'</span></a><dl class="layui-nav-child">';
 					for(var j = 0;j < jack.length;j++){
 						if(jack[i].menuId == jack[j].menuParent){
-							str +='<dd><a href="javascript:;"  name="'+jack[j].menuURL+'" class="'+jack[j].menuName+'"> <span ><i class="layui-icon layui-icon-right" name ="ic" style="font-size:13px;margin-right:15px;"></i>'+jack[j].menuName+'</span></a></dd>';
+							str +='<dd><a href="javascript:;"  name="'+jack[j].menuURL+'" class="'+jack[j].menuName+'"> <span ><i class="layui-icon layui-icon-right" name ="ic" style="font-size:10px;margin-right:15px;"></i>'+jack[j].menuName+'</span></a></dd>';
 						}
 					}
 				}

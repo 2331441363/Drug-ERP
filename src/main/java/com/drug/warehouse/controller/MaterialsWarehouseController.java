@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drug.entity.WarehouseDO;
-import com.drug.util.ToolClass;
+import com.drug.util.ReturnDataUtils;
 import com.drug.warehouse.service.MaterialsWarehouseService;
 
 /**
@@ -36,7 +36,7 @@ public class MaterialsWarehouseController {
 		map.put("materialsWarehouseName", materialsWarehouseName);
 		List<WarehouseDO> list = materialsWarehouseService.selectMaterialsWarehouse(map);
 		int count = materialsWarehouseService.getMatCount();
-		Map<String, Object> maps = ToolClass.responseByData();
+		Map<String, Object> maps = ReturnDataUtils.responseByData();
 		maps.put("data", list);
 		maps.put("count", count);
 		return maps;

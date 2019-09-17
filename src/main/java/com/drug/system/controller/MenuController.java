@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drug.entity.MenuDO;
 import com.drug.system.service.MenuService;
-import com.drug.util.ToolClass;
+import com.drug.util.ReturnDataUtils;
 
 @Controller
 public class MenuController {
@@ -25,7 +25,7 @@ public class MenuController {
 	public Map<String,Object> queryByMenu(){
 		List<MenuDO> menuList = menuBiz.queryByMenu();
 		menuList.forEach(System.out::println);
-		Map<String,Object> map = ToolClass.responseByData();
+		Map<String,Object> map = ReturnDataUtils.responseByData();
 		map.put("data", menuList);
 		return map;
 	}

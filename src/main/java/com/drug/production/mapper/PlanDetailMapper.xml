@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.production.mapper.PlanDetailMapper">
+
+	<!-- 新增订单详情 -->
+	<insert id="insertPlanDetail" parameterType="List">
+        insert into plan_detail(plan_id,drug_id,plan_detail_number,plan_detail_quantity) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.planId},#{item.drugId},#{item.planDetailNumber},#{item.planDetailQuantity})
+        </foreach>
+    </insert>
+
+	
+</mapper>

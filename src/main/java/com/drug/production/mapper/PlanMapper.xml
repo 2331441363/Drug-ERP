@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.production.mapper.PlanMapper">
+	<!-- 根据id查询月计划及详情  -->
+	<resultMap type="PlanDO" id="PlanMap">
+  		<id column="plan_id" property="planId" />
+  		<result column="emp_id" property="empId"/>
+  		<result column="plan_time" property="planTime"/>
+  		<result column="audit_id" property="auditId"/>
+  		<result column="audit_time" property="auditTime"/>
+  		<result column="audit_state" property="auditState"/>
+  		<result column="audit_comment" property="auditComment"/>
+  		<result column="plan_comment" property="planComment"/>
+  		<result column="start_time" property="startTime"/>
+  		<result column="end_time" property="endTime"/>
+  		<result column="planned_quantity" property="plannedQuantity"/>
+  		<result column="actual_quantity" property="actualQuantity"/>
+  		<result column="is_deleted" property="isDeleted"/>
+  		<collection property="listDetailDO" ofType="PlanDetailDO">
+  			<id column="plan_detail_id" property="planDetailId" />
+  			<result column="plan_id" property="planId"/>
+  			<result column="drug_id" property="drugId"/>
+  			<result column="plan_detail_quantity" property="planDetailQuantity"/>
+  			<result column="plan_detail_number" property="planDetailNumber"/>
+  		</collection>
+  	</resultMap>
+	
+	<!-- 根据id查询月计划及详情  -->
+	<select id="getPlanById" parameterType="String" resultMap="PlanMap">
+		SELECT * FROM plan p JOIN plan_detail pd 
+		ON p.plan_id = pd.plan_id
+		WHERE p.plan_id = #{planId} AND p.is_deleted = 0
+	</select>	
+	
+	
+	<!-- 查询所有月计划 -->
+	<select id="getAllPlan" parameterType="Map" resultType="PlanDTO">
+		SELECT * FROM plan p join employee e 
+		on p.emp_id = e.emp_id 
+		 WHERE p.is_deleted = 0  
+		<if test="plan.planId != null and plan.planId != ''">
+			 AND p.plan_id like CONCAT('%',#{plan.planId},'%')
+		</if>
+		
+		<if test="plan.startTime != null">
+			 <![CDATA[
+          AND DATE_FORMAT(p.start_time, '%Y-%m') = DATE_FORMAT(#{plan.startTime}, '%Y-%m')
+          ]]>
+          
+		</if>
+		
+		<if test="plan.auditState != null and plan.auditState != ''">
+			 AND p.audit_state = #{plan.auditState}
+		</if>
+		LIMIT #{beginRow},#{endRow}
+	</select>
+
+
+	<!-- 得到总行数 -->
+	<select id="getSumLinePlan" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*) FROM plan p
+		WHERE is_deleted = 0 
+		<if test="plan != null">
+			<if test="plan.planId != null and plan.planId != ''">
+			 	AND p.plan_id like CONCAT('%',#{plan.planId},'%')
+			</if>
+		
+			<if test="plan.startTime != null">
+			 	<![CDATA[
+         	 		AND DATE_FORMAT(p.start_time, '%Y-%m') =  DATE_FORMAT(#{plan.startTime}, '%Y-%m')
+          		]]>
+			</if>
+		
+			<if test="plan.auditState != null and plan.auditState != ''">
+			 	AND p.audit_state = #{plan.auditState}
+			</if>
+		</if>
+		
+	</select>
+	
+</mapper>
