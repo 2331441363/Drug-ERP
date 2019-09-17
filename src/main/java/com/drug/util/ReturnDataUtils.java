@@ -8,7 +8,7 @@ import java.util.Map;
  * @author lijie
  *
  */
-public class ToolClass {
+public class ReturnDataUtils {
 	/**
 	 * Controller返回数据格式工具
 	 * @return

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.drug.entity.PurchaseEmployeeDO;
 import com.drug.entity.PurchaseRequestDetailsDO;
 import com.drug.purchase.service.PurchaseRequestDetailsService;
-import com.drug.util.ToolClass;
+import com.drug.util.ReturnDataUtils;
 
 @Controller
 public class PurchaseRequestDetailsController {
@@ -31,7 +31,7 @@ public class PurchaseRequestDetailsController {
 		showMap.put("page", (page-1)*limit);
 		showMap.put("limit", limit);
 		showMap.put("id", id);
-		Map<String,Object> map=ToolClass.responseByData();
+		Map<String,Object> map=ReturnDataUtils.responseByData();
 		//得到采购申请详情数据
 		List<PurchaseRequestDetailsDO> list=
 				purchaseRequestDetailsBiz.selectById(showMap);

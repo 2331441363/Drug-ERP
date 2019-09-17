@@ -17,7 +17,7 @@ import com.drug.entity.PurchaseEmployeeDO;
 import com.drug.entity.PurchaseRequestDO;
 import com.drug.purchase.service.PurchaseEmployeeService;
 import com.drug.purchase.service.PurchaseRequestService;
-import com.drug.util.ToolClass;
+import com.drug.util.ReturnDataUtils;
 
 @Controller
 public class PurchaseEmployeeController {
@@ -69,7 +69,7 @@ public class PurchaseEmployeeController {
 		}
 		//采购申请数据总条数
 		int countPage=purchaseEmployeeBiz.countPage();
-		Map<String,Object> map=ToolClass.responseByData();
+		Map<String,Object> map=ReturnDataUtils.responseByData();
 		map.put("data", purchaseEmployeeDOList);
 		map.put("count", countPage);
 		return  map;

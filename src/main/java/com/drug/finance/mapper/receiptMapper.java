@@ -6,8 +6,10 @@ package com.drug.finance.mapper;
 */
 
 import java.util.List;
+import java.util.Map;
 
-import com.drug.entity.ReceiptDO;
+import com.drug.dto.ReceiptDTO;
+
 
 public interface receiptMapper {
 	
@@ -15,12 +17,19 @@ public interface receiptMapper {
 	 * 查询收款单
 	 * @return 收款单
 	 */
-	public List<ReceiptDO> getReceipt();
+	public List<ReceiptDTO> getReceipt(Map<String,	Object> map);
 	
 	/**
-	 * 新增收款单
-	 * @param receipt 收款单
+	 * 查询收款日期、合计
+	 * @return
 	 */
-	public void addReceipt(ReceiptDO receipt);
+	public List<ReceiptDTO> getReceiptDateMoney();
 	
+
+	
+	/**
+	 * 查询收款总行数
+	 * @return
+	 */
+	public Integer getReceptCount();
 }

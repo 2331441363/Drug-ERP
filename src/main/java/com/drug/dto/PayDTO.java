@@ -1,22 +1,23 @@
-package com.drug.entity;
+package com.drug.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 @Data
-public class Pay {
+public class PayDTO {
 	//编号
 	private Integer payId;
 	//付款日期
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date payDate;
 	//付款人
-	private String payPerson;
+	private String empName;
 	//部门
-	private String dept;
+	private String departmentName;
 	//分店
-	private String payBranch;
-	//公司账户
-	private String companyAccount;
+	private String branchName;
 	//付款金额
 	private double money;
 	//付款类型

@@ -1,12 +1,13 @@
 package com.drug.finance.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import com.drug.entity.ReceiptDO;
+import com.drug.dto.ReceiptDTO;
 import com.drug.finance.mapper.receiptMapper;
 import com.drug.finance.service.receiptService;
 
@@ -21,13 +22,20 @@ public class receiptServiceImpl implements receiptService{
 	private receiptMapper receiptmapper;
 	
 	@Override
-	public List<ReceiptDO> getReceipt() {
-		return receiptmapper.getReceipt();
+	public List<ReceiptDTO> getReceipt(Map<String,Object> map) {
+		return receiptmapper.getReceipt(map);
 	}
 
+
 	@Override
-	public void addReceipt(ReceiptDO receipt) {
-		receiptmapper.addReceipt(receipt);
+	public List<ReceiptDTO> getReceiptDateMoney() {
+		return receiptmapper.getReceiptDateMoney();
+	}
+
+
+	@Override
+	public Integer getReceptCount() {
+		return receiptmapper.getReceptCount();
 	}
 
 }

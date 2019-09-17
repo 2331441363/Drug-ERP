@@ -2,17 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.drug.finance.mapper.receiptMapper">
 	<!-- 查询收款单 -->
-	<select id="getReceipt" resultType="ReceiptDO">
-		SELECT receipt_id,receipt_time,receipt_payee,receipt_dept,
-		receipt_bsubbranch,receipt_account,receipt_money,
-		receipt_type,receipt_form FROM receipt 
-		where is_show=0
+	<select id="getReceipt" resultType="ReceiptDTO" parameterType="Map">
+		
+		SELECT receipt_id,emp_name,receipt_time,
+		 departmentName,branchName,receipt_money,receipt_type,receipt_form from receipt r
+	LEFT JOIN employee e
+	on r.emp_id=e.empId
+	LEFT JOIN department d
+	on r.departmentId=d.departmentId
+	LEFT JOIN branchinfr b
+	on r.branchId=b.branchId 
+	<where>  
+            <if test="date!=null and date!=''">  
+                r.receipt_time like'%${date}%' 
+            </if >  
+            <if test="branch!=null and branch!=''">  
+                AND b.branchName like '%${branch}%'
+            </if >  
+            <if test="receiptType !=null and receiptType!=''">  
+                AND r.receipt_type like '%${receiptType}%' 
+            </if >  
+            and r.is_show=0
+    </where>    
+
+LIMIT #{beginRow},#{endRow}
 	</select>
 	
-	<!-- 新增收款单 -->
-	<insert id="addReceipt" parameterType="ReceiptDO">
-		insert into receipt(receipt_time,receipt_payee,receipt_dept,
-		receipt_bsubbranch,receipt_account,receipt_money,receipt_type,receipt_form) 
-		values(#{receipt_time},#{receipt_payee},#{receipt_dept},#{receipt_bsubbranch},#{receipt_account},#{receipt_money},#{receipt_type},#{receipt_form}) 
-	</insert>
+	
+	<!-- 查询收款总行数 -->
+	<select id="getReceptCount" resultType="integer">
+		select count(*) from receipt r
+	LEFT JOIN employee e
+	on r.emp_id=e.empId
+	LEFT JOIN department d
+	on r.departmentId=d.departmentId
+	LEFT JOIN branchinfr b
+	on r.branchId=b.branchId 
+	<where>  
+            <if test="date!=null and date!=''">  
+                r.receipt_time like'%${date}%' 
+            </if >  
+            <if test="branch!=null and branch!=''">  
+                AND b.branchName like '%${branch}%'
+            </if >  
+            <if test="receiptType !=null and receiptType!=''">  
+                AND r.receipt_type like '%${receiptType}%' 
+            </if >  
+            and r.is_show=0
+       </where>
+	</select>
+	
+	
+	<!-- 查询收款日期、合计 -->
+	<select id="getReceiptDateMoney" resultType="ReceiptDTO">
+		select receipt_time,receipt_money from receipt
+		where is_show=0
+	</select>
 </mapper>

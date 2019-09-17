@@ -18,10 +18,10 @@
 			<p:value>com.mysql.jdbc.Driver</p:value>
 		</p:property>
 		<p:property name="url">
-			<p:value>jdbc:mysql://47.97.153.27:48222/lijie?characterEncoding=utf8</p:value>
+			<p:value>jdbc:mysql://localhost:3306/medicine?characterEncoding=utf8</p:value>
 		</p:property>
-		<p:property name="username" value="abc"/>
-		<p:property name="password" value="123456"/>
+		<p:property name="username" value="root"/>
+		<p:property name="password" value="123"/>
 	</p:bean>
 	<!-- 配置sqlSessionFactory工厂 -->
 	<p:bean id="sqlSessionFactory"

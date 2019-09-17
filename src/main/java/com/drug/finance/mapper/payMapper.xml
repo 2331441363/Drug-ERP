@@ -2,15 +2,92 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.drug.finance.mapper.payMapper">
 	<!-- 查询付款单 -->
-	<select id="getPay" resultType="Pay">
-		SELECT pay_id,pay_date,pay_person,dept,
-pay_branch,company_account,money,pay_type,
-pay_note FROM pay where is_show=0
+	<select id="getPay" resultType="PayDTO" parameterType="Map">
+		SELECT pay_id,pay_date,emp_name,departmentName,
+	branchName,money,pay_type,
+	pay_note FROM pay p
+	LEFT JOIN employee e
+	on p.emp_id=e.empId
+	LEFT JOIN department d
+	on p.departmentId=d.departmentId
+	LEFT JOIN branchinfr b
+	on p.branchId=b.branchId
+	<where>  
+            <if test="date!=null and date!=''">  
+                p.pay_date like '%${date}%'
+            </if >  
+            <if test="branch!=null and branch!=''">  
+                AND b.branchName like '%${branch}%'
+            </if >  
+            <if test="payType !=null and payType!=''">  
+                AND p.pay_type like '%${payType}%' 
+            </if >  
+            and p.is_show=0
+    </where>    
+LIMIT #{beginRow},#{endRow}
+
 	</select>
 	
-	<insert id="addPay" parameterType="Pay">
+	
+	<!-- 新增付款单 -->
+	<!-- <insert id="addPay" parameterType="Pay">
 		INSERT INTO pay(pay_date,pay_person,dept,pay_branch,
-company_account,money,pay_type,pay_note)
- VALUES(#{payDate},#{payPerson},#{dept},#{payBranch},#{companyAccount},#{money},#{payType},#{payNote})
-	</insert>
+	money,pay_type,pay_note)
+ VALUES(#{date},#{payPerson},#{dept},#{payBranch},#{money},#{payType},#{payNote})
+	</insert> -->
+	
+	<!-- 查询付款日期、合计 -->
+	<select id="getDateMoney" resultType="PayDTO">
+		select pay_date,money from pay 
+		where is_show=0
+	</select>
+	
+	<!-- 查询付款总行数 -->
+	<select id="getPayCount" resultType="integer" parameterType="Map">
+		select count(*) from pay p
+	LEFT JOIN employee e
+	on p.emp_id=e.empId
+	LEFT JOIN department d
+	on p.departmentId=d.departmentId
+	LEFT JOIN branchinfr b
+	on p.branchId=b.branchId
+	<where>  
+            <if test="date!=null ">  
+                p.pay_date like '%'#{date}'%'
+            </if >  
+            <if test="branch!=null ">  
+                AND b.branchName like '%'#{branch}'%'
+            </if >  
+            <if test="payType !=null">  
+                AND p.pay_type like '%'#{payType}'%' 
+            </if >  
+            and p.is_show=0
+    </where>   
+	</select>
+	
+	
+	<!-- 删除付款单 -->
+	<delete id="delPay" parameterType="integer">
+		delete from pay 
+		where pay_id=#{pid}
+	</delete>
+	
+	
+	<!-- 修改付款单 -->
+	<update id="updPay" parameterType="PayDTO">
+		update pay set pay_date=#{payDate},money=#{money},pay_type=#{payType},
+		pay_note=#{payNote}
+		where pay_id=#{payId}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
