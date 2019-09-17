@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.production.mapper.DayPlanMapper">
+	<!-- 根据id查询月计划及详情  -->
+	<resultMap type="DayPlanDO" id="DayPlanMap">
+  		<id column="day_plan_id" property="dayPlanId" />
+  		<result column="emp_id" property="empId"/>
+  		<result column="day_plan_time" property="dayPlanTime"/>
+  		<result column="day_begin_time" property="dayBeginTime"/>
+  		<result column="audit_id" property="auditId"/>
+  		<result column="audit_time" property="auditTime"/>
+  		<result column="audit_state" property="auditState"/>
+  		<result column="audit_comment" property="auditComment"/>
+  		<result column="day_plan_comment" property="dayPlanComment"/>
+  		<result column="day_planned_quantity" property="dayPlannedQuantity"/>
+  		<result column="day_detail_number" property="dayDetailNumber"/>
+  		<result column="is_deleted" property="isDeleted"/>
+  		<result column="plan_id" property="planId"/>
+  		<collection property="listDayPlanDetail" ofType="DayPlanDetailDO">
+  			<id column="day_plan_detail_id" property="dayPlanDetailId" />
+  			<result column="day_plan_id" property="dayPlanId"/>
+  			<result column="drug_id" property="drugId"/>
+  			<result column="plan_number" property="planNumber"/>
+  			<result column="day_plan_number" property="dayPlanNumber"/>
+  		</collection>
+  	</resultMap>
+
+	<!-- 根据id查询月计划及详情  -->
+	<select id="getDayPlanById" parameterType="String" resultMap="DayPlanMap">
+		SELECT * FROM day_plan p JOIN day_plan_detail pd 
+		ON p.day_plan_id = pd.day_plan_id
+		WHERE p.day_plan_id = #{dayPlanId} AND p.is_deleted = 0
+	</select>	
+	
+	
+	<!-- 新增日生产计划 -->
+	<insert id="insertByDayPlan" parameterType="DayPlanDO">
+		INSERT INTO day_plan 
+		VALUES(#{dayPlanId},#{empId},#{dayPlanTime},#{dayBeginTime},NULL,NULL,0,NULL,
+		#{dayPlanComment},#{dayPlannedQuantity},#{dayDetailNumber},#{isDeleted},#{planId})
+	</insert>
+
+	<!-- 新增日计划详情 -->
+	<insert id="insertByDayPlanDetail" parameterType="List">
+        insert into day_plan_detail(day_plan_id,drug_id,day_number,day_plan_number) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.dayPlanId},#{item.drugId},#{item.dayNumber},#{item.dayPlanNumber})
+        </foreach>
+    </insert>
+    
+    <!-- 查询所有日计划 -->
+	<select id="getDayPlan" parameterType="Map" resultType="DayPlanDTO">
+		SELECT * FROM day_plan p join employee e 
+		on p.emp_id = e.emp_id 
+		 WHERE p.is_deleted = 0  		
+		<if test="dayPlan.auditState != null and dayPlan.auditState != ''">
+			 AND p.audit_state = #{dayPlan.auditState}
+		</if>
+		LIMIT #{beginRow},#{endRow}
+	</select>
+	
+	<!-- 得到总行数 -->
+	<select id="getSumLineDayPlan" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*) FROM day_plan p join employee e 
+		on p.emp_id = e.emp_id 
+		 WHERE p.is_deleted = 0  		
+		<if test="dayPlan.auditState != null and dayPlan.auditState != ''">
+			 AND p.audit_state = #{dayPlan.auditState}
+		</if>
+		LIMIT #{beginRow},#{endRow}
+	</select>
+	
+	<!-- 审核日计划 -->
+	<update id="updateAuditState" parameterType="DayPlanDO">
+		UPDATE day_plan SET audit_id=#{auditId},audit_time=#{auditTime},
+		audit_state=#{auditState},audit_comment=#{auditComment} 
+		WHERE day_plan_id = #{dayPlanId}
+	</update>
+	
+</mapper>

@@ -65,6 +65,10 @@ public class EmployeeDO {
 	private String empPhoto;
 	
 	/**
+	 * 逻辑删除（1表删除，0表未删除）
+	 */
+	private int isDeleted;
+	/**
 	 * 部门id
 	 */
 	private Integer departmentId;

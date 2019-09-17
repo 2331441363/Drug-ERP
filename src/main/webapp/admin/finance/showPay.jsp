@@ -238,7 +238,7 @@ $.ajax({
  		                            layer.msg("修改成功", {icon: 6});
  		                            setTimeout(function(){
  		                               obj.update({
- 		                                     eqptType:massage.field.neweqptType,
+ 		                            	  payId:massage.field.neweqptType,
  		                                     eqptIdCode:massage.field.neweqptIdCode,
  		                                     eqptName:massage.field.neweqptName
  		                                 });//修改成功修改表格数据不进行跳转

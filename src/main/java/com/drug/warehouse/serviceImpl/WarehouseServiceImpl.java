@@ -1,6 +1,5 @@
 package com.drug.warehouse.serviceImpl;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.drug.entity.WarehouseDO;
 import com.drug.warehouse.mapper.WarehouseMapper;
 import com.drug.warehouse.service.WarehouseService;
-	
+
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
 	@Autowired
@@ -38,6 +37,14 @@ public class WarehouseServiceImpl implements WarehouseService {
 	@Override
 	public int getCount() {
 		return warehouseMapper.getCount();
+	}
+
+	/**
+	 * 修改仓库管理信息
+	 */
+	@Override
+	public int updatewarehouse(Map<String, Object> map2) {
+		return warehouseMapper.updatewarehouse(map2);
 	}
 
 }

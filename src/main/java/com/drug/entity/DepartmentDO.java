@@ -23,4 +23,8 @@ public class DepartmentDO {
 	 * 部门描述
 	 */
 	private String departmentDes;
+	/**
+	 * 逻辑删除（1表删除，0表未删除）
+	 */
+	private int isDeleted;
 }

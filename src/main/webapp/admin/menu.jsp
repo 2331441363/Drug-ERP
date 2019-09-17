@@ -13,9 +13,7 @@
 <body style="margin:0;padding:0;">         
 <table class="layui-hide" id="test" lay-filter="test"></table>         
 <style>
-.layui-table, .layui-table-view {
-    margin: 0px 0;
-}
+
 </style>
 <script>
 layui.use('table', function(){

@@ -77,7 +77,6 @@ public class payController {
 		//总行数
 		util.put("count", payservice.getPayCount(map));
 		return util;
-		
 	}
 	
 	

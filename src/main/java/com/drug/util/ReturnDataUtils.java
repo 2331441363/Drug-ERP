@@ -3,6 +3,8 @@ package com.drug.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Test;
+
 /**
  * 前端返回数据工具类
  * @author lijie
@@ -20,4 +22,6 @@ public class ReturnDataUtils {
 		map.put("count", 0);	//总行数，用于分页
 		return map;
 	}
+	
+	
 }

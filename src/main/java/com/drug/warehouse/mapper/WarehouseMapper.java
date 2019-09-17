@@ -23,4 +23,9 @@ public interface WarehouseMapper {
 	 * 查询仓库信息的总行数
 	 */
 	public int getCount();
+
+	/**
+	 * 修改仓库管理信息
+	 */
+	public int updatewarehouse(Map<String, Object> map2);
 }

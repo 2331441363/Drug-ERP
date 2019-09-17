@@ -47,6 +47,34 @@ public class WarehouseDO {
 	 */
 	private List<FinishedGoodsSheetDO> finishedGoodsSheetDOList;
 
+	/**
+	 * 原材料仓库集合
+	 */
+	public List<MaterialsWarehouseDO> materialsWarehouseDOList;
+	
+	/**
+	 * 废弃仓库集合
+	 */
+	public List<AbandonedWarehouseDO> abandonedWarehouseDOLits;
+	
+	
+
+	public List<AbandonedWarehouseDO> getAbandonedWarehouseDOLits() {
+		return abandonedWarehouseDOLits;
+	}
+
+	public void setAbandonedWarehouseDOLits(List<AbandonedWarehouseDO> abandonedWarehouseDOLits) {
+		this.abandonedWarehouseDOLits = abandonedWarehouseDOLits;
+	}
+
+	public List<MaterialsWarehouseDO> getMaterialsWarehouseDOList() {
+		return materialsWarehouseDOList;
+	}
+
+	public void setMaterialsWarehouseDOList(List<MaterialsWarehouseDO> materialsWarehouseDOList) {
+		this.materialsWarehouseDOList = materialsWarehouseDOList;
+	}
+
 	public List<FinishedGoodsSheetDO> getFinishedGoodsSheetDOList() {
 		return finishedGoodsSheetDOList;
 	}

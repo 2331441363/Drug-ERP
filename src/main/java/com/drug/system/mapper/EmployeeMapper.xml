@@ -2,16 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.drug.system.mapper.EmployeeMapper">
 
-	<!-- 查询员工 -->
-	<select id="getAllEmploye" parameterType="int" resultType="EmployeeDTO">
-		SELECT * FROM employee e join department d 
-		on e.departmentId = d.departmentId
-		<if test="_parameter != null and _parameter != 0">
-			WHERE emp_id = #{empId}
+	<!-- 查询所有员工/单个员工详情/搜索员工 -->
+	<select id="getAllEmploye" parameterType="Map" resultType="EmployeeDTO">
+		SELECT * FROM employee e 
+		JOIN department d 
+		ON e.departmentId = d.departmentId 
+		WHERE e.is_deleted = 0 
+		<if test="employee.empId != null and employee.empId != ''">
+			 AND emp_id like CONCAT('%',#{employee.empId},'%')
 		</if>
+		
+		<if test="employee.empUserId != null and employee.empUserId != ''">
+			 AND emp_user_id like CONCAT('%',#{employee.empUserId},'%')
+		</if>
+		
+		<if test="employee.empName != null and employee.empName != ''">
+			 AND emp_name like CONCAT('%',#{employee.empName},'%')
+		</if>
+		LIMIT #{beginRow},#{endRow}
 	</select>
 	
+	<!-- 新增员工 -->
+	<insert id="insertByEmployee" parameterType="EmployeeDO">
+		INSERT INTO employee 
+		VALUES(0,#{empUserId},#{empPassword},#{empName}
+		,#{empAge},#{empSex},#{empCard},#{empPhone},#{empAddress}
+		,#{empSalary},#{empPhoto},0,#{departmentId})
+	</insert>
+
 	
-	<!-- 搜索员工 -->
-	<select id="getSearchEmployee" ></select>
+	<!-- 得到总行数 -->
+	<select id="getSumEmployee" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*) FROM employee e 
+		JOIN department d 
+		ON e.departmentId = d.departmentId 
+		WHERE e.is_deleted = 0 
+		<if test="employee != null">
+			<if test="employee.empId != null and employee.empId != ''">
+			 	AND emp_id like CONCAT('%',#{employee.empId},'%')
+			</if>
+		
+			<if test="employee.empUserId != null and employee.empUserId != ''">
+				AND emp_user_id like CONCAT('%',#{employee.empUserId},'%')
+			</if>
+		
+			<if test="employee.empName != null and employee.empName != ''">
+			 	AND emp_name like CONCAT('%',#{employee.empName},'%')
+			</if>
+		</if>
+		
+	</select>
 </mapper>
