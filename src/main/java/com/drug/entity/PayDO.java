@@ -7,22 +7,22 @@ import lombok.Data;
 /**
 * @author 肖影
 * @version 创建时间：2019年9月17日 上午10:35:23
-* 类说明
+* 类说明：付款单DO
 */
 @Data
 public class PayDO {
 	/**
 	 * 编号
 	 */
-	private int pay_id;
+	private int payId;
 	/**
 	 * 付款日期
 	 */
-	private Date pay_date;
+	private Date payDate;
 	/**
 	 * 员工id
 	 */
-	private int emp_id;
+	private int empId;
 	/**
 	 * 部门id
 	 */
@@ -38,13 +38,13 @@ public class PayDO {
 	/**
 	 * 付款类型
 	 */
-	private String pay_type;
+	private String payType;
 	/**
 	 * 付款备注
 	 */
-	private String pay_note;
+	private String payNote;
 	/**
 	 * 是否显示
 	 */
-	private int is_show;
+	private int isShow;
 }

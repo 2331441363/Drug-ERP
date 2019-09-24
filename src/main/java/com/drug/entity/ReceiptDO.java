@@ -1,4 +1,4 @@
-package com.drug.dto;
+package com.drug.entity;
 
 import java.util.Date;
 
@@ -8,49 +8,48 @@ import lombok.Data;
 
 /**
 * @author 肖影
-* @version 创建时间：2019年9月9日 下午5:10:02
-* 类说明:收款记录数据DTO
+* @version 创建时间：2019年9月17日 下午4:46:44
+* 类说明：收款单DO
 */
 @Data
-public class ReceiptDTO {
-	
+public class ReceiptDO {
+
 	/**
 	 * 编号
 	 */
-	private Integer receiptId;
-	
+	private int receiptId;
 	/**
-	 * 收款人
-	 */
-	private String empName;
-	/**
-	 * 收款时间
+	 * 收款日期
 	 */
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date receiptTime;
-	
 	/**
-	 * 部门
+	 * 员工id
 	 */
-	private String departmentName;
-	
+	private int empId;
 	/**
-	 * 分店
+	 * 部门id
 	 */
-	private String branchName;
-	
+	private int departmentId;
+	/**
+	 * 分店id
+	 */
+	private int branchId;
 	/**
 	 * 收款金额
 	 */
 	private double receiptMoney;
-	
 	/**
-	 * /收款类型
+	 * 收款类型
 	 */
 	private String receiptType;
-	
 	/**
-	 * 备注
+	 * 收款备注
 	 */
 	private String receiptForm;
+	/**
+	 * 是否显示
+	 */
+	private int isShow;
+
 }

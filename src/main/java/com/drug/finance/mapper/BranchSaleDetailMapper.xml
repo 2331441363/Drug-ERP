@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.drug.finance.mapper.BranchSaleDetailMapper">
+	<!-- 根据（分店）销售的商品名称查询分店销售数量 -->
+	<select id="getQuantityByGname" resultType="integer"
+		parameterType="String">
+		SELECT branch_sale_quantity
+		FROM branch_sale_order o
+		LEFT
+		JOIN branch_sale_detail d
+		on o.branch_sale_id=d.branch_sale_id
+		LEFT JOIN
+		branch_goods g
+		on d.branch_goods_id=g.branch_goods_id
+		where
+		branch_goods_name=#{pname}
+	</select>
+</mapper>

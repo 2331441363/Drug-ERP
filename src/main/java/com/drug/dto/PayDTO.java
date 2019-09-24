@@ -5,6 +5,11 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
+/**
+* @author 肖影
+* @version 创建时间：2019年9月9日 下午5:10:02
+* 类说明：付款记录数据DTO
+*/
 @Data
 public class PayDTO {
 	//编号
@@ -24,6 +29,4 @@ public class PayDTO {
 	private String payType;
 	//付款备注
 	private String payNote;
-
-	
 }

@@ -2,12 +2,14 @@ package com.drug.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 /**
 * @author 肖影
 * @version 创建时间：2019年9月15日 上午8:13:42
-* 类说明
+* 类说明：分店信息DO
 */
 @Data
 public class BranchinfrDO {
@@ -38,6 +40,7 @@ public class BranchinfrDO {
 	/**
 	 * 签订时间
 	 */
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date signTime;
 	/**
 	 * 合同状态

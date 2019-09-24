@@ -1,61 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.drug.finance.mapper.receiptMapper">
-	<!-- 查询收款单 -->
-	<select id="getReceipt" resultType="ReceiptDTO" parameterType="Map">
-		
+	<!-- 查询所有收款单 -->
+	<select id="getReceipt" resultType="ReceiptDTO"
+		parameterType="Map">
 		SELECT receipt_id,emp_name,receipt_time,
-		 departmentName,branchName,receipt_money,receipt_type,receipt_form from receipt r
-	LEFT JOIN employee e
-	on r.emp_id=e.empId
-	LEFT JOIN department d
-	on r.departmentId=d.departmentId
-	LEFT JOIN branchinfr b
-	on r.branchId=b.branchId 
-	<where>  
-            <if test="date!=null and date!=''">  
-                r.receipt_time like'%${date}%' 
-            </if >  
-            <if test="branch!=null and branch!=''">  
-                AND b.branchName like '%${branch}%'
-            </if >  
-            <if test="receiptType !=null and receiptType!=''">  
-                AND r.receipt_type like '%${receiptType}%' 
-            </if >  
-            and r.is_show=0
-    </where>    
-
-LIMIT #{beginRow},#{endRow}
+		departmentName,branchName,receipt_money,receipt_type,receipt_form from
+		receipt r
+		LEFT JOIN employee e
+		on r.emp_id=e.emp_id
+		LEFT JOIN department d
+		on r.departmentId=d.departmentId
+		LEFT JOIN branch_infr b
+		on r.branchId=b.branchId
+		<where>
+			<if test="date!=null and date!=''">
+				r.receipt_time like'%${date}%'
+			</if>
+			<if test="branch!=null and branch!=''">
+				AND b.branchName like '%${branch}%'
+			</if>
+			<if test="receiptType !=null and receiptType!=''">
+				AND r.receipt_type like '%${receiptType}%'
+			</if>
+			and r.is_show=0
+		</where>
+		LIMIT #{beginRow},#{endRow}
 	</select>
-	
-	
+
+
 	<!-- 查询收款总行数 -->
 	<select id="getReceptCount" resultType="integer">
 		select count(*) from receipt r
-	LEFT JOIN employee e
-	on r.emp_id=e.empId
-	LEFT JOIN department d
-	on r.departmentId=d.departmentId
-	LEFT JOIN branchinfr b
-	on r.branchId=b.branchId 
-	<where>  
-            <if test="date!=null and date!=''">  
-                r.receipt_time like'%${date}%' 
-            </if >  
-            <if test="branch!=null and branch!=''">  
-                AND b.branchName like '%${branch}%'
-            </if >  
-            <if test="receiptType !=null and receiptType!=''">  
-                AND r.receipt_type like '%${receiptType}%' 
-            </if >  
-            and r.is_show=0
-       </where>
+		LEFT JOIN employee e
+		on r.emp_id=e.emp_id
+		LEFT JOIN department d
+		on r.departmentId=d.departmentId
+		LEFT JOIN branch_infr b
+		on r.branchId=b.branchId
+		<where>
+			<if test="date!=null and date!=''">
+				r.receipt_time like'%${date}%'
+			</if>
+			<if test="branch!=null and branch!=''">
+				AND b.branchName like '%${branch}%'
+			</if>
+			<if test="receiptType !=null and receiptType!=''">
+				AND r.receipt_type like '%${receiptType}%'
+			</if>
+			and r.is_show=0
+		</where>
 	</select>
-	
-	
+
+
 	<!-- 查询收款日期、合计 -->
 	<select id="getReceiptDateMoney" resultType="ReceiptDTO">
-		select receipt_time,receipt_money from receipt
+		select
+		receipt_time,receipt_money from receipt
 		where is_show=0
 	</select>
+
+
+	<!-- 删除收款 -->
+	<update id="delReceipt" parameterType="integer">
+		update receipt set
+		is_show=1
+		where receipt_id=#{rid}
+	</update>
+
+	<!-- 修改付款单 -->
+	<update id="updReceipt" parameterType="Map">
+		update receipt set
+		receipt_time=#{receiptTime},receipt_money=#{receiptMoney},receipt_type=#{receiptType},
+		receipt_form=#{receiptForm}
+		where receipt_id=#{receiptId}
+	</update>
 </mapper>
