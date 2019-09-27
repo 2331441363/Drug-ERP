@@ -40,6 +40,10 @@ public class ReceiptDO {
 	 */
 	private double receiptMoney;
 	/**
+	 * 收款状态
+	 */
+	private String receiptStatus;
+	/**
 	 * 收款类型
 	 */
 	private String receiptType;

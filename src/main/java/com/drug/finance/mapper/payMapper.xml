@@ -4,7 +4,7 @@
 	<!-- 查询所有付款单 -->
 	<select id="getPay" resultType="PayDTO" parameterType="Map">
 		SELECT pay_id,pay_date,emp_name,departmentName,
-		branchName,money,pay_type,
+		branchName,money,pay_status,pay_type,
 		pay_note FROM pay p
 		LEFT JOIN employee e
 		on p.emp_id=e.emp_id
@@ -28,13 +28,7 @@
 	</select>
 
 
-	<!-- 查询付款日期、合计 -->
-	<select id="getDateMoney" resultType="PayDTO">
-		select pay_date,money from
-		pay
-		where is_show=0
-	</select>
-
+	
 	<!-- 查询付款总行数 -->
 	<select id="getPayCount" resultType="integer"
 		parameterType="Map">
@@ -72,7 +66,7 @@
 	<update id="updPay" parameterType="Map">
 		update pay set
 		pay_date=#{payDate},money=#{money},pay_type=#{payType},
-		pay_note=#{payNote}
+		pay_note=#{payNote},pay_status=#{payStatus}
 		where pay_id=#{payId}
 	</update>
 </mapper>

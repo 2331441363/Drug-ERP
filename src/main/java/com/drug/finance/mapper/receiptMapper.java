@@ -20,13 +20,7 @@ public interface receiptMapper {
 	 */
 	public List<ReceiptDTO> getReceipt(Map<String, Object> map);
 
-	/**
-	 * 查询收款日期、合计
-	 * 
-	 * @return 合计list
-	 */
-	public List<ReceiptDTO> getReceiptDateMoney();
-
+	
 	/**
 	 * 查询收款总行数
 	 * 

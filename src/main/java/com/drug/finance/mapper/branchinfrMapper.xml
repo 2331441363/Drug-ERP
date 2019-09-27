@@ -1,8 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-<mapper namespace="com.drug.finance.mapper.branchinfrMapper" >
-	<!-- 查询分店名称 -->
+<mapper namespace="com.drug.finance.mapper.branchinfrMapper">
+	<!-- 查询所有分店名称 -->
 	<select id="getAllBranchName" resultType="String">
-		select branchName from branchinfr
+		select branchName from
+		branch_infr
+		where is_show=0
 	</select>
+
+
+	<!-- 查询所有分店信息 -->
+	<select id="getAllBranch" resultType="BranchinfrDO"
+		parameterType="Map">
+		select * from branch_infr
+		where is_show=0
+		LIMIT
+		#{beginRow},#{endRow}
+	</select>
+
+
+	<!-- 查询所有分店总数 -->
+	<select id="getAllBranchCount" resultType="integer"
+		parameterType="Map">
+		select count(*) from branch_infr
+		where is_show=0
+		LIMIT
+		#{beginRow},#{endRow}
+	</select>
+
+	<!-- 新增分店 -->
+	<insert id="addBranch" parameterType="Map">
+		insert into
+		branch_infr(branchName,branchOwner,branchAddress,
+		branchTel,signTime,bargainStatus)
+		values(#{bName},#{branchBossName},#{branchAddr},#{branchTel},#{signTime},#{isBargin})
+	</insert>
+
+
+	<!-- 删除分店 -->
+	<update id="delBranch" parameterType="integer">
+		update branch_infr set
+		is_show=1
+		where branchId=#{bid}
+	</update>
+
+
+	<!-- 修改分店信息 -->
+	<update id="updBranch" parameterType="Map">
+		update branch_infr
+		set
+		branchName=#{bName},branchOwner=#{branchBossName},branchAddress=#{bAddr},
+		branchTel=#{branchTel},signTime=#{signTime},bargainStatus=#{isBargin}
+		where branchId=#{bid}
+	</update>
 </mapper>

@@ -27,6 +27,24 @@ label{
 </style>
 </head>
 <body>
+<table class="layui-table" lay-data="{url:'../../listPay.do', id:'testReload',page: true}" lay-filter="testReload">
+		    	  <thead>
+		    	    <tr>
+		    	    <th lay-data="{type: 'checkbox', fixed: 'left'}">ID</th>
+		    	    <th lay-data="{field: 'returnId', width:150, sort: true}">订单编号</th>
+		    	    <th lay-data="{field: 'branchName'}">分店名称</th>
+		    	    <th lay-data="{field: 'drugName'}">商品名称</th>
+		    	    <th lay-data="{field: 'returnQuantity'}">商品数量</th>
+		    	    <th lay-data=" {field: 'returnTotal'}">合计</th>
+		    	    <th lay-data="{field: 'returnTime'}">退货时间</th>
+		    	    <th lay-data="{field: 'checkStatus',edit: 'text'  }">审核状态</th>
+		    	    <th lay-data="{field: 'receiptStatus',edit: 'text'  }">收款状态</th>
+		        </tr>
+		        </thead>
+		      </table>
+		  
+
+
 <script>
 	layui.use('laydate', function(){
 	  var laydate = layui.laydate;
@@ -41,32 +59,8 @@ label{
 
 <table id="demo" lay-filter="test"></table>
 <script>
-		var table2 = null ;
-		layui.use('table', function(){
+		layui.use(['table'], function(){
 			var table = layui.table, form = layui.form;
-		  
-		  //执行一个 table 实例
-		 	table2 =  table.render({
-		    elem: '#demo'
-		    ,height:563
-		    ,url: '../json/demo1.json' //数据接口
-		    ,title: '分店退货单'
-		    ,page: true //开启分页
-		    ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-		    ,totalRow: true //开启合计行
-		    ,cols: [[ //表头
-		    	{type:'checkbox', fixed: 'left'}
-		        ,{field: 'orderId', title: '订单号', width:150, sort: true,unresize:true}
-		        ,{field: 'orderDate', title: '下单时间',unresize:true}
-		        ,{field: 'productName', title: '商品名称', unresize:true}
-		        , {field: 'productQuantity', title: '商品数量',unresize:true}
-		        , {field: 'total', title: '合计', unresize:true}
-		        ,{field: 'backTime', title: '退货时间', unresize:true}
-		        ,{
-		    		fixed: 'right', title:'操作',width:178, align:'center', toolbar: '#barDemo',unresize:true
-		          }
-		    ]]
-		  });
 		  
 		 	$(function() {
 			 	//查询
@@ -84,6 +78,37 @@ label{
 		 		});
 		 	});
 		  
+		 	
+		 	 //单元格编辑事件
+		 	  table.on('edit(testReload)', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+		 	      //console.log(obj.value); //得到修改后的值
+		 	      //console.log(obj.field); //当前编辑的字段名
+		 	      var data = obj.data; //所在行的所有相关数据  
+		 	      $.ajax({
+		 				url:'../../updBranchReturnStatus.do',
+		 				method:'post',
+		 				data:'returnId='+data.returnId+'&receiptStatus='+data.receiptStatus,
+		 				dataType:'json',
+		 				success:function(back){
+		 					if(back='ok'){
+		 					//修改分店收款状态、日期
+		 					 $.ajax({
+		 		 				url:'../../updBranchReceStatus.do',
+		 		 				method:'post',
+		 		 				data:'returnId='+data.returnId,
+		 		 				dataType:'json',
+		 		 				success:function(back){
+		 		 					if(back='ok'){
+		 		 						alert("分店已收款");
+		 		 					}
+		 		 				}
+		 		 			});
+		 					}
+		 				}
+		 			});
+		 	      
+		 	    });
+		 	
 	 	//监听头工具栏事件
 	 	  table.on('select', function(data){
 	 		 console.log(data.elem);

@@ -39,6 +39,27 @@ label{
  
 </head>
 <body>
+
+<table class="layui-table" lay-data="{url:'../../listPay.do', id:'testReload',page: true}" lay-filter="testReload">
+		    	  <thead>
+		    	    <tr>
+		    	    <th lay-data="{type: 'checkbox', fixed: 'left'}">ID</th>
+		    	    <th lay-data="{field: 'payId', width:150, sort: true}">编号</th>
+		    	    <th lay-data="{field: 'empName',edit: 'text'  }">付款人</th>
+		    	    <th lay-data="{field: 'payDate',edit: 'text' }">付款时间</th>
+		    	    <th lay-data=" {field: 'departmentName',edit: 'text'  }">部门</th>
+		    	    <th lay-data="{field: 'branchName',edit: 'text'  }">分店名称</th>
+		    	    <th lay-data="{field: 'money',edit: 'text'  }">付款金额</th>
+		    	     <th lay-data="{field: 'payStatus',edit: 'text'  }">付款状态</th>
+		    	    <th lay-data="{field: 'payType',edit: 'text'  }">付款类型</th>
+		    	    <th lay-data="{field: 'payNote',edit: 'text'  }">付款备注</th>
+		    	    <th lay-data="{fixed: 'right',width:178, align:'center', toolbar: '#barDemo'}">操作</th>
+		        </tr>
+		        </thead>
+		      </table>
+		  
+
+
  <script type="text/javascript">
 //加载分店名称
 $.ajax({
@@ -52,7 +73,10 @@ $.ajax({
             $('#branchName').append("<option value='"+item+"'>"+item+"</option>");//往下拉菜单里添加元素
         });
  
-        form.render();//菜单渲染 把内容加载进去
+        layui.use(['form'], function(){
+        	 var form = layui.form;
+        	form.render();//菜单渲染 把内容加载进去
+        });
     }
 });
 
@@ -110,39 +134,30 @@ $.ajax({
 			var $ = layui.$;
 		  
 
-			
 			//日期时间选择器
 			  laydate.render({
 			    elem: '#payDate'
 			    ,type: 'datetime'
 			  });
 			
-		  //执行一个 table 实例
- 		 	table.render({
-		    elem: '#demo'
-		    ,height:563
-		    ,url: '../../listPay.do' //数据接口
-		    ,title: '付款单查询'
-		    ,page: true //开启分页
-		    ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-		    ,cols: [[ //表头
-		    	{type: 'checkbox', fixed: 'left'}
-		        ,{field: 'payId', title: '编号', width:150, sort: true, unresize:true}
-		        ,{field: 'empName', title: '付款人', unresize:true}
-		        , {field: 'payDate', title: '付款时间', unresize:true}
-		        , {field: 'departmentName', title: '部门', unresize:true}
-		        ,{field: 'branchName', title: '分店', unresize:true}
-		        , {field: 'money', title: '付款金额', unresize:true}
-		        ,{field: 'payType', title: '付款类型', unresize:true}
-		        ,{field: 'payNote', title:'备注', unresize:true}
-		        ,{
-		    		fixed: 'right', title:'操作',width:178, align:'center', toolbar: '#barDemo',unresize:true
-		          }
-		        ]]
- 		 	,id:'testReload'
-		  });
 		  
-		  
+			//单元格编辑事件
+			  table.on('edit(testReload)', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+			      //console.log(obj.value); //得到修改后的值
+			      //console.log(obj.field); //当前编辑的字段名
+			      var data = obj.data; //所在行的所有相关数据  
+			      $.ajax({
+	 					url:'../../updPay.do',
+	 					method:'post',
+	 					data:'payId='+data.payId+'&payDate='+data.payDate+'&payStatus='+payStatus+
+	 				'&money='+data.money+'&payType='+data.payType+'&payNote='+data.payNote,
+	 					dataType:'json',
+	 					success:function(back){
+	 					}
+	 				});
+			    });
+			
+			
  		 //头部搜索框，查询
  		 	 var $ = layui.$,active = {
  		 			reload: function(){
@@ -223,7 +238,7 @@ $.ajax({
  		 		  
 		 		
  		 		 //监听弹出框表单提交，massage是修改界面的表单数据'submit(demo11),是修改按钮的绑定
- 		        function setFormValue(obj,data){
+ 		       /*  function setFormValue(obj,data){
  		            form.on('submit(editPayBtn)', function(massage) {
  		                $.ajax({
  		                    url:'../../updPay.do',
@@ -252,11 +267,11 @@ $.ajax({
  		                });
  		            });
 
- 		        }
+ 		        } */
 
  		 		 
 		//监听行工具事件操作
-		 table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		 table.on('tool(testReload)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
 			var data = obj.data; //获得当前行数据
 			var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 			var tr = obj.tr; //获得当前行 tr 的DOM对象
@@ -270,7 +285,7 @@ $.ajax({
 					var data$ = {payId : data.payId};
 					$.post(url,data$,function(obj) {
 						layer.msg(obj.msg);//提示
-						table2.reload(); //也是刷新父页面的
+						testReload.reload(); //也是刷新父页面的
 					},"json");
 				});
 			} else if (layEvent === 'edit') { //编辑
@@ -301,61 +316,5 @@ $.ajax({
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
-
-<form class="layui-form" action=""  id="editPayForm" style="display: none;" onsubmit="return false;">
-	<table  style="font-size: 13px;width: 96%;height: 100%">
-		<tr>
-					<td class="trs">编号:</td>
-					<td class="textTd"><input type="text" class="layui-input" id="payId" 
-					autocomplete="off" readonly="readonly">
-					</td>
-					
-     				<td class="trs"> 付款人:</td>
-        <td class="textTd"><input type="text" readonly="readonly" class="layui-input" id="empName" 
-					autocomplete="off"	>
-		</td>
-		
-     		<td class="trs">付款时间:</td>
-        <td class="textTd"><input type="text" class="layui-input" id="payDate" 
-					autocomplete="off"	>
-    	</td>
-    </tr>
-    <tr>
-     		<td class="trs">部门:</td>
-        <td class="textTd"><input type="text"  readonly="readonly"  class="layui-input" id="departmentName" 
-					autocomplete="off">
-        </td>
-
-				<td class="trs">分店:</td>
-					<td class="textTd"><input type="text"  readonly="readonly"  class="layui-input" id="branchName" 
-					autocomplete="off">
-				</td>
-
-				<td class="trs">付款金额:</td>
-					<td class="textTd"><input  type="text" name="money" id="money" autocomplete="off"
-						class="layui-input">
-					</td>
-		</tr>
-		<tr>
-
-				<td class="trs">付款类型:</td>
-					<td class="textTd"><input type="text"  class="layui-input" id="payType" 
-					autocomplete="off"	>
-					</td>
-					
-			</tr>
-			<tr>
-
-			   <td class="trs">备注:</td>
-			    <td style="padding-left: 10px;padding-top: 20px;" colspan="5" ><textarea placeholder="请输入内容"  cols="70px" rows="15px" id="payNote"></textarea>
-			    </td>
-			</tr>
-		  </table>
-		  
-		  
-			<div class="layui-form-item" style="margin-top:15px;">
-				<button class="layui-btn  layui-btn-sm layui-btn-normal" lay-filter="demo2" style="margin-left: 700px;" id="editPayBtn">确定</button>
-			</div>
-	</form>
 </body>
 </html>

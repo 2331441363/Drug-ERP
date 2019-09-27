@@ -43,7 +43,10 @@ public class ReceiptDTO {
 	 * 收款金额
 	 */
 	private double receiptMoney;
-	
+	/**
+	 * 收款状态
+	 */
+	private String receiptStatus;
 	/**
 	 * /收款类型
 	 */

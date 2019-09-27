@@ -30,13 +30,6 @@ public class payServiceImpl implements payService {
 		return paymapper.getPay(map);
 	}
 
-	/**
-	 * 查询付款日期、合计
-	 */
-	@Override
-	public List<PayDTO> getDateMoney() {
-		return paymapper.getDateMoney();
-	}
 
 	/**
 	 * 查询付款总行数

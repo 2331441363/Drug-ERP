@@ -5,7 +5,7 @@
 	<select id="getReceipt" resultType="ReceiptDTO"
 		parameterType="Map">
 		SELECT receipt_id,emp_name,receipt_time,
-		departmentName,branchName,receipt_money,receipt_type,receipt_form from
+		departmentName,branchName,receipt_money,receipt_status,receipt_type,receipt_form from
 		receipt r
 		LEFT JOIN employee e
 		on r.emp_id=e.emp_id
@@ -50,14 +50,6 @@
 			</if>
 			and r.is_show=0
 		</where>
-	</select>
-
-
-	<!-- 查询收款日期、合计 -->
-	<select id="getReceiptDateMoney" resultType="ReceiptDTO">
-		select
-		receipt_time,receipt_money from receipt
-		where is_show=0
 	</select>
 
 

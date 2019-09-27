@@ -21,12 +21,6 @@ public interface payMapper {
 	 */
 	public List<PayDTO> getPay(Map<String, Object> map);
 
-	/**
-	 * 查询付款日期、合计
-	 * 
-	 * @return 合计list
-	 */
-	public List<PayDTO> getDateMoney();
 
 	/**
 	 * 查询付款总行数

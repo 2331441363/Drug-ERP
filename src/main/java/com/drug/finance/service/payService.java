@@ -22,12 +22,6 @@ public interface payService {
 	
 	
 	/**
-	 * 查询付款日期、合计
-	 * @return 合计list
-	 */
-	public List<PayDTO> getDateMoney();
-	
-	/**
 	 * 查询付款总行数
 	 * @param map 查询条件
 	 * @return Integer 付款总行数

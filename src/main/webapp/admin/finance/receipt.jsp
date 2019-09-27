@@ -40,6 +40,27 @@ label{
 
 </head>
 <body>
+
+		    	
+		    	<table class="layui-table" lay-data="{url:'../../listReceipt.do', id:'testReload',page: true}" lay-filter="testReload">
+		    	  <thead>
+		    	    <tr>
+		    	    <th lay-data="{type: 'checkbox', fixed: 'left'}">ID</th>
+		    	    <th lay-data="{field: 'receiptId', width:150, sort: true}">编号</th>
+		    	    <th lay-data="{field: 'empName',edit: 'text'  }">收款人</th>
+		    	    <th lay-data="{field: 'receiptTime',edit: 'text' }">收款时间</th>
+		    	    <th lay-data=" {field: 'departmentName',edit: 'text'  }">部门</th>
+		    	    <th lay-data="{field: 'branchName',edit: 'text'  }">分店名称</th>
+		    	    <th lay-data="{field: 'receiptMoney',edit: 'text'  }">收款金额</th>
+		    	    <th lay-data="{field: 'receiptStatus',edit: 'text'  }">收款状态</th>
+		    	    <th lay-data="{field: 'receiptType',edit: 'text'  }">收款类型</th>
+		    	    <th lay-data="{field: 'receiptForm',edit: 'text'  }">收款备注</th>
+		    	    <th lay-data="{fixed: 'right',width:178, align:'center', toolbar: '#barDemo'}">操作</th>
+		        </tr>
+		        </thead>
+		      </table>
+		  	  
+
  <script type="text/javascript">
 //加载分店名称
 $.ajax({
@@ -53,7 +74,10 @@ $.ajax({
             $('#sbranch').append("<option value='"+item+"'>"+item+"</option>");//往下拉菜单里添加元素
         });
  
-        form.render();//菜单渲染 把内容加载进去
+        layui.use(['form'], function(){
+	       	 var form = layui.form;
+	        form.render();//菜单渲染 把内容加载进去
+        });
     }
 });
 
@@ -112,32 +136,23 @@ $.ajax({
 			  });
 			
 			
-		  //执行一个 table 实例
-		 	table2 =  table.render({
-		    elem: '#demo'
-		    ,height:563
-		    ,url: '../../listReceipt.do' //数据接口
-		    ,title: '收款单查询'
-		    ,page: true //开启分页
-		    ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-		    ,totalRow: true //开启合计行
-		    ,cols: [[ //表头
-		    	{type: 'checkbox', fixed: 'left'}
-		        ,{field: 'receiptId', title: '编号', width:150, sort: true,unresize:true}
-		        ,{field: 'empName', title: '收款人', unresize:true}
-		        , {field: 'receiptTime', title: '收款时间', unresize:true}
-		        , {field: 'departmentName', title: '部门', unresize:true}
-		        ,{field: 'branchName', title: '分店', unresize:true}
-		        , {field: 'receiptMoney', title: '收款金额', unresize:true}	
-		        ,{field: 'receiptType', title: '收款类型', unresize:true}
-		        ,{field: 'receiptForm', title:'备注', unresize:true}
-		        ,{
-		    		fixed: 'right', title:'操作',width:178, align:'center', toolbar: '#barDemo',unresize:true
-		          }
-		    ]]
-		 	,id:'testReload'
-		  });
-		  	  
+			//单元格编辑事件
+			  table.on('edit(testReload)', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+			      //console.log(obj.value); //得到修改后的值
+			      //console.log(obj.field); //当前编辑的字段名
+			      var data = obj.data; //所在行的所有相关数据  
+			      $.ajax({
+	 					url:'../../updReceipt.do',
+	 					method:'post',
+	 					data:'receiptId='+data.receiptId+'&receiptTime='+data.receiptTime+
+	 				'&receiptMoney='+data.receiptMoney+'&receiptType='+data.receiptType+'&receiptForm='+data.receiptForm,
+	 					dataType:'json',
+	 					success:function(back){
+	 					}
+	 				});
+			    });
+			
+			
 		  
 		 	//头部搜索框，查询
 		 	 var $ = layui.$,active = {
@@ -172,7 +187,7 @@ $.ajax({
 		  
 		 	   
 		//监听操作
-		table.on('tool(test)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		table.on('tool(testReload)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
 			var data = obj.data; //获得当前行数据
 			var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 			var tr = obj.tr; //获得当前行 tr 的DOM对象
@@ -182,11 +197,11 @@ $.ajax({
 					obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 					layer.close(index);
 					//向服务端发送删除指令
-					var url = "flowerServlet?action=delect";
-					var data$ = {flowerId : data.flowerId};
+					var url = "../../delReceipt.do";
+					var data$ = {receiptId : data.receiptId};
 					$.post(url,data$,function(obj) {
 						layer.msg(obj.msg);//提示
-						table2.reload(); //也是刷新父页面的
+						testReload.reload(); //也是刷新父页面的
 					},"json");
 				});
 			} else if (layEvent === 'edit') { //编辑

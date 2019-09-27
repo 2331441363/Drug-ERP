@@ -29,13 +29,7 @@ public class receiptServiceImpl implements receiptService {
 		return receiptmapper.getReceipt(map);
 	}
 
-	/**
-	 * 查询收款日期、合计
-	 */
-	@Override
-	public List<ReceiptDTO> getReceiptDateMoney() {
-		return receiptmapper.getReceiptDateMoney();
-	}
+	
 
 	/**
 	 * 查询收款总行数

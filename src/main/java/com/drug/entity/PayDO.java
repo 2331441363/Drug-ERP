@@ -36,6 +36,10 @@ public class PayDO {
 	 */
 	private double money;
 	/**
+	 * 付款状态
+	 */
+	private String payStatus;
+	/**
 	 * 付款类型
 	 */
 	private String payType;
