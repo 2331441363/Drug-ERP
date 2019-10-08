@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.drug.dto.PayDTO;
-import com.drug.entity.EmployeeDO;
 
 public interface payMapper {
 
@@ -45,4 +44,11 @@ public interface payMapper {
 	 * @return int 受影响行数
 	 */
 	public int updPay(Map<String, Object> map);
+	
+	/**
+	 * 查询付款日期、合计
+	 * 
+	 * @return 合计list
+	 */
+	public List<PayDTO> getDateMoney();
 }

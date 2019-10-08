@@ -30,7 +30,6 @@ public class branchinfrServiceImpl implements branchinfrService {
 	/**
 	 * 新增分店
 	 */
-	@Override
 	public int addBranch(Map<String, Object> map) {
 		return branchinfrmapper.addBranch(map);
 	}
@@ -38,7 +37,6 @@ public class branchinfrServiceImpl implements branchinfrService {
 	/**
 	 * 查询所有分店
 	 */
-	@Override
 	public List<BranchinfrDO> getAllBranch(Map<String, Object> map) {
 		return branchinfrmapper.getAllBranch(map);
 	}
@@ -46,7 +44,6 @@ public class branchinfrServiceImpl implements branchinfrService {
 	/**
 	 * 查询所有分店总数
 	 */
-	@Override
 	public int getAllBranchCount(Map<String, Object> map) {
 		return branchinfrmapper.getAllBranchCount(map);
 	}
@@ -54,7 +51,6 @@ public class branchinfrServiceImpl implements branchinfrService {
 	/**
 	 * 删除分店
 	 */
-	@Override
 	public int delBranch(int bid) {
 		return branchinfrmapper.delBranch(bid);
 	}
@@ -62,7 +58,6 @@ public class branchinfrServiceImpl implements branchinfrService {
 	/**
 	 * 修改分店信息
 	 */
-	@Override
 	public int updBranch(Map<String, Object> map) {
 		System.out.println("eeeee");
 		return branchinfrmapper.updBranch(map);

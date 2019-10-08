@@ -20,13 +20,14 @@
 				dataType : "JSON",
 				data : {},
 				success : function(data1) {//这里得到后台Java响应的json数据,即resultJsonMapData
+					alert(data1);
 							 $.ajax({
 								url : "../../getDateMoney.do",
 								type : "POST",
 								dataType : "JSON",
 								data : {},
 								success : function(data2) {
- 
+									alert(data2);
 									//基于准备好的dom，初始化echarts实例
 									var myChar = echarts.init(document
 											.getElementById('main'));

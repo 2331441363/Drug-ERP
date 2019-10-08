@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import com.drug.dto.ReceiptDTO;
 
@@ -46,4 +45,11 @@ public interface receiptService {
 	 * @return int 受影响行数
 	 */
 	public int updReceipt(Map<String, Object> map);
+	
+	/**
+	 * 查询收款日期、合计
+	 * 
+	 * @return 合计list
+	 */
+	public List<ReceiptDTO> getReceiptDateMoney();
 }

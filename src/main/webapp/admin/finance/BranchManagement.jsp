@@ -65,7 +65,6 @@ layui.use(['table','form','laydate','layer'], function(){
   });
 
   
-  
    //单元格编辑事件
   table.on('edit(test3)', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
       //console.log(obj.value); //得到修改后的值
@@ -79,16 +78,16 @@ layui.use(['table','form','laydate','layer'], function(){
 		'&signTime='+data.signTime+'&isBargin='+data.bargainStatus,
 			dataType:'json',
 			success:function(back){
+				test3.reload(); //也是刷新父页面的
 			}
 		});
-      
     });
           
 
 	 //新增分店
 	 	 var $ = layui.$,active = {
 	 			reload: function(){
-	 		    	
+	 		    	alert("fffff");
 	 		     var branchName = $('#branchName').val();
 	 		   var branchOwner = $('#branchOwner').val();
 	 		 var province = $('#province123').val();
@@ -97,6 +96,8 @@ layui.use(['table','form','laydate','layer'], function(){
 	 		 var branchTel = $('#branchTel').val();
 	 		 var signTime = $('#signTime').val();
 	 		 var bargainStatus = $('#bargainStatus').val();
+	 		 alert(branchOwner);
+	 		 
 	 		$.ajax({
 	 		    url:'../../addBranch.do',
 	 		    data:'bName='+branchName+'&branchBossName='+branchOwner+
@@ -107,16 +108,13 @@ layui.use(['table','form','laydate','layer'], function(){
 	 		    dataType:'json',
 	 		    type:'post',
 	 		    success:function(back){
-	 		    	if(back="ok"){
-	 		    		alert("新增分店成功");
-	 		    	}
 	 		    }
 	 		});
 	 		//关闭所有弹出框
 	 		layer.closeAll();
 	 		 
 	 		      //执行重载
-	 		      table.reload('testReload', {
+	 		      table.reload('test3', {
 	 		        page: {
 	 		          curr: 1 //重新从第 1 页开始
 	 		        }
@@ -124,12 +122,32 @@ layui.use(['table','form','laydate','layer'], function(){
 	 		    }
 	 		  };
 	 		  
-	 		  $('.layui-input-block .layui-btn').on('click', function(){
+	 		  $('.layui-form-item .layui-btn').on('click', function(){
 	 		    var type = $(this).data('type');
 	 		    active[type] ? active[type].call(this) : '';
 	 		  }); 
 	  
-   
+	 		  
+	 		//弹出新增分店
+	 	 	 var $ = layui.$,active = {
+	 	 			load: function(){
+	 	 			   layer.open({
+	 	                   title:'新增分店',//标题
+	 	                   type:1,//样式
+	 	                   area:['auto','520px'],//大小
+	 	                   content:$("#form2"),
+	 	               });
+	 	               form.render();
+	 	 		    }
+	 	 		  };
+	 	 		  
+	 	 		  $('.layui-input-inline .layui-btn').on('click', function(){
+	 	 		    var type = $(this).data('type');
+	 	 		    active[type] ? active[type].call(this) : '';
+	 	 		  }); 
+	 	  
+	 		  
+	 		  
 	//下拉框改变事件
   form.on('select(cs)', function(data){
 			// 获得省份框中的值 
@@ -151,7 +169,7 @@ layui.use(['table','form','laydate','layer'], function(){
         
   
   //头工具栏事件
-  table.on('toolbar(test)', function(obj){
+  table.on('toolbar(test3)', function(obj){
     var checkStatus = table.checkStatus(obj.config.id);
     switch(obj.event){
     case 'getSearch':
@@ -230,7 +248,7 @@ layui.use(['table','form','laydate','layer'], function(){
 <body>
 
 <div class="layui-input-inline">
- <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="audit">新增</button>
+ <button class="layui-btn layui-btn-sm layui-btn-normal" data-type="load" >新增</button>
       </div>
 
     	<table class="layui-table" lay-data="{url:'../../getAllBranch.do', id:'test3',page: true}" lay-filter="test3">
@@ -249,10 +267,6 @@ layui.use(['table','form','laydate','layer'], function(){
         </thead>
       </table>
         
-
-      <table class="layui-hide" id="test1" lay-filter="test"></table>
-<table class="layui-hide" id="test" lay-filter="test"></table>
-
 
  <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -299,7 +313,7 @@ layui.use(['table','form','laydate','layer'], function(){
    <div class="layui-form-item">
    <label class="layui-form-label">联系方式</label>
     <div class="layui-input-inline">
-      <input type="text" name="branchTel" id="branchTel" style="width:300px;" lay-verify="required|number" placeholder="地址" autocomplete="off" class="layui-input">
+      <input type="text" name="branchTel" id="branchTel" style="width:300px;" lay-verify="required|number" placeholder="联系方式" autocomplete="off" class="layui-input">
     </div>
   </div>
   
@@ -323,10 +337,7 @@ layui.use(['table','form','laydate','layer'], function(){
     </div>
     </div>
    <div class="layui-form-item">
-    <br>
-    <div class="layui-input-block">
-     <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="position:absolute;left:110px;" onclick="gitAudit();" >提交</button>
-    </div>
+     <button class="layui-btn layui-btn-sm layui-btn-normal" style="position:absolute;left:110px;" data-type="reload" >提交</button>
   </div>
    
 </form>  

@@ -3,11 +3,9 @@ package com.drug.finance.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.drug.entity.BranchinfrDO;
-import com.drug.finance.mapper.branchinfrMapper;
 
 /**
  * @author 肖影

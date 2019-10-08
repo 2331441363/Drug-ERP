@@ -1,7 +1,5 @@
 package com.drug.dto;
 
-import java.util.Date;
-
 import org.joda.time.DateTime;
 
 /**

@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import lombok.Data;
-
 /**
  * @author 喻锦文
  * @version 创建时间:2019-9-2 类说明:仓库信息管理

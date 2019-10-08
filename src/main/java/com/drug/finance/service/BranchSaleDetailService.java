@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.drug.dto.BranchSaleDetailDTO;
-
 /**
 * @author 肖影
 * @version 创建时间：2019年9月17日 下午8:35:27

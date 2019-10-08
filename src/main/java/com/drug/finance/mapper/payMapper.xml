@@ -67,6 +67,13 @@
 		update pay set
 		pay_date=#{payDate},money=#{money},pay_type=#{payType},
 		pay_note=#{payNote},pay_status=#{payStatus}
-		where pay_id=#{payId}
+		where pay_id=#{payId} and is_show=0
 	</update>
+	
+	<!-- 查询付款日期、合计 -->
+	<select id="getDateMoney" resultType="PayDTO">
+		select pay_date,money from
+		pay
+		where is_show=0
+	</select>
 </mapper>

@@ -2,7 +2,6 @@ package com.drug.finance.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.drug.dto.BranchSaleDetailDTO;
 import com.drug.finance.service.BranchGoodsService;
 import com.drug.finance.service.BranchSaleDetailService;
 
@@ -39,11 +37,11 @@ public class BranchSaleDetailController {
 		// 查询分店仓库所有商品名称
 		List<String> bGoodsList = branchGoodsService.getAllGoodsname();
 		// 新建一个map类对象，用来装 分店销售的商品名称集合、数量总数集合
-		Map<String, List<Object>> map = new HashMap<>();
+		Map<String, List<Object>> map = new HashMap<String, List<Object>>();
 		// 商品名称集合
-		List<Object> gnameList = new ArrayList<>();
+		List<Object> gnameList = new ArrayList<Object>();
 		// 商品数量总数集合
-		List<Object> quaList = new ArrayList<>();
+		List<Object> quaList = new ArrayList<Object>();
 		for (int i = 0; i < bGoodsList.size(); i++) {
 			// 新建 商品数量总数变量
 			int quai = 0;

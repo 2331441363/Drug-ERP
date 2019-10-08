@@ -7,8 +7,6 @@ package com.drug.finance.mapper;
 
 import java.util.List;
 
-import com.drug.dto.BranchSaleDetailDTO;
-
 public interface BranchSaleDetailMapper {
 	/**
 	 * 根据销售的商品名称查询销售数量

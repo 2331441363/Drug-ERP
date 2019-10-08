@@ -40,6 +40,40 @@ label{
 
 </head>
 <body>
+<div class="demoTable" >
+	<form class="layui-form" onsubmit="return false;">
+		<div class="layui-inline"  style="margin-left:20px;">
+			<label >收款时间：</label>
+			<div class="layui-input-inline">
+				<input type="text" class="layui-input" id="test5"
+					placeholder="年--月--日 ">
+			</div>
+		</div>
+
+		<div class="layui-inline"  style="margin-left:20px;">
+			<label>分店：</label>
+			<div class="layui-input-inline">
+				<select name="branchName" id="sbranch" lay-search="">
+					<option value="">请选择</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="layui-inline"  style="margin-left:20px;">
+			<label >收款类型：</label>
+			<div class="layui-input-inline">
+				<select name="sReceiptType" id="sReceiptType"  lay-search="required">
+					<option value="">请选择</option>
+					<option value="总店销售">总店销售</option>
+					<option value="采购退货">采购退货</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-inline" >
+			<button class="layui-btn layui-btn-sm  layui-btn-normal" data-type="reload" id="seachTable">搜索</button>		
+		</div> 
+	</form>
+</div>
 
 		    	
 		    	<table class="layui-table" lay-data="{url:'../../listReceipt.do', id:'testReload',page: true}" lay-filter="testReload">
@@ -83,40 +117,6 @@ $.ajax({
 
 </script>
 
-<div class="demoTable" >
-	<form class="layui-form" onsubmit="return false;">
-		<div class="layui-inline"  style="margin-left:20px;">
-			<label >收款时间：</label>
-			<div class="layui-input-inline">
-				<input type="text" class="layui-input" id="test5"
-					placeholder="年--月--日 ">
-			</div>
-		</div>
-
-		<div class="layui-inline"  style="margin-left:20px;">
-			<label>分店：</label>
-			<div class="layui-input-inline">
-				<select name="branchName" id="sbranch" lay-search="">
-					<option value="">请选择</option>
-				</select>
-			</div>
-		</div>
-
-		<div class="layui-inline"  style="margin-left:20px;">
-			<label >收款类型：</label>
-			<div class="layui-input-inline">
-				<select name="sReceiptType" id="sReceiptType"  lay-search="required">
-					<option value="">请选择</option>
-					<option value="总店销售">总店销售</option>
-					<option value="采购退货">采购退货</option>
-				</select>
-			</div>
-		</div>
-		<div class="layui-inline" >
-			<button class="layui-btn layui-btn-sm  layui-btn-normal" data-type="reload" id="seachTable">搜索</button>		
-		</div> 
-	</form>
-</div>
 
 
 	<script type="text/html" id="toolbarDemo">
@@ -141,6 +141,7 @@ $.ajax({
 			      //console.log(obj.value); //得到修改后的值
 			      //console.log(obj.field); //当前编辑的字段名
 			      var data = obj.data; //所在行的所有相关数据  
+			      alert();
 			      $.ajax({
 	 					url:'../../updReceipt.do',
 	 					method:'post',
@@ -148,6 +149,7 @@ $.ajax({
 	 				'&receiptMoney='+data.receiptMoney+'&receiptType='+data.receiptType+'&receiptForm='+data.receiptForm,
 	 					dataType:'json',
 	 					success:function(back){
+	 						testReload.reload(); //也是刷新父页面的
 	 					}
 	 				});
 			    });

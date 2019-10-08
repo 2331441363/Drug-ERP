@@ -65,6 +65,14 @@
 		update receipt set
 		receipt_time=#{receiptTime},receipt_money=#{receiptMoney},receipt_type=#{receiptType},
 		receipt_form=#{receiptForm}
-		where receipt_id=#{receiptId}
+		where receipt_id=#{receiptId} and is_show=0
 	</update>
+	
+	
+	<!-- 查询收款日期、合计 -->
+	<select id="getReceiptDateMoney" resultType="ReceiptDTO">
+		select
+		receipt_time,receipt_money from receipt
+		where is_show=0
+	</select>
 </mapper>

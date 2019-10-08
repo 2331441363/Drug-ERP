@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.drug.dto.BranchSaleDetailDTO;
 import com.drug.finance.mapper.BranchSaleDetailMapper;
 import com.drug.finance.service.BranchSaleDetailService;
 
@@ -22,7 +21,6 @@ public class BranchSaleDetailServiceImpl implements BranchSaleDetailService {
 	/**
 	 * 根据分店销售的商品名查询销售数量
 	 */
-	@Override
 	public List<Integer> getQuantityByGname(String pname) {
 		return branchSaleDetailMapper.getQuantityByGname(pname);
 	}

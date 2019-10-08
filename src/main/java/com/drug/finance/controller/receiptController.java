@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.drug.dto.PayDTO;
 import com.drug.dto.ReceiptDTO;
 import com.drug.entity.LayuiTablePageDO;
 import com.drug.finance.service.receiptService;
@@ -44,7 +43,7 @@ public class receiptController {
 			@RequestParam(value = "receiptType", required = false, defaultValue = "") String receiptType,
 			LayuiTablePageDO layuiTablePageDO) {
 		// 新建一个map类对象1
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		// 把查询条件加入map集合
 		map.put("date", receiptTime);
 		map.put("branch", branchName);
@@ -112,7 +111,7 @@ public class receiptController {
 		// 新建一个Timestamp类对象
 		Timestamp newReceiptTime = new Timestamp(dt.getTime());
 		// 新建一个map类对象
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		// 把 修改信息 加入 map集合
 		map.put("receiptId", receiptId);
 		map.put("receiptTime", newReceiptTime);
@@ -128,5 +127,77 @@ public class receiptController {
 			System.out.println("修改收款单失败");
 			return "no";
 		}
+	}
+	
+	/**
+	 * 查询收款日期、合计
+	 * 
+	 * @return 合计集合
+	 */
+	@RequestMapping("/getReceiptDateMoney")
+	@ResponseBody
+	public List<Double> getReceiptDateMoney() {
+		// 新建一个用来装5周收入总计的List集合
+		List<Double> arrReceTotal = new ArrayList<Double>();
+		// 查询所有付款日期、合计
+		List<ReceiptDTO> receiptDateMoney = receiptservice.getReceiptDateMoney();
+		// 新建一个SimpleDateFormat类对象
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
+		// 新建5个用来装 合计 的变量
+		double total1 = 0;
+		double total2 = 0;
+		double total3 = 0;
+		double total4 = 0;
+		double total5 = 0;
+		for (ReceiptDTO receipt : receiptDateMoney) {
+			// 得到收款日期
+			Date date = receipt.getReceiptTime();
+			// 把 收款日期 由日期时间类型转为字符串类型
+			String dateStr = simple.format(date);
+			// 分割字符串类型的 收款日期
+			String[] dateArr = dateStr.split("-");
+			// 得到 收款日期的‘日‘
+			int day = Integer.parseInt(dateArr[2]);
+			// 判断 付款日期的‘日’在第几周
+			if (day / 7 <= 1 && (day % 7 >= 0 && day % 7 <= 6)) {
+				// 第 1周
+				// 得到 收款金额
+				double money = receipt.getReceiptMoney();
+				// 计算第1周财务收入
+				total1 += money;
+			} else if (day / 7 <= 2 && (day % 7 >= 0 && day % 7 <= 6)) {
+				// 第2周
+				// 得到 收款金额
+				double money = receipt.getReceiptMoney();
+				// 计算第2周财务收入
+				total2 += money;
+			} else if (day / 7 <= 3 && (day % 7 >= 0 && day % 7 <= 6)) {
+				// 3周
+				// 得到 收款金额
+				double money = receipt.getReceiptMoney();
+				// 计算第3周财务收入
+				total3 += money;
+			} else if (day / 7 <= 4 && (day % 7 >= 0 && day % 7 <= 6)) {
+				// 第4周
+				// 得到 收款金额
+				double money = receipt.getReceiptMoney();
+				// 计算第4周财务收入
+				total4 += money;
+			} else if (day / 7 <= 5 && (day % 7 >= 0 && day % 7 <= 6)) {
+				// 第5周
+				// 得到 收款金额
+				double money = receipt.getReceiptMoney();
+				// 计算第5周财务收入
+				total5 += money;
+			}
+		}
+		// 把 5周的收入总计分别 加入 用来装5周收入总计的List集合
+		arrReceTotal.add(total1);
+		arrReceTotal.add(total2);
+		arrReceTotal.add(total3);
+		arrReceTotal.add(total4);
+		arrReceTotal.add(total5);
+		// 返回 装了5周收入总计的List集合
+		return arrReceTotal;
 	}
 }

@@ -7,6 +7,8 @@
     <title>分店销量报表</title>
     <!--引入echarts.js-->
     <script src="<%=request.getContextPath()%>/js/echarts.js"></script>
+    <script src="../layui/layui.js"></script>
+   <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
     <!--为ECharts准备一个具备大小（宽高）的Dom-->

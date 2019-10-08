@@ -1,7 +1,5 @@
 package com.drug.dto;
 
-import com.drug.entity.FinishedGoodsSheetDO;
-
 import lombok.Data;
 
 /**

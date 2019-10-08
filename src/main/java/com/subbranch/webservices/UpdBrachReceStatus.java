@@ -3,6 +3,7 @@ package com.subbranch.webservices;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,9 +11,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>updBrachReceStatus complex type的 Java 类。
+ * <p>updBrachReceStatus complex type锟斤拷 Java 锟洁。
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
  * 
  * <pre>
  * &lt;complexType name="updBrachReceStatus">
@@ -59,7 +60,7 @@ public class UpdBrachReceStatus {
     protected UpdBrachReceStatus.Arg0 arg0;
 
     /**
-     * 获取arg0属性的值。
+     * 锟斤拷取arg0锟斤拷锟皆碉拷值锟斤拷
      * 
      * @return
      *     possible object is
@@ -71,7 +72,7 @@ public class UpdBrachReceStatus {
     }
 
     /**
-     * 设置arg0属性的值。
+     * 锟斤拷锟斤拷arg0锟斤拷锟皆碉拷值锟斤拷
      * 
      * @param value
      *     allowed object is
@@ -84,9 +85,9 @@ public class UpdBrachReceStatus {
 
 
     /**
-     * <p>anonymous complex type的 Java 类。
+     * <p>anonymous complex type锟斤拷 Java 锟洁。
      * 
-     * <p>以下模式片段指定包含在此类中的预期内容。
+     * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
      * 
      * <pre>
      * &lt;complexType>
@@ -152,9 +153,9 @@ public class UpdBrachReceStatus {
 
 
         /**
-         * <p>anonymous complex type的 Java 类。
+         * <p>anonymous complex type锟斤拷 Java 锟洁。
          * 
-         * <p>以下模式片段指定包含在此类中的预期内容。
+         * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
          * 
          * <pre>
          * &lt;complexType>
@@ -182,7 +183,7 @@ public class UpdBrachReceStatus {
             protected Object value;
 
             /**
-             * 获取key属性的值。
+             * 锟斤拷取key锟斤拷锟皆碉拷值锟斤拷
              * 
              * @return
              *     possible object is
@@ -194,7 +195,7 @@ public class UpdBrachReceStatus {
             }
 
             /**
-             * 设置key属性的值。
+             * 锟斤拷锟斤拷key锟斤拷锟皆碉拷值锟斤拷
              * 
              * @param value
              *     allowed object is
@@ -206,7 +207,7 @@ public class UpdBrachReceStatus {
             }
 
             /**
-             * 获取value属性的值。
+             * 锟斤拷取value锟斤拷锟皆碉拷值锟斤拷
              * 
              * @return
              *     possible object is
@@ -218,7 +219,7 @@ public class UpdBrachReceStatus {
             }
 
             /**
-             * 设置value属性的值。
+             * 锟斤拷锟斤拷value锟斤拷锟皆碉拷值锟斤拷
              * 
              * @param value
              *     allowed object is

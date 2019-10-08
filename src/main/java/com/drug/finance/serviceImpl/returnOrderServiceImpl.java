@@ -19,7 +19,6 @@ public class returnOrderServiceImpl implements returnOrderService {
 	@Autowired
 	private returnOrderMapper returnOrderMapper;
 
-	@Override
 	public int updBranchReturnStatus(Map<String, Object> map) {
 		return returnOrderMapper.updBranchReturnStatus(map);
 	}

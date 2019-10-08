@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.drug.dto.EmployeeDTO;
-import com.drug.entity.DepartmentDO;
 import com.drug.entity.EmployeeDO;
 import com.drug.entity.LayuiTablePageDO;
 import com.drug.system.service.EmployeeService;

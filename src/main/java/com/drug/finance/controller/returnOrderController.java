@@ -30,7 +30,7 @@ public class returnOrderController {
 	@RequestMapping("/updBranchReturnStatus")
 	@ResponseBody
 	public String updBranchReturnStatus(int returnId, String receiptStatus) {
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("returnId", returnId);
 		map.put("receiptStatus", receiptStatus);
 		int row = returnOrderService.updBranchReturnStatus(map);

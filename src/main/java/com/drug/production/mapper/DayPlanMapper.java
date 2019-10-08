@@ -3,13 +3,11 @@ package com.drug.production.mapper;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.drug.dto.DayPlanDTO;
 import com.drug.entity.DayPlanDO;
 import com.drug.entity.DayPlanDetailDO;
-import com.drug.entity.PlanDO;
 
 /**
 * @author 李杰

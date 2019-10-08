@@ -3,13 +3,11 @@ package com.drug.finance.controller;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,6 @@ import com.drug.entity.BranchinfrDO;
 import com.drug.entity.LayuiTablePageDO;
 import com.drug.finance.service.branchinfrService;
 import com.drug.util.ReturnDataUtils;
-import com.sun.tools.javac.util.Convert;
 
 /**
  * @author 肖影
@@ -55,7 +52,7 @@ public class branchinfrController {
 	@ResponseBody
 	public Map<String, Object> getAllBranch(LayuiTablePageDO layuiTablePageDO) {
 		// 新建一个map集合1
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		// 得到分页起始页
 		map.put("beginRow", layuiTablePageDO.getBeginRow());
 		// 得到分页尾页
@@ -90,6 +87,7 @@ public class branchinfrController {
 	@ResponseBody
 	public String addBranch(String bName, String province, String city, String addrDetl, String signTime,
 			String isBargin, String branchBossName, String branchTel) {
+		System.out.println("========");
 		// 新建SimpleDateFormat类对象
 		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// 定义空Date对象
@@ -106,7 +104,7 @@ public class branchinfrController {
 		// 分店全地址
 		String branchAddr = province + city + addrDetl;
 		// 新建一个map类对象
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		/// 把要新增的分店信息加入map集合
 		map.put("bName", bName);
 		map.put("branchAddr", branchAddr);
@@ -116,6 +114,7 @@ public class branchinfrController {
 		map.put("branchTel", branchTel);
 		// 新增分店
 		int row = branchinfrservice.addBranch(map);
+		System.out.println(row);
 		if (row > 0) {
 			System.out.println("新增分店成功");
 			return "ok";
@@ -153,7 +152,7 @@ public class branchinfrController {
 	public String updBranch(String bid, String bName, String bAddr, String signTime, String isBargin,
 			String branchBossName, String branchTel) {
 		// 新建一个map类对象
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		// 新建SimpleDateFormat类对象
 		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// 定义空Date对象

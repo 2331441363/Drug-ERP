@@ -21,7 +21,6 @@ public class BranchGoodsServiceImpl implements BranchGoodsService {
 	/**
 	 * 查询所有商品名称
 	 */
-	@Override
 	public List<String> getAllGoodsname() {
 		return branchGoodsMapper.getAllGoodsname();
 	}

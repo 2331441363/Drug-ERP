@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.drug.dto.ReceiptDTO;
@@ -24,7 +23,6 @@ public class receiptServiceImpl implements receiptService {
 	/**
 	 * 查询所有收款单
 	 */
-	@Override
 	public List<ReceiptDTO> getReceipt(Map<String, Object> map) {
 		return receiptmapper.getReceipt(map);
 	}
@@ -34,7 +32,6 @@ public class receiptServiceImpl implements receiptService {
 	/**
 	 * 查询收款总行数
 	 */
-	@Override
 	public Integer getReceptCount() {
 		return receiptmapper.getReceptCount();
 	}
@@ -42,7 +39,6 @@ public class receiptServiceImpl implements receiptService {
 	/**
 	 * 删除收款
 	 */
-	@Override
 	public int delReceipt(int rid) {
 		return receiptmapper.delReceipt(rid);
 	}
@@ -50,8 +46,14 @@ public class receiptServiceImpl implements receiptService {
 	/**
 	 * 修改收款
 	 */
-	@Override
 	public int updReceipt(Map<String, Object> map) {
 		return receiptmapper.updReceipt(map);
+	}
+	
+	/**
+	 * 查询收款日期、合计
+	 */
+	public List<ReceiptDTO> getReceiptDateMoney() {
+		return receiptmapper.getReceiptDateMoney();
 	}
 }

@@ -40,6 +40,43 @@ label{
 </head>
 <body>
 
+	<div class="demoTable" >
+<form class="layui-form" onsubmit="return false;">
+		<div class="layui-inline" style="margin-left:20px;">
+			<label>付款时间：</label>
+			<div class="layui-input-inline" style="margin-left:5px;">
+				<input type="text" name="payDate" class="layui-input" id="payDate"
+					placeholder="年--月--日 " autocomplete="off">
+			</div>
+		</div>
+
+		<div class="layui-inline" style="margin-left:20px;">
+			<label>分店：</label>
+			<div class="layui-input-inline" style="margin-left:5px;">
+				<select name="branchName" id="branchName"  lay-search="">
+				<option value="">请选择</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="layui-inline" style="margin-left:20px;">
+			<label>付款类型：</label>
+			<div class="layui-input-inline" style="margin-left:5px;">
+				<select name="payType" id="payType" lay-search="">
+					<option value="">请选择</option>
+					<option value="采购付款">采购付款</option>
+					<option value="分店退货">分店退货</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="layui-inline" >
+			<button class="layui-btn  layui-btn-sm layui-btn-normal" data-type="reload" >搜索</button>		
+		</div> 
+</form>
+</div>
+
+
 <table class="layui-table" lay-data="{url:'../../listPay.do', id:'testReload',page: true}" lay-filter="testReload">
 		    	  <thead>
 		    	    <tr>
@@ -82,42 +119,6 @@ $.ajax({
 
 </script>
 
-	<div class="demoTable" >
-<form class="layui-form" onsubmit="return false;">
-		<div class="layui-inline" style="margin-left:20px;">
-			<label>付款时间：</label>
-			<div class="layui-input-inline" style="margin-left:5px;">
-				<input type="text" name="payDate" class="layui-input" id="payDate"
-					placeholder="年--月--日 " autocomplete="off">
-			</div>
-		</div>
-
-		<div class="layui-inline" style="margin-left:20px;">
-			<label>分店：</label>
-			<div class="layui-input-inline" style="margin-left:5px;">
-				<select name="branchName" id="branchName"  lay-search="">
-				<option value="">请选择</option>
-				</select>
-			</div>
-		</div>
-
-		<div class="layui-inline" style="margin-left:20px;">
-			<label>付款类型：</label>
-			<div class="layui-input-inline" style="margin-left:5px;">
-				<select name="payType" id="payType" lay-search="">
-					<option value="">请选择</option>
-					<option value="采购付款">采购付款</option>
-					<option value="分店退货">分店退货</option>
-				</select>
-			</div>
-		</div>
-
-		<div class="layui-inline" >
-			<button class="layui-btn  layui-btn-sm layui-btn-normal" data-type="reload" >搜索</button>		
-		</div> 
-</form>
-</div>
-
 
 <script src="../layui/layui.js"></script>
 	<!-- <iframe src="Pay.html" width="890px" height= "400px" name="topFrame" scrolling="no" frameborder="0" id="topFrame" style="display: none;"></iframe> -->
@@ -146,13 +147,16 @@ $.ajax({
 			      //console.log(obj.value); //得到修改后的值
 			      //console.log(obj.field); //当前编辑的字段名
 			      var data = obj.data; //所在行的所有相关数据  
+			      alert(data.money);
 			      $.ajax({
 	 					url:'../../updPay.do',
 	 					method:'post',
-	 					data:'payId='+data.payId+'&payDate='+data.payDate+'&payStatus='+payStatus+
+	 					data:'payId='+data.payId+'&payDate='+data.payDate+'&payStatus='+data.payStatus+
 	 				'&money='+data.money+'&payType='+data.payType+'&payNote='+data.payNote,
 	 					dataType:'json',
 	 					success:function(back){
+	 						alert(back);
+	 						testReload.reload(); //也是刷新父页面的
 	 					}
 	 				});
 			    });
