@@ -55,4 +55,12 @@ public class payServiceImpl implements payService {
 	public List<PayDTO> getDateMoney() {
 		return paymapper.getDateMoney();
 	}
+
+	/**
+	 * 修改分店退货单付款状态
+	 */
+	@Override
+	public int updBrachBackPay(Map<String, Object> map) {
+		return paymapper.updBrachBackPay(map);
+	}
 }

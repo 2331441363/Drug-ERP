@@ -147,18 +147,42 @@ $.ajax({
 			      //console.log(obj.value); //得到修改后的值
 			      //console.log(obj.field); //当前编辑的字段名
 			      var data = obj.data; //所在行的所有相关数据  
-			      alert(data.money);
-			      $.ajax({
-	 					url:'../../updPay.do',
-	 					method:'post',
-	 					data:'payId='+data.payId+'&payDate='+data.payDate+'&payStatus='+data.payStatus+
-	 				'&money='+data.money+'&payType='+data.payType+'&payNote='+data.payNote,
-	 					dataType:'json',
-	 					success:function(back){
-	 						alert(back);
-	 						testReload.reload(); //也是刷新父页面的
-	 					}
-	 				});
+			      if(data.payType=='分店退货' && obj.field=='付款状态'){
+			    	  $.ajax({
+		 					url:'../../updBrachBackPay.do',
+		 					method:'post',
+		 					data:'payId='+data.payId+'&payStatus='+data.payStatus,
+		 					dataType:'json',
+		 					success:function(back){
+		 						alert(back);
+		 						testReload.reload(); //也是刷新父页面的
+		 						//修改分店退货单收款状态、日期
+			 					 $.ajax({
+			 		 				url:'../../updBranchReceStatus.do',
+			 		 				method:'post',
+			 		 				data:'returnId='+data.returnId,
+			 		 				dataType:'json',
+			 		 				success:function(back){
+			 		 					if(back='ok'){
+			 		 						alert("分店已收款");
+			 		 					}
+			 		 				}
+			 		 			});
+		 					}
+		 				});
+			      }else{
+				      $.ajax({
+		 					url:'../../updPay.do',
+		 					method:'post',
+		 					data:'payId='+data.payId+'&payDate='+data.payDate+
+		 				'&money='+data.money+'&payType='+data.payType+'&payNote='+data.payNote,
+		 					dataType:'json',
+		 					success:function(back){
+		 						alert(back);
+		 						testReload.reload(); //也是刷新父页面的
+		 					}
+		 				});
+			      }
 			    });
 			
 			

@@ -84,7 +84,7 @@ label{
 		 	      //console.log(obj.value); //得到修改后的值
 		 	      //console.log(obj.field); //当前编辑的字段名
 		 	      var data = obj.data; //所在行的所有相关数据  
-		 	      $.ajax({
+		 	      /* $.ajax({
 		 				url:'../../updBranchReturnStatus.do',
 		 				method:'post',
 		 				data:'returnId='+data.returnId+'&receiptStatus='+data.receiptStatus,
@@ -106,7 +106,7 @@ label{
 		 					}
 		 				}
 		 			});
-		 	      
+		 	       */
 		 	    });
 		 	
 	 	//监听头工具栏事件

@@ -92,7 +92,7 @@ public class payController {
 	@RequestMapping("/updPay")
 	@ResponseBody
 	public String updPay(String payId, String payDate, 
-			String money, String payType, String payNote,String payStatus) {
+			String money, String payType, String payNote) {
 		System.out.println(money);
 		// 新建一个SimpleDateFormat类对象
 		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -116,7 +116,6 @@ public class payController {
 		map.put("money", money);
 		map.put("payType", payType);
 		map.put("payNote", payNote);
-		map.put("payStatus", payStatus);
 		// 修改付款信息
 		int row = payservice.updPay(map);
 		if (row > 0) {
@@ -127,6 +126,34 @@ public class payController {
 			return "no";
 		}
 	}
+	
+	/**
+	 * 修改分店退货单付款状态
+	 * @param payId 分店退货单id
+	 * @param payStatus 付款状态
+	 * @return 修改是否成功信息
+	 */
+	@RequestMapping("/updBrachBackPay")
+	@ResponseBody
+	public String updBrachBackPay(String payId,String payStatus) {
+		// 新建一个map类对象
+				Map<String, Object> map = new HashMap<String, Object>();
+				// 把 修改信息 加入 map集合
+				map.put("payId", payId);
+				map.put("payStatus", payStatus);
+				// 修改付款信息
+				int row = payservice.updBrachBackPay(map);
+				if (row > 0) {
+					System.out.println("修改分店退货单付款状态成功");
+					return "ok";
+				} else {
+					System.out.println("修改分店退货单付款状态失败");
+					return "no";
+				}
+	}
+	
+	
+	
 	
 	/**
 	 * 查询付款日期、合计

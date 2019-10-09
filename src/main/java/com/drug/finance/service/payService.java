@@ -43,6 +43,14 @@ public interface payService {
 	public int updPay(Map<String,Object> map);
 	
 	/**
+	 * 修改分店退货单付款状态
+	 * 
+	 * @param map 修改后的付款信息
+	 * @return int 受影响行数
+	 */
+	public int updBrachBackPay(Map<String, Object> map);
+	
+	/**
 	 * 查询付款日期、合计
 	 * @return 合计list
 	 */

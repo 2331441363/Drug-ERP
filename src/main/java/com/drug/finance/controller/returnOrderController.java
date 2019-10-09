@@ -25,14 +25,17 @@ public class returnOrderController {
 	 * 
 	 * @param returnId      退货单id
 	 * @param receiptStatus 收款状态
-	 * @return
+	 * @return 修改是否成功信息
 	 */
 	@RequestMapping("/updBranchReturnStatus")
 	@ResponseBody
 	public String updBranchReturnStatus(int returnId, String receiptStatus) {
+		// 新建一个map对象
 		Map<String, Object> map = new HashMap<String, Object>();
+		//把修改信息加入map集合
 		map.put("returnId", returnId);
 		map.put("receiptStatus", receiptStatus);
+		//修改分店退货单收款状态
 		int row = returnOrderService.updBranchReturnStatus(map);
 		if (row > 0) {
 			System.out.println("修改分店退货单收款状态成功");

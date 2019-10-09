@@ -66,7 +66,14 @@
 	<update id="updPay" parameterType="Map">
 		update pay set
 		pay_date=#{payDate},money=#{money},pay_type=#{payType},
-		pay_note=#{payNote},pay_status=#{payStatus}
+		pay_note=#{payNote}
+		where pay_id=#{payId} and is_show=0
+	</update>
+	
+	<!-- 修改分店退货单付款状态 -->
+	<update id="updBrachBackPay" parameterType="Map">
+		update pay set
+		pay_status=#{payStatus}
 		where pay_id=#{payId} and is_show=0
 	</update>
 	

@@ -15,7 +15,7 @@ import com.subbranch.webservices.HelloServiceImplService;
 /**
  * @author 肖影
  * @version 创建时间：2019年9月26日 上午11:16:42 
- * 类说明 分店退货单controlller
+ * 类说明 分店退货单controller
  */
 @Controller
 public class BranchBackController {
