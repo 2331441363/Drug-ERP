@@ -59,7 +59,7 @@ public class receiptController {
 		// 要显示的数据
 		util.put("data", receiptList);
 		// 要显示的行数
-		util.put("count", receiptservice.getReceptCount());
+		util.put("count", receiptservice.getReceptCount(map));
 		// 返回 map类对象2
 		return util;
 	}

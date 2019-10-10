@@ -30,7 +30,8 @@
 
 
 	<!-- 查询收款总行数 -->
-	<select id="getReceptCount" resultType="integer">
+	<select id="getReceptCount" resultType="integer"
+	 parameterType="Map">
 		select count(*) from receipt r
 		LEFT JOIN employee e
 		on r.emp_id=e.emp_id

@@ -32,8 +32,8 @@ public class receiptServiceImpl implements receiptService {
 	/**
 	 * 查询收款总行数
 	 */
-	public Integer getReceptCount() {
-		return receiptmapper.getReceptCount();
+	public Integer getReceptCount(Map<String, Object> map) {
+		return receiptmapper.getReceptCount(map);
 	}
 
 	/**

@@ -28,7 +28,7 @@ public interface receiptService {
 	 * 
 	 * @return Integer 收款总行数
 	 */
-	public Integer getReceptCount();
+	public Integer getReceptCount(Map<String, Object> map);
 
 	/**
 	 * 删除收款

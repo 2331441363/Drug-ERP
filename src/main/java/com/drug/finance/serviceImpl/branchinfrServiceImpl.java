@@ -59,7 +59,6 @@ public class branchinfrServiceImpl implements branchinfrService {
 	 * 修改分店信息
 	 */
 	public int updBranch(Map<String, Object> map) {
-		System.out.println("eeeee");
 		return branchinfrmapper.updBranch(map);
 	}
 }
