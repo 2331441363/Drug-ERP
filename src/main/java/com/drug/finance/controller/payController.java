@@ -91,9 +91,8 @@ public class payController {
 	 */
 	@RequestMapping("/updPay")
 	@ResponseBody
-	public String updPay(String payId, String payDate, 
+	public String updPay(int payId, String payDate, 
 			String money, String payType, String payNote) {
-		System.out.println(money);
 		// 新建一个SimpleDateFormat类对象
 		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// 新建一个空Date类对象
@@ -106,7 +105,6 @@ public class payController {
 		}
 		// 新建一个Timestamp类对象
 		Timestamp newSignTime = new Timestamp(dt.getTime());
-		System.out.println(newSignTime);
 		
 		// 新建一个map类对象
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -135,7 +133,7 @@ public class payController {
 	 */
 	@RequestMapping("/updBrachBackPay")
 	@ResponseBody
-	public String updBrachBackPay(String payId,String payStatus) {
+	public String updBrachBackPay(int payId,String payStatus) {
 		// 新建一个map类对象
 				Map<String, Object> map = new HashMap<String, Object>();
 				// 把 修改信息 加入 map集合

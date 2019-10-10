@@ -160,7 +160,7 @@ $.ajax({
 			 					 $.ajax({
 			 		 				url:'../../updBranchReceStatus.do',
 			 		 				method:'post',
-			 		 				data:'returnId='+data.returnId,
+			 		 				data:'payId='+data.payId,
 			 		 				dataType:'json',
 			 		 				success:function(back){
 			 		 					if(back='ok'){
